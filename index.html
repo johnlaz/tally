@@ -631,6 +631,85 @@
   }
   .deck-item-icon svg { width: 14px; height: 14px; }
 
+  /* Deck Library — saved decks shown as a collapsible section above the
+     active build list. Visually a sibling of .bank-item/.draft-item (same
+     row shape, padding, border) so a saved deck reads as "the same kind of
+     thing" as the live items below it, with its own meta line for the
+     question count and last-saved date in place of the drag handle and
+     correct/timer badges those rows show instead. */
+  .library-section {
+    margin-bottom: 22px;
+  }
+  .library-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 2px 0;
+    margin-bottom: 10px;
+  }
+  .library-section-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .library-section-count {
+    background: var(--surface-2);
+    color: var(--text-dim);
+    border-radius: 999px;
+    padding: 1px 8px;
+    font-size: 10.5px;
+  }
+  .library-section-chevron {
+    width: 14px; height: 14px;
+    color: var(--text-faint);
+    transition: transform 0.15s ease;
+    flex-shrink: 0;
+  }
+  .library-section.collapsed .library-section-chevron { transform: rotate(-90deg); }
+  .library-section.collapsed .library-list,
+  .library-section.collapsed .library-empty { display: none; }
+  .library-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin-bottom: 8px;
+  }
+  .library-item-main {
+    flex: 1;
+    min-width: 0;
+  }
+  .library-item-name {
+    font-size: 14.5px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .library-item-meta {
+    font-size: 12px;
+    color: var(--text-faint);
+    margin-top: 2px;
+  }
+  .library-empty {
+    text-align: center;
+    padding: 20px 16px;
+    color: var(--text-faint);
+    font-size: 13px;
+    border: 1.5px dashed var(--border);
+    border-radius: var(--radius-md);
+  }
+
   .empty-state {
     text-align: center;
     padding: 48px 24px;
@@ -993,6 +1072,9 @@
   .preview-scale .eyebrow { font-size: 10px !important; }
   .preview-scale .tally-label, .preview-scale .tally-count { font-size: 12px !important; }
   .preview-scale .reveal-waiting-sub { font-size: 10px !important; }
+  .preview-scale .countdown-display { font-size: 26px !important; margin-bottom: 10px !important; }
+  .preview-scale .answer-key-banner { font-size: 11px !important; padding: 8px 12px !important; margin-bottom: 14px !important; }
+  .preview-scale .answer-key-banner .answer-key-label { font-size: 9px !important; }
   .preview-scale .attendee-inner { width: 100% !important; max-width: 358px !important; }
 
   .kbd-hint {
@@ -1658,6 +1740,18 @@
       <div class="section-heading">Build session</div>
       <div class="section-sub">Build your deck of polls and slides. You can also add to it live once the session starts.</div>
 
+      <div class="library-section" id="library-section">
+        <div class="library-section-header" id="library-section-toggle">
+          <span class="library-section-title">
+            <svg class="library-section-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            Deck Library
+            <span class="library-section-count" id="library-count">0</span>
+          </span>
+        </div>
+        <div id="library-list" class="library-list"></div>
+        <div id="library-empty" class="library-empty">No saved decks yet — build a deck below, then save it here to reopen anytime.</div>
+      </div>
+
       <div class="eyebrow" style="margin-top:4px;">Session label (optional)</div>
       <input id="session-label-input" class="input-field" placeholder="e.g. Q3 All-Hands, Tuesday Training" maxlength="80">
       <div class="settings-row-sub" style="margin-top:4px; margin-bottom:18px;">Shown on the report and used to name your export file — easier to find later than a session code alone.</div>
@@ -1671,6 +1765,7 @@
       <div class="action-row">
         <button class="btn btn-ghost" id="btn-add-question">+ Add to Deck</button>
         <button class="btn btn-ghost" id="btn-speed-card">⚡ Speed Card</button>
+        <button class="btn btn-ghost" id="btn-save-to-library">💾 Save to Library</button>
       </div>
 
       <div class="action-row-bottom">
@@ -1945,6 +2040,25 @@
     <div class="modal-body">
 
       <div class="modal-panel active" data-panel="data">
+        <div class="library-section-title" style="margin-bottom:10px;">Deck Library</div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">Import deck library</div>
+            <div class="settings-row-sub">Merge decks from a previously exported library file</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="btn-import-library">Choose File</button>
+        </div>
+        <input type="file" id="import-library-input" accept="application/json" class="hidden">
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">Export deck library</div>
+            <div class="settings-row-sub" id="export-library-sub">No saved decks yet</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="btn-export-library" disabled>Download JSON</button>
+        </div>
+
+        <div class="library-section-title" style="margin-top:18px; margin-bottom:10px;">Session Results</div>
         <div class="settings-row">
           <div>
             <div class="settings-row-label">Import past session</div>
@@ -2160,6 +2274,9 @@
     <div class="modal-body" style="padding:28px 24px 24px;">
       <div class="app-dialog-title" id="app-dialog-title"></div>
       <div class="app-dialog-body" id="app-dialog-body"></div>
+      <div id="app-dialog-input-wrap" class="hidden" style="margin-top:14px;">
+        <input type="text" id="app-dialog-input" class="input-field">
+      </div>
       <div class="app-dialog-actions" id="app-dialog-actions"></div>
     </div>
   </div>
@@ -2437,19 +2554,40 @@ function escapeHtml(str) {
    becomes `if (!await appConfirm(...))` — without scattering bespoke
    modal markup throughout the app for every individual warning. */
 let appDialogResolve = null;
+let appDialogMode = null;
 
 function closeAppDialog(result) {
   document.getElementById('app-dialog').classList.add('hidden');
   if (appDialogResolve) {
     const resolve = appDialogResolve;
     appDialogResolve = null;
-    resolve(result);
+    // Prompt mode resolves with the typed string (or null if cancelled)
+    // rather than the boolean alert/confirm use, since callers need the
+    // actual value, not just whether the dialog was dismissed positively.
+    if (appDialogMode === 'prompt') {
+      const input = document.getElementById('app-dialog-input');
+      resolve(result ? (input ? input.value.trim() : '') : null);
+    } else {
+      resolve(result);
+    }
   }
 }
 
 function renderAppDialog(opts) {
+  appDialogMode = opts.mode;
   document.getElementById('app-dialog-title').textContent = opts.title || '';
   document.getElementById('app-dialog-body').textContent = opts.body || '';
+
+  const inputWrap = document.getElementById('app-dialog-input-wrap');
+  const input = document.getElementById('app-dialog-input');
+  if (opts.mode === 'prompt') {
+    inputWrap.classList.remove('hidden');
+    input.value = opts.defaultValue || '';
+    input.placeholder = opts.placeholder || '';
+    input.maxLength = opts.maxLength || 80;
+  } else {
+    inputWrap.classList.add('hidden');
+  }
 
   const actions = document.getElementById('app-dialog-actions');
   actions.innerHTML = '';
@@ -2476,11 +2614,17 @@ function renderAppDialog(opts) {
   }
 
   document.getElementById('app-dialog').classList.remove('hidden');
-  // Focus the rightmost (primary) action so keyboard users land somewhere
-  // sensible immediately, matching how the native dialogs being replaced
-  // would have behaved.
-  const lastBtn = actions.lastElementChild;
-  if (lastBtn) lastBtn.focus();
+  // Prompt mode focuses the text field itself so typing can start
+  // immediately; alert/confirm focus the rightmost (primary) action so
+  // keyboard users land somewhere sensible, matching how the native
+  // dialogs being replaced would have behaved.
+  if (opts.mode === 'prompt') {
+    input.focus();
+    input.select();
+  } else {
+    const lastBtn = actions.lastElementChild;
+    if (lastBtn) lastBtn.focus();
+  }
 }
 
 function appAlert(message, opts) {
@@ -2505,6 +2649,33 @@ function appConfirm(opts) {
     });
   });
 }
+
+// Resolves to the trimmed string the user typed, or null if they
+// cancelled — never an empty string for "cancelled", since a deck name of
+// '' is a meaningfully different (rejected) case from "no answer given".
+function appPrompt(opts) {
+  if (typeof opts === 'string') opts = { body: opts };
+  return new Promise((resolve) => {
+    appDialogResolve = resolve;
+    renderAppDialog({
+      mode: 'prompt',
+      title: opts.title || 'Enter a value',
+      body: opts.body || '',
+      confirmLabel: opts.confirmLabel || 'Save',
+      cancelLabel: opts.cancelLabel || 'Cancel',
+      defaultValue: opts.defaultValue,
+      placeholder: opts.placeholder,
+      maxLength: opts.maxLength,
+    });
+  });
+}
+
+// Enter submits a prompt dialog directly from the text field, same as a
+// native browser prompt() — without this, Enter would just be swallowed
+// by the input with no way to confirm except reaching for the mouse.
+document.getElementById('app-dialog-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') { e.preventDefault(); closeAppDialog(true); }
+});
 
 // Escape cancels (mirrors native confirm/alert dismissal); Enter confirms,
 // since the primary action button already holds focus by default.
@@ -3122,6 +3293,300 @@ function loadDraft() {
   }
 }
 
+/* ---------- Deck Library ----------
+   A separate, persistent shelf of named decks the moderator builds once
+   and reopens across sessions — distinct from tally_draft_bank above,
+   which is a single scratch slot that only ever holds "whatever's
+   currently on the Build screen" and has no name or independent identity.
+   Before this, the only way a deck survived past one session was the
+   Rerun flow, which reconstructs a deck from a session's *export* — i.e.
+   the deck could only be saved after being opened, run, and ended. This
+   stores deck snapshots directly, independent of ever starting a session
+   at all.
+   Each entry: { id, name, items, createdAt, updatedAt }. "items" is the
+   exact same shape as State.questionBank, so saving/opening a deck is
+   just swapping that array out from under the existing render/persist
+   functions rather than introducing a parallel data shape. */
+const DECK_LIBRARY_KEY = 'tally_deck_library';
+
+function loadDeckLibrary() {
+  const saved = localStorage.getItem(DECK_LIBRARY_KEY);
+  if (!saved) return [];
+  try {
+    const parsed = JSON.parse(saved);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveDeckLibrary(decks) {
+  localStorage.setItem(DECK_LIBRARY_KEY, JSON.stringify(decks));
+}
+
+function deckSummary(items) {
+  const polls = items.filter(q => q.type !== 'slide').length;
+  const slides = items.length - polls;
+  const parts = [];
+  if (polls > 0) parts.push(polls + ' poll' + (polls === 1 ? '' : 's'));
+  if (slides > 0) parts.push(slides + ' slide' + (slides === 1 ? '' : 's'));
+  return parts.join(', ') || 'Empty deck';
+}
+
+function formatLibraryDate(ts) {
+  if (!ts) return '';
+  const d = new Date(ts);
+  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+}
+
+function renderDeckLibrary() {
+  const decks = loadDeckLibrary();
+  const list = document.getElementById('library-list');
+  const empty = document.getElementById('library-empty');
+  const count = document.getElementById('library-count');
+
+  count.textContent = decks.length;
+  list.innerHTML = '';
+
+  if (decks.length === 0) {
+    empty.classList.remove('hidden');
+    syncLibraryExportControl(decks);
+    return;
+  }
+  empty.classList.add('hidden');
+
+  // Most recently saved/updated first — the deck someone just finished
+  // editing is the one they're most likely to want next, not whichever
+  // happened to be created first.
+  const sorted = decks.slice().sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+
+  sorted.forEach((deck) => {
+    const item = document.createElement('div');
+    item.className = 'library-item';
+
+    const main = document.createElement('div');
+    main.className = 'library-item-main';
+    main.innerHTML = `
+      <div class="library-item-name">${escapeHtml(deck.name)}</div>
+      <div class="library-item-meta">${escapeHtml(deckSummary(deck.items))} · saved ${formatLibraryDate(deck.updatedAt || deck.createdAt)}</div>`;
+
+    const actions = document.createElement('div');
+    actions.className = 'item-actions';
+
+    const openBtn = document.createElement('button');
+    openBtn.className = 'btn btn-primary btn-sm';
+    openBtn.textContent = 'Open';
+    openBtn.addEventListener('click', () => openDeckFromLibrary(deck.id));
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'icon-btn';
+    delBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>';
+    delBtn.setAttribute('aria-label', 'Delete deck');
+    delBtn.addEventListener('click', () => deleteDeckFromLibrary(deck.id, deck.name));
+
+    actions.appendChild(openBtn);
+    actions.appendChild(delBtn);
+    item.appendChild(main);
+    item.appendChild(actions);
+    list.appendChild(item);
+  });
+
+  syncLibraryExportControl(decks);
+}
+
+function syncLibraryExportControl(decks) {
+  const btn = document.getElementById('btn-export-library');
+  const sub = document.getElementById('export-library-sub');
+  if (!btn || !sub) return;
+  btn.disabled = decks.length === 0;
+  sub.textContent = decks.length === 0
+    ? 'No saved decks yet'
+    : decks.length + ' deck' + (decks.length === 1 ? '' : 's') + ' saved on this device';
+}
+
+async function saveCurrentDeckToLibrary() {
+  if (State.questionBank.length === 0) {
+    await appAlert('Add at least one question or slide before saving a deck.', { title: 'Empty deck' });
+    return;
+  }
+
+  const decks = loadDeckLibrary();
+  const suggestedName = State.sessionLabel || '';
+  const name = await appPrompt({
+    title: 'Save to Library',
+    body: 'Name this deck so you can find it again later.',
+    defaultValue: suggestedName,
+    placeholder: 'e.g. Q3 All-Hands',
+    confirmLabel: 'Save',
+  });
+  if (name === null) return; // cancelled
+  if (!name) {
+    await appAlert('Enter a name to save this deck.', { title: 'Name required' });
+    return;
+  }
+
+  // Matching an existing deck by name (case-insensitive) offers an
+  // overwrite instead of silently creating a confusing second copy with
+  // the same name — but it's still the moderator's call, not automatic,
+  // since they may genuinely want two decks called the same thing.
+  const existing = decks.find(d => d.name.toLowerCase() === name.toLowerCase());
+  if (existing) {
+    const shouldOverwrite = await appConfirm({
+      title: 'Deck already exists',
+      body: `"${existing.name}" is already in your library. Overwrite it with the current deck, or save this as a new entry?`,
+      confirmLabel: 'Overwrite',
+      cancelLabel: 'Save as New',
+    });
+    if (shouldOverwrite) {
+      existing.items = JSON.parse(JSON.stringify(State.questionBank));
+      existing.updatedAt = Date.now();
+      saveDeckLibrary(decks);
+      renderDeckLibrary();
+      return;
+    }
+  }
+
+  const now = Date.now();
+  decks.push({
+    id: generateId(),
+    name: name,
+    items: JSON.parse(JSON.stringify(State.questionBank)),
+    createdAt: now,
+    updatedAt: now,
+  });
+  saveDeckLibrary(decks);
+  renderDeckLibrary();
+}
+
+async function openDeckFromLibrary(deckId) {
+  const decks = loadDeckLibrary();
+  const deck = decks.find(d => d.id === deckId);
+  if (!deck) return;
+
+  // Opening a deck replaces whatever's currently on the Build screen, so
+  // an unsaved in-progress deck needs a confirmation gate — the library
+  // save flow already covers "save what I have," this only needs to
+  // protect against an accidental silent overwrite of unsaved work.
+  if (State.questionBank.length > 0) {
+    const proceed = await appConfirm({
+      title: 'Replace current deck?',
+      body: `Opening "${deck.name}" will replace the deck you're currently building. Anything unsaved will be lost.`,
+      confirmLabel: 'Open Deck',
+      cancelLabel: 'Cancel',
+    });
+    if (!proceed) return;
+  }
+
+  State.questionBank = JSON.parse(JSON.stringify(deck.items));
+  persistDraft();
+  renderQuestionBank();
+}
+
+async function deleteDeckFromLibrary(deckId, deckName) {
+  const confirmed = await appConfirm({
+    title: 'Delete this deck?',
+    body: `"${deckName}" will be permanently removed from your library. This doesn't affect the deck currently on your Build screen.`,
+    confirmLabel: 'Delete',
+    cancelLabel: 'Cancel',
+    danger: true,
+  });
+  if (!confirmed) return;
+
+  const decks = loadDeckLibrary().filter(d => d.id !== deckId);
+  saveDeckLibrary(decks);
+  renderDeckLibrary();
+}
+
+document.getElementById('btn-save-to-library').addEventListener('click', saveCurrentDeckToLibrary);
+
+// Collapsible purely for screen space — the library can grow long over
+// time, and the moderator usually only needs it open long enough to pick
+// a deck or save one, not while actively editing individual questions.
+document.getElementById('library-section-toggle').addEventListener('click', () => {
+  document.getElementById('library-section').classList.toggle('collapsed');
+});
+
+document.getElementById('btn-export-library').addEventListener('click', () => {
+  const decks = loadDeckLibrary();
+  if (decks.length === 0) return;
+  const exportPayload = {
+    type: 'tally-deck-library',
+    exportedAt: Date.now(),
+    decks: decks,
+  };
+  const blob = new Blob([JSON.stringify(exportPayload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  const dateStr = new Date().toISOString().slice(0, 10);
+  a.download = `tally-deck-library-${dateStr}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('btn-import-library').addEventListener('click', () => {
+  document.getElementById('import-library-input').click();
+});
+
+document.getElementById('import-library-input').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async () => {
+    let data;
+    try {
+      data = JSON.parse(reader.result);
+    } catch (err) {
+      await appAlert('That file isn\'t valid JSON.', { title: 'Import failed' });
+      e.target.value = '';
+      return;
+    }
+    await handleImportedLibrary(data);
+    e.target.value = ''; // allow re-importing the same filename later
+  };
+  reader.readAsText(file);
+});
+
+async function handleImportedLibrary(data) {
+  // Accepts either a full library export ({ decks: [...] }) or a bare
+  // array, so a deck list someone hand-edited or extracted from elsewhere
+  // still imports cleanly rather than only accepting this app's exact
+  // export envelope.
+  const incoming = Array.isArray(data) ? data : data.decks;
+  if (!Array.isArray(incoming) || incoming.length === 0) {
+    await appAlert('No decks found in that file.', { title: 'Import failed' });
+    return;
+  }
+
+  const existing = loadDeckLibrary();
+  let added = 0;
+  let skipped = 0;
+
+  incoming.forEach((deck) => {
+    if (!deck || !Array.isArray(deck.items) || deck.items.length === 0) { skipped++; return; }
+    const name = (deck.name || 'Imported deck').toString().slice(0, 80);
+    // Re-IDed on import rather than trusting the source file's ids, since
+    // two separately-exported libraries could coincidentally reuse the
+    // same generated id and silently clobber each other on merge.
+    existing.push({
+      id: generateId(),
+      name: name,
+      items: deck.items,
+      createdAt: deck.createdAt || Date.now(),
+      updatedAt: Date.now(),
+    });
+    added++;
+  });
+
+  saveDeckLibrary(existing);
+  renderDeckLibrary();
+
+  const message = skipped > 0
+    ? `Imported ${added} deck(s). Skipped ${skipped} invalid or empty entr${skipped === 1 ? 'y' : 'ies'}.`
+    : `Imported ${added} deck(s) into your library.`;
+  await appAlert(message, { title: 'Library updated' });
+}
+
 let editingIndex = null;
 let qeRevealMode = null; // no default — moderator must choose, per design decision
 
@@ -3736,6 +4201,16 @@ document.getElementById('btn-start-session').addEventListener('click', async () 
         revealMode: revealMode,
         revealed: revealMode === 'live', // hidden-mode questions start unrevealed; live mode has nothing to hide
       };
+      // correctAnswerIndex and timerSeconds were set on the Build screen
+      // but previously never made it into this object — every question
+      // that went through "Start Session" silently lost its timer and
+      // correct-answer marking the moment the session was created, even
+      // though both were stored correctly on State.questionBank right up
+      // until this point. Questions added live mid-session (a separate
+      // code path) never had this gap, which is why the feature could
+      // look broken in one flow and fine in the other.
+      if (typeof q.correctAnswerIndex === 'number') questionsObj[qid].correctAnswerIndex = q.correctAnswerIndex;
+      if (typeof q.timerSeconds === 'number') questionsObj[qid].timerSeconds = q.timerSeconds;
     }
   });
 
@@ -3989,11 +4464,13 @@ function renderPreviewPane(targetId, code, qid, qdata, isClosed) {
   if (!isClosed) {
     target.innerHTML = `
       <div class="attendee-inner" style="padding-top:60px;">
+        <div id="${targetId}-countdown" class="countdown-display hidden"></div>
         <div class="attendee-question-text">${escapeHtml(qdata.text)}</div>
         <div style="margin-top:28px;">
           ${(qdata.options || []).map(opt => `<div class="option-card" style="cursor:default;">${escapeHtml(opt)}</div>`).join('')}
         </div>
       </div>`;
+    renderCountdown(qdata, `${targetId}-countdown`);
     return;
   }
 
@@ -4028,8 +4505,10 @@ function renderPreviewPane(targetId, code, qid, qdata, isClosed) {
     <div class="attendee-inner" style="padding-top:60px;">
       <div class="eyebrow" style="text-align:center;">Final results</div>
       <div class="attendee-question-text" style="font-size:18px; margin-bottom:24px;">${escapeHtml(qdata.text)}</div>
+      <div id="${targetId}-answer-key" class="answer-key-banner hidden"></div>
       <div>${rows}</div>
     </div>`;
+  renderAnswerKeyBanner(qdata, `${targetId}-answer-key`);
 }
 
 function renderDraftList(code, draftEntries) {
@@ -4444,9 +4923,13 @@ function runRerunSession() {
   // rather than from Firebase (which no longer has this session — it was
   // deleted the moment the session ended). Strips vote data, status, and
   // timestamps, since those belong to the session that just finished, not
-  // to a fresh deck about to be reused. Order is preserved using each
-  // item's original createdAt, since Firebase objects don't guarantee key
-  // order the way an array does.
+  // to a fresh deck about to be reused. correctAnswerIndex and
+  // timerSeconds are deck-authoring settings, not session state, so they
+  // carry over just like revealMode does — they were previously dropped
+  // here, which silently turned trivia/timed questions back into plain
+  // polls on every rerun. Order is preserved using each item's original
+  // createdAt, since Firebase objects don't guarantee key order the way
+  // an array does.
   if (!State.lastExport || !State.lastExport.session) {
     appAlert('No previous session data available to reload.', { title: 'Nothing to reload' });
     return;
@@ -4459,7 +4942,10 @@ function runRerunSession() {
     if (q.type === 'slide') {
       return { type: 'slide', slide: q.slide };
     }
-    return { type: 'poll', text: q.text, options: q.options, revealMode: q.revealMode || 'live' };
+    const item = { type: 'poll', text: q.text, options: q.options, revealMode: q.revealMode || 'live' };
+    if (typeof q.correctAnswerIndex === 'number') item.correctAnswerIndex = q.correctAnswerIndex;
+    if (typeof q.timerSeconds === 'number') item.timerSeconds = q.timerSeconds;
+    return item;
   });
 
   State.sessionCode = null;
@@ -4527,9 +5013,16 @@ async function handleImportedSession(data) {
   // Preserve type/slide/revealMode on import — a previous version of this
   // stripped everything down to {text, options}, which silently dropped
   // any slide in the imported deck and reset every poll's reveal mode.
+  // correctAnswerIndex and timerSeconds are deck-authoring settings, not
+  // session state, so they're carried over too rather than stripped —
+  // they were previously dropped here as well, silently turning
+  // trivia/timed questions back into plain polls on import.
   State.questionBank = questions.map(q => {
     if (q.type === 'slide') return { type: 'slide', slide: q.slide };
-    return { type: 'poll', text: q.text, options: q.options, revealMode: q.revealMode || 'live' };
+    const item = { type: 'poll', text: q.text, options: q.options, revealMode: q.revealMode || 'live' };
+    if (typeof q.correctAnswerIndex === 'number') item.correctAnswerIndex = q.correctAnswerIndex;
+    if (typeof q.timerSeconds === 'number') item.timerSeconds = q.timerSeconds;
+    return item;
   });
 
   persistDraft();
@@ -4575,6 +5068,7 @@ document.addEventListener('keydown', (e) => {
 /* ---------- Boot ---------- */
 loadDraft();
 renderQuestionBank();
+renderDeckLibrary();
 renderVisibilityPills();
 refreshThemeToggleUI();
 checkDeepLink();
