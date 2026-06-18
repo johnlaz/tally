@@ -4105,7 +4105,18 @@ function renderCountdown(qdata, containerId) {
     delete activeCountdowns[containerId];
   }
 
-  if (typeof qdata.timerSeconds !== 'number' || !qdata.openedAt) {
+  // openedAt is written via firebase.database.ServerValue.TIMESTAMP — on
+  // the device that performed the write, Firebase's SDK can echo back a
+  // snapshot with the raw, unresolved placeholder object still in place
+  // for a brief window before the server's real timestamp syncs back
+  // down. That placeholder is truthy (so a plain `!qdata.openedAt` check
+  // doesn't catch it) but isn't a number, and using it directly in the
+  // deadline math below produces NaN — which then renders as the literal
+  // text "NaNs" forever after, since nothing else ever re-triggers a
+  // fresh render once a question is already the active one. Checking the
+  // type explicitly means the countdown just stays hidden for that one
+  // brief window instead, until a real numeric timestamp actually arrives.
+  if (typeof qdata.timerSeconds !== 'number' || typeof qdata.openedAt !== 'number') {
     el.classList.add('hidden');
     el.textContent = '';
     return;
