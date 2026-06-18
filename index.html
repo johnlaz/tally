@@ -81,6 +81,48 @@
     --shadow-modal: 0 16px 48px rgba(0,0,0,0.55);
   }
 
+  /* Light mode — the same "muted luxury" system lit differently, not an
+     inverted palette. Warm off-white instead of stark white, warm charcoal
+     instead of pure black, keeping the restrained, expensive feel.
+     --teal goes darker than the dark-mode value (#1A66BC vs #2A8DF3) since
+     the original brand blue fails text-contrast checks against a light
+     background — verified at a 5.4:1 ratio here, comfortably past the
+     4.5:1 minimum for normal text, rather than just eyeballed. */
+  html[data-theme="light"] {
+    --bg: #FAF8F5;
+    --surface: #FFFFFF;
+    --surface-2: #F2EFEA;
+    --surface-raised: #FFFFFF;
+    --border: #E2DDD4;
+    --border-soft: #ECE8E1;
+
+    --text: #262420;
+    --text-dim: #6B6660;
+    --text-faint: #9B958C;
+
+    --teal: #1A66BC;
+    --teal-bright: #2A8DF3;
+    --teal-dim: #BFDAF7;
+    --teal-wash: rgba(26, 102, 188, 0.08);
+
+    --amber: #A8612B;
+    --amber-bright: #C97D3C;
+    --amber-dim: #F2DCC4;
+    --amber-wash: rgba(168, 97, 43, 0.08);
+
+    --sage: #4A7256;
+    --sage-bright: #5E8C6B;
+
+    --violet: #635A8E;
+    --violet-bright: #7A6FA8;
+
+    --danger: #A03D33;
+    --danger-bright: #B5483D;
+
+    --shadow-card: 0 1px 0 rgba(0,0,0,0.04);
+    --shadow-modal: 0 16px 48px rgba(0,0,0,0.18);
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { height: 100%; }
   body {
@@ -115,6 +157,11 @@
     pointer-events: none;
     z-index: 0;
   }
+  html[data-theme="light"] body::before {
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(26,102,188,0.04), transparent),
+      radial-gradient(ellipse 60% 40% at 90% 100%, rgba(168,97,43,0.025), transparent);
+  }
 
   /* Blueprint grid — dotted, architectural, reserved for the host dashboard
      where a precision/command-center feel is the goal. Deliberately not used
@@ -127,6 +174,12 @@
     background-size: 28px 28px;
     pointer-events: none;
     z-index: 0;
+  }
+  html[data-theme="light"] .blueprint-grid {
+    /* Light-gray dots on a near-black background read as a subtle texture;
+       the same dots on a warm off-white background would nearly vanish, so
+       this needs a dark dot instead, at a similarly restrained opacity. */
+    background-image: radial-gradient(circle, rgba(38,36,32,0.07) 1px, transparent 1px);
   }
 
   #app { position: relative; min-height: 100vh; display: flex; flex-direction: column; z-index: 1; }
@@ -1626,6 +1679,7 @@
     </div>
     <div class="modal-tabs">
       <button class="modal-tab active" data-tab="data">Import / Export</button>
+      <button class="modal-tab" data-tab="display">Display</button>
       <button class="modal-tab" data-tab="ai">AI</button>
       <button class="modal-tab" data-tab="about">About / Help</button>
     </div>
@@ -1655,6 +1709,25 @@
             <div class="settings-row-sub" id="export-pdf-sub">Available after a session has ended</div>
           </div>
           <button class="btn btn-ghost btn-sm" id="btn-download-report" disabled>Download PDF</button>
+        </div>
+      </div>
+
+      <div class="modal-panel" data-panel="display">
+        <div class="settings-row" style="align-items:flex-start;">
+          <div style="flex:1;">
+            <div class="settings-row-label">Theme</div>
+            <div class="settings-row-sub" id="theme-toggle-sub">Applies to your dashboard and, once a session starts, to every attendee's screen too.</div>
+            <div class="reveal-toggle" id="theme-toggle" role="radiogroup" aria-label="Theme" style="margin-top:10px;">
+              <button class="reveal-toggle-option" data-theme-choice="dark" type="button">
+                <span class="reveal-toggle-title">Dark</span>
+                <span class="reveal-toggle-sub">The default — dark luxury, cobalt accents</span>
+              </button>
+              <button class="reveal-toggle-option" data-theme-choice="light" type="button">
+                <span class="reveal-toggle-title">Light</span>
+                <span class="reveal-toggle-sub">Same system, warm off-white</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1859,6 +1932,12 @@ const DataLayer = {
   registerParticipant(code, participantId) {
     return this.participantsRef(code).child(participantId).set(firebase.database.ServerValue.TIMESTAMP);
   },
+  // Generic top-level session field update — used for host-controlled
+  // settings that apply to the whole session (currently just theme) rather
+  // than to an individual question.
+  updateSessionField(code, field, value) {
+    return this.sessionRef(code).update({ [field]: value });
+  },
   onSessionChange(code, callback) { this.sessionRef(code).on('value', callback); },
   offSession(code) { this.sessionRef(code).off(); },
   getSessionOnce(code) { return this.sessionRef(code).once('value'); }
@@ -1878,6 +1957,13 @@ const State = {
   // it persists across every session this host runs from this browser
   // rather than living in Firebase or the per-session export.
   dashboardVisibility: { showParticipantCount: true, showComparisonData: true, showNextItemHint: false },
+  // Theme is different from the above: once a session starts, it becomes
+  // host-controlled SESSION state synced through Firebase so every
+  // attendee sees the same theme the host chose. Before a session exists
+  // (on the Build screen), there's nothing to sync yet, so it falls back
+  // to this device's last choice, persisted locally just so the toggle
+  // remembers itself between visits.
+  theme: 'dark',
 };
 
 (function loadDashboardVisibility() {
@@ -1886,6 +1972,23 @@ const State = {
     if (saved) Object.assign(State.dashboardVisibility, JSON.parse(saved));
   } catch (e) { /* malformed value, just keep defaults */ }
 })();
+
+(function loadLocalTheme() {
+  try {
+    const saved = localStorage.getItem('tally_theme');
+    if (saved === 'dark' || saved === 'light') State.theme = saved;
+  } catch (e) { /* malformed value, just keep default */ }
+  applyTheme(State.theme);
+})();
+
+/* Applies the theme to the actual DOM. This is the one function both the
+   pre-session local toggle AND the live Firebase listener call — so there
+   is exactly one code path that ever touches data-theme, regardless of
+   which source triggered the change. */
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme === 'light' ? 'light' : 'dark');
+  State.theme = theme;
+}
 
 function persistDashboardVisibility() {
   localStorage.setItem('tally_dashboard_visibility', JSON.stringify(State.dashboardVisibility));
@@ -1930,6 +2033,7 @@ function escapeHtml(str) {
 function openSettings() {
   document.getElementById('settings-modal').classList.remove('hidden');
   refreshGroqKeyStatus();
+  refreshThemeToggleUI();
 }
 function closeSettings() {
   document.getElementById('settings-modal').classList.add('hidden');
@@ -1986,6 +2090,34 @@ document.getElementById('btn-save-groq-key').addEventListener('click', () => {
 document.getElementById('btn-clear-groq-key').addEventListener('click', () => {
   localStorage.removeItem('tally_groq_key');
   refreshGroqKeyStatus();
+});
+
+/* ---------- Theme toggle (Settings → Display) ----------
+   Scoped to #theme-toggle specifically — this reuses the same
+   .reveal-toggle-option visual pattern as several other choices in this
+   app (reveal mode, slide content type), and those each learned the hard
+   way that an unscoped selector cross-contaminates unrelated toggles that
+   happen to share the class name. */
+function refreshThemeToggleUI() {
+  document.querySelectorAll('#theme-toggle .reveal-toggle-option').forEach(btn => {
+    btn.classList.toggle('selected', btn.dataset.themeChoice === State.theme);
+  });
+}
+
+document.querySelectorAll('#theme-toggle .reveal-toggle-option').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const choice = btn.dataset.themeChoice;
+    applyTheme(choice);
+    localStorage.setItem('tally_theme', choice);
+    refreshThemeToggleUI();
+
+    // If a session is already live, the host's choice IS the session's
+    // theme from this point forward — push it so every attendee's screen
+    // updates too, not just this device.
+    if (State.sessionCode) {
+      await DataLayer.updateSessionField(State.sessionCode, 'theme', choice);
+    }
+  });
 });
 
 /* ---------- Dashboard visibility strip ---------- */
@@ -2085,6 +2217,7 @@ function enterAttendeeSession(code) {
     firstSnapshot = false;
     const session = snap.val();
     if (!session) { renderAttendeeWaiting(); return; }
+    applyTheme(session.theme || 'dark');
     const questions = session.questions || {};
     const openQ = Object.entries(questions).find(([id, q]) => q.status === 'open');
     const closedQs = Object.entries(questions).filter(([id, q]) => q.status === 'closed');
@@ -2870,21 +3003,32 @@ document.getElementById('btn-start-session').addEventListener('click', async () 
   const questionsObj = {};
   State.questionBank.forEach(q => {
     const qid = generateId();
-    const revealMode = q.revealMode || 'live'; // questions imported from older exports may predate this field
-    questionsObj[qid] = {
-      text: q.text,
-      options: q.options,
-      status: 'draft',
-      createdAt: now,
-      revealMode: revealMode,
-      revealed: revealMode === 'live', // hidden-mode questions start unrevealed; live mode has nothing to hide
-    };
+    if (q.type === 'slide') {
+      questionsObj[qid] = {
+        type: 'slide',
+        status: 'draft',
+        createdAt: now,
+        slide: q.slide,
+      };
+    } else {
+      const revealMode = q.revealMode || 'live'; // questions imported from older exports may predate this field
+      questionsObj[qid] = {
+        type: 'poll',
+        text: q.text,
+        options: q.options,
+        status: 'draft',
+        createdAt: now,
+        revealMode: revealMode,
+        revealed: revealMode === 'live', // hidden-mode questions start unrevealed; live mode has nothing to hide
+      };
+    }
   });
 
   const sessionData = {
     createdAt: now,
     expiresAt: now + (3 * 60 * 60 * 1000),
     status: 'live',
+    theme: State.theme || 'dark',
     questions: questionsObj,
   };
 
@@ -2953,6 +3097,12 @@ function checkExpiryWarning(session) {
 }
 
 function renderDashboard(code, session) {
+  // The session's theme field is the live source of truth once a session
+  // exists — defaults to dark for sessions started before this feature
+  // shipped, or for the brief moment before the host's own write lands.
+  applyTheme(session.theme || 'dark');
+  refreshThemeToggleUI();
+
   const questions = session.questions || {};
   const entries = Object.entries(questions);
   const openEntry = entries.find(([id, q]) => q.status === 'open');
@@ -3430,6 +3580,7 @@ document.addEventListener('keydown', (e) => {
 loadDraft();
 renderQuestionBank();
 renderVisibilityPills();
+refreshThemeToggleUI();
 checkDeepLink();
 
 /* Register the service worker for PWA installability. Wrapped in a feature
