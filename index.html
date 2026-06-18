@@ -1443,6 +1443,70 @@
   }
   .report-export-prompt button { color: var(--teal-bright); font-weight: 600; text-decoration: underline; }
 
+  .share-results-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    margin-top: 16px;
+  }
+  .share-results-card.active {
+    border-color: var(--teal);
+    background: var(--teal-wash);
+  }
+  .share-results-left { flex: 1; min-width: 0; }
+  .share-results-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .share-results-card.active .share-results-title { color: var(--teal-bright); }
+  .share-results-sub { font-size: 12px; color: var(--text-faint); }
+
+  /* Attendee view — session ended */
+  .attendee-ended-inner {
+    text-align: center;
+    padding: 24px 0;
+  }
+  .attendee-ended-icon {
+    width: 56px; height: 56px;
+    background: var(--teal-wash);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    color: var(--teal-bright);
+  }
+  .attendee-ended-icon svg { width: 28px; height: 28px; }
+  .attendee-ended-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .attendee-ended-sub { font-size: 14px; color: var(--text-faint); }
+
+  /* Attendee shared results */
+  .attendee-results-q-block {
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .attendee-results-q-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+
   /* ============================================
      SETTINGS MODAL
      ============================================ */
@@ -1843,6 +1907,24 @@
 
         <div id="attendee-slide" class="hidden"></div>
 
+        <div id="attendee-ended" class="hidden">
+          <div class="attendee-ended-inner">
+            <div class="attendee-ended-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+            </div>
+            <div class="attendee-ended-title">Session ended</div>
+            <div class="attendee-ended-sub" id="attendee-ended-sub">Thanks for participating!</div>
+          </div>
+        </div>
+
+        <div id="attendee-shared-results" class="hidden">
+          <div class="eyebrow" style="text-align:center; margin-bottom:20px;">
+            <span class="pulse-dot" style="background:var(--teal);"></span>Session results
+          </div>
+          <div id="attendee-results-leaderboard"></div>
+          <div id="attendee-results-questions"></div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -2114,6 +2196,17 @@
 
       <div class="report-export-prompt">
         Need a copy of this? Open <button data-open-settings>Settings → Export</button> to download the PDF or raw JSON.
+      </div>
+
+      <div class="share-results-card" id="share-results-card">
+        <div class="share-results-left">
+          <div class="share-results-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            Share results with attendees
+          </div>
+          <div class="share-results-sub" id="share-results-sub">Attendees still on their results screen will see the full tally and leaderboard.</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" id="btn-share-results">Share</button>
       </div>
 
       <div class="action-row-bottom">
@@ -2505,6 +2598,7 @@ const DataLayer = {
   questionRef(code, qid) { return db.ref('sessions/' + code + '/questions/' + qid); },
   votesRef(code, qid) { return db.ref('sessions/' + code + '/questions/' + qid + '/votes'); },
   participantsRef(code) { return db.ref('sessions/' + code + '/participants'); },
+  resultsRef(code) { return db.ref('results/' + code); },
 
   createSession(code, sessionData) { return this.sessionRef(code).set(sessionData); },
   deleteSession(code) { return this.sessionRef(code).remove(); },
@@ -2524,12 +2618,13 @@ const DataLayer = {
       name: name || '',
     });
   },
-  // Generic top-level session field update — used for host-controlled
-  // settings that apply to the whole session (currently just theme) rather
-  // than to an individual question.
   updateSessionField(code, field, value) {
     return this.sessionRef(code).update({ [field]: value });
   },
+  publishResults(code, payload) { return this.resultsRef(code).set(payload); },
+  retractResults(code) { return this.resultsRef(code).remove(); },
+  onResultsChange(code, callback) { this.resultsRef(code).on('value', callback); },
+  offResults(code) { this.resultsRef(code).off(); },
   onSessionChange(code, callback) { this.sessionRef(code).on('value', callback); },
   offSession(code) { this.sessionRef(code).off(); },
   getSessionOnce(code) { return this.sessionRef(code).once('value'); }
@@ -3129,10 +3224,32 @@ function enterAttendeeSession(code) {
   showView('attendee');
   showAttendeeSkeleton();
   let firstSnapshot = true;
+  let resultsListenerActive = false;
+
   DataLayer.onSessionChange(code, (snap) => {
     firstSnapshot = false;
     const session = snap.val();
-    if (!session) { renderAttendeeWaiting(); return; }
+
+    if (!session) {
+      // Session was deleted — show ended screen, then listen for shared results.
+      renderAttendeeEnded();
+      if (!resultsListenerActive) {
+        resultsListenerActive = true;
+        DataLayer.onResultsChange(code, (rSnap) => {
+          const payload = rSnap.val();
+          if (payload) {
+            renderAttendeeSharedResults(payload);
+          } else {
+            // Results were retracted — go back to ended screen
+            document.getElementById('attendee-shared-results').classList.add('hidden');
+            document.getElementById('attendee-ended').classList.remove('hidden');
+            document.getElementById('attendee-ended-sub').textContent = 'Thanks for participating!';
+          }
+        });
+      }
+      return;
+    }
+
     applyTheme(session.theme || 'dark');
     const questions = session.questions || {};
     const openQ = Object.entries(questions).find(([id, q]) => q.status === 'open');
@@ -5051,6 +5168,8 @@ document.getElementById('btn-end-session').addEventListener('click', async () =>
   document.getElementById('export-json-sub').textContent = 'Session ' + State.sessionCode + ' · ready to download';
   document.getElementById('export-pdf-sub').textContent = 'Session ' + State.sessionCode + ' · ready to download';
 
+  // Reset share card to unshared state for this new report
+  resetShareResultsCard();
   renderReport(exportData);
   showView('report');
 });
@@ -5154,6 +5273,144 @@ function renderReport(exportData) {
     block.innerHTML = `<div class="report-q-title">${i + 1}. ${escapeHtml(qdata.text)}</div><div class="report-total">${total} responses</div>${rows}`;
     content.appendChild(block);
   });
+}
+
+/* ---------- Share Results ----------
+   Moderator can push results to any attendees still on their session-ended
+   screen. A distilled payload (leaderboard + per-question tallies, no raw
+   vote/participant IDs) is written to results/{code} in Firebase. Attendees
+   listen on that path while waiting after session deletion. The moderator
+   can retract at any time with the same toggle. The results node is also
+   cleaned up when the moderator navigates away from the report screen. */
+
+let shareResultsActive = false;
+
+function resetShareResultsCard() {
+  shareResultsActive = false;
+  const card = document.getElementById('share-results-card');
+  const btn = document.getElementById('btn-share-results');
+  const sub = document.getElementById('share-results-sub');
+  card.classList.remove('active');
+  btn.textContent = 'Share';
+  btn.className = 'btn btn-ghost btn-sm';
+  sub.textContent = 'Attendees still on their results screen will see the full tally and leaderboard.';
+}
+
+function buildSharePayload(exportData) {
+  const session = exportData.session;
+  const leaderboard = computeLeaderboard(session);
+  const questions = Object.entries(session.questions || {})
+    .sort((a, b) => (a[1].createdAt || 0) - (b[1].createdAt || 0))
+    .filter(([, q]) => q.type !== 'slide')
+    .map(([, q]) => {
+      const counts = tallyVotes(q);
+      const total = counts.reduce((a, b) => a + b, 0);
+      return {
+        text: q.text,
+        options: q.options,
+        counts,
+        total,
+        correctAnswerIndex: typeof q.correctAnswerIndex === 'number' ? q.correctAnswerIndex : null,
+      };
+    });
+  return {
+    sharedAt: Date.now(),
+    label: session.label || '',
+    leaderboard: leaderboard ? leaderboard.rows.map(r => ({ name: r.name, score: r.score })) : null,
+    leaderboardTotal: leaderboard ? leaderboard.totalQuestions : 0,
+    questions,
+  };
+}
+
+document.getElementById('btn-share-results').addEventListener('click', async () => {
+  if (!State.lastExport) return;
+  const code = State.lastExport.sessionCode;
+  const card = document.getElementById('share-results-card');
+  const btn = document.getElementById('btn-share-results');
+  const sub = document.getElementById('share-results-sub');
+
+  if (shareResultsActive) {
+    await DataLayer.retractResults(code);
+    shareResultsActive = false;
+    card.classList.remove('active');
+    btn.textContent = 'Share';
+    btn.className = 'btn btn-ghost btn-sm';
+    sub.textContent = 'Attendees still on their results screen will see the full tally and leaderboard.';
+  } else {
+    const payload = buildSharePayload(State.lastExport);
+    await DataLayer.publishResults(code, payload);
+    shareResultsActive = true;
+    card.classList.add('active');
+    btn.textContent = 'Stop Sharing';
+    btn.className = 'btn btn-danger btn-sm';
+    sub.textContent = 'Results are live — attendees can see them now. Press Stop Sharing to retract.';
+  }
+});
+
+// Clean up the results node if the moderator navigates away from the report
+// without explicitly stopping — no orphaned public data.
+function cleanUpSharedResults() {
+  if (shareResultsActive && State.lastExport) {
+    DataLayer.retractResults(State.lastExport.sessionCode);
+    shareResultsActive = false;
+  }
+}
+
+/* ---------- Attendee shared results view ---------- */
+function renderAttendeeSharedResults(payload) {
+  const container = document.getElementById('attendee-shared-results');
+
+  // Leaderboard
+  const lbEl = document.getElementById('attendee-results-leaderboard');
+  if (payload.leaderboard && payload.leaderboard.length > 0) {
+    const rows = payload.leaderboard.map((r, i) => `
+      <div class="leaderboard-row">
+        <span class="leaderboard-rank">${i + 1}</span>
+        <span class="leaderboard-name">${escapeHtml(r.name)}</span>
+        <span class="leaderboard-score">${r.score} / ${payload.leaderboardTotal}</span>
+      </div>`).join('');
+    lbEl.innerHTML = `<div class="leaderboard-block" style="margin-bottom:16px;">
+      <div class="leaderboard-title">Trivia leaderboard</div>${rows}</div>`;
+  } else {
+    lbEl.innerHTML = '';
+  }
+
+  // Per-question tallies
+  const qEl = document.getElementById('attendee-results-questions');
+  qEl.innerHTML = '';
+  (payload.questions || []).forEach((q, i) => {
+    const block = document.createElement('div');
+    block.className = 'attendee-results-q-block';
+    const total = q.total || 0;
+    const rows = (q.options || []).map((opt, idx) => {
+      const pct = total > 0 ? Math.round(((q.counts[idx] || 0) / total) * 100) : 0;
+      const isCorrect = q.correctAnswerIndex === idx;
+      const colorClass = TALLY_COLORS[idx % TALLY_COLORS.length];
+      return `<div class="report-result-row" ${isCorrect ? 'style="background:var(--teal-wash); border-radius:6px; padding:4px 6px; margin:0 -6px;"' : ''}>
+        <div>
+          <span>${escapeHtml(opt)}${isCorrect ? ' ✓' : ''}</span>
+          <div class="report-result-bar-bg"><div class="report-result-bar-fill ${colorClass.replace('c', 'tally-fill c')}" style="width:${pct}%"></div></div>
+        </div>
+        <span style="text-align:right; font-family:var(--font-mono);">${q.counts[idx] || 0} · ${pct}%</span>
+      </div>`;
+    }).join('');
+    block.innerHTML = `<div class="attendee-results-q-title">${i + 1}. ${escapeHtml(q.text)}</div>${rows}`;
+    qEl.appendChild(block);
+  });
+
+  // Show the results panel, hide the ended panel
+  document.getElementById('attendee-ended').classList.add('hidden');
+  container.classList.remove('hidden');
+}
+
+function renderAttendeeEnded() {
+  ['attendee-skeleton','attendee-waiting','attendee-question','attendee-voted',
+   'attendee-closed','attendee-slide','attendee-shared-results'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('hidden');
+  });
+  document.getElementById('attendee-countdown').classList.add('hidden');
+  document.getElementById('attendee-ended').classList.remove('hidden');
 }
 
 /* Builds a filesystem-safe slug from the session label, e.g.
@@ -5294,6 +5551,7 @@ function runRerunSession() {
 }
 
 function runStartNewSession() {
+  cleanUpSharedResults();
   State.sessionCode = null;
   State.questionBank = [];
   State.activeQuestionId = null;
@@ -5302,7 +5560,7 @@ function runStartNewSession() {
   localStorage.removeItem('tally_draft_bank');
   showView('build');
   renderQuestionBank();
-  // Clear the global timer toggle — a new blank deck has no timer set.
+  syncGlobalTimerFromBank();
   const checkbox = document.getElementById('global-timer-enabled');
   const timerRow = document.getElementById('global-timer-row');
   checkbox.checked = false;
@@ -5311,6 +5569,7 @@ function runStartNewSession() {
 }
 
 document.getElementById('btn-rerun-session').addEventListener('click', () => {
+  cleanUpSharedResults();
   confirmBackupBeforeExit(runRerunSession);
 });
 
