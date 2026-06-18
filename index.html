@@ -723,7 +723,6 @@
   .action-row {
     display: flex;
     gap: 12px;
-    flex-wrap: wrap;
     margin-top: 16px;
   }
   .action-row-bottom {
@@ -731,7 +730,6 @@
     padding-top: 24px;
     display: flex;
     gap: 12px;
-    flex-wrap: wrap;
   }
 
   /* ============================================
@@ -1435,6 +1433,130 @@
   }
   @keyframes slideUp { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
+  /* QR expand button — sits on top of the QR thumbnail in the dash header */
+  .qr-expand-btn {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5,6,7,0.55);
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+    color: #fff;
+  }
+  .qr-expand-btn svg { width: 18px; height: 18px; }
+  .dash-qr-wrap:hover .qr-expand-btn { opacity: 1; }
+  .dash-qr-wrap { position: relative; cursor: pointer; }
+
+  /* Full-screen join overlay */
+  #join-screen-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease;
+  }
+  #join-screen-overlay.hidden { display: none; }
+  .join-screen-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-dim);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .join-screen-close:hover { color: var(--text); border-color: var(--border); }
+  .join-screen-close svg { width: 18px; height: 18px; }
+  .join-screen-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    text-align: center;
+    padding: 20px;
+  }
+  .join-screen-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal-bright);
+    margin-bottom: 28px;
+  }
+  .join-screen-qr {
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 32px;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.4);
+  }
+  .join-screen-qr img, .join-screen-qr canvas {
+    display: block;
+    border-radius: 4px;
+  }
+  .join-screen-or {
+    font-size: 12px;
+    color: var(--text-faint);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .join-screen-code {
+    font-family: var(--font-mono);
+    font-size: clamp(52px, 10vw, 80px);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+  .join-screen-url {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-faint);
+    margin-bottom: 24px;
+    word-break: break-all;
+  }
+  .join-screen-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .join-screen-dismiss {
+    position: absolute;
+    bottom: 24px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-faint);
+    letter-spacing: 0.04em;
+  }
+
   .modal-header {
     display: flex;
     align-items: center;
@@ -1774,13 +1896,15 @@
       </div>
 
       <div class="action-row">
-        <button class="btn btn-ghost" id="btn-add-question">+ Add to Deck</button>
-        <button class="btn btn-ghost" id="btn-speed-card">⚡ Speed Card</button>
-        <button class="btn btn-ghost" id="btn-save-to-library">💾 Save to Library</button>
+        <button class="btn btn-ghost" id="btn-add-question" style="flex:1;">+ Add to Deck</button>
+        <button class="btn btn-ghost" id="btn-save-to-library" style="flex:1;">💾 Save to Library</button>
+      </div>
+      <div class="action-row" style="margin-top:10px;">
+        <button class="btn btn-ghost btn-block" id="btn-speed-card">⚡ Speed Card</button>
       </div>
 
       <div class="action-row-bottom">
-        <button class="btn btn-primary" id="btn-start-session">Start Session</button>
+        <button class="btn btn-primary btn-block" id="btn-start-session">Start Session</button>
       </div>
     </div>
   </section>
@@ -1867,7 +1991,11 @@
           <div class="dash-code-label">Session code</div>
           <div class="dash-code" id="session-code-display"></div>
         </div>
-        <div class="dash-qr-wrap" id="session-qr"></div>
+        <div class="dash-qr-wrap" id="session-qr" title="Show join screen">
+          <button class="qr-expand-btn" id="btn-show-join-screen" aria-label="Show join screen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+          </button>
+        </div>
       </div>
       <div class="dash-meta">
         <div class="participant-pill" id="participant-pill">
@@ -1914,8 +2042,8 @@
           <div id="dashboard-countdown" class="countdown-display hidden"></div>
           <div id="dashboard-tally" style="flex:1;"></div>
           <div style="margin-top:24px; display:flex; gap:12px;">
-            <button class="btn btn-primary hidden" id="btn-reveal-live">Show Results</button>
-            <button class="btn btn-amber" id="btn-close-question">Close Question</button>
+            <button class="btn btn-primary hidden" id="btn-reveal-live" style="flex:1;">Show Results</button>
+            <button class="btn btn-amber" id="btn-close-question" style="flex:1;">Close Question</button>
           </div>
         </div>
       </div>
@@ -1933,8 +2061,8 @@
           <div id="dashboard-answer-key" class="answer-key-banner hidden"></div>
           <div id="dashboard-final-tally" style="flex:1;"></div>
           <div style="margin-top:24px; display:flex; gap:12px;">
-            <button class="btn btn-primary hidden" id="btn-reveal-closed">Show Results</button>
-            <button class="btn btn-primary" id="btn-next-question">Open Next Question</button>
+            <button class="btn btn-primary hidden" id="btn-reveal-closed" style="flex:1;">Show Results</button>
+            <button class="btn btn-primary" id="btn-next-question" style="flex:1;">Open Next Question</button>
           </div>
         </div>
       </div>
@@ -1969,8 +2097,8 @@
       </div>
 
       <div class="action-row-bottom">
-        <button class="btn btn-ghost" id="btn-rerun-session">Back to Build</button>
-        <button class="btn btn-primary" id="btn-new-session">Start New Session</button>
+        <button class="btn btn-ghost" id="btn-rerun-session" style="flex:1;">Back to Build</button>
+        <button class="btn btn-primary" id="btn-new-session" style="flex:1;">Start New Session</button>
       </div>
     </div>
   </section>
@@ -2293,6 +2421,27 @@
   </div>
 </div>
 
+<!-- Full-screen join screen — overlays the entire app so attendees can
+     scan without seeing the question deck or any session controls. Tap
+     anywhere or press Escape to dismiss. -->
+<div class="hidden" id="join-screen-overlay" role="dialog" aria-label="Join screen" aria-modal="true">
+  <button class="join-screen-close" id="btn-close-join-screen" aria-label="Close join screen">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <div class="join-screen-inner">
+    <div class="join-screen-eyebrow">Scan to join</div>
+    <div id="join-screen-qr" class="join-screen-qr"></div>
+    <div class="join-screen-or">or enter code</div>
+    <div class="join-screen-code" id="join-screen-code"></div>
+    <div class="join-screen-url" id="join-screen-url"></div>
+    <div class="join-screen-pill" id="join-screen-pill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/></svg>
+      <span id="join-screen-count">0 joined</span>
+    </div>
+  </div>
+  <div class="join-screen-dismiss">Tap anywhere to dismiss · Esc</div>
+</div>
+
 <script>
 /* ============================================================
    TALLY ARS — Application Logic
@@ -2454,6 +2603,10 @@ function showView(name) {
   document.querySelectorAll('[data-view]').forEach(el => el.classList.remove('active'));
   const target = document.querySelector('[data-view="' + name + '"]');
   if (target) target.classList.add('active');
+  // Dismiss the join screen overlay any time the app navigates — the
+  // overlay makes no sense outside the dashboard, and leaving it open
+  // while a different view is active behind it would be confusing.
+  if (name !== 'dashboard') closeJoinScreen();
   syncHistoryGuard(name);
 }
 
@@ -2692,6 +2845,12 @@ document.getElementById('app-dialog-input').addEventListener('keydown', (e) => {
 // since the primary action button already holds focus by default.
 document.getElementById('app-dialog').addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeAppDialog(false);
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !document.getElementById('join-screen-overlay').classList.contains('hidden')) {
+    closeJoinScreen();
+  }
 });
 
 /* Also catches an actual tab close / external navigation / refresh while a
@@ -4343,19 +4502,29 @@ function enterHostDashboard(code) {
 function renderJoinQR(code) {
   const qrContainer = document.getElementById('session-qr');
   qrContainer.innerHTML = '';
+
+  // Preserve the expand button — renderJoinQR replaces innerHTML, which
+  // would wipe it. Re-append after clearing, then fill the rest of the
+  // container with the actual QR canvas/image as before.
+  const expandBtn = document.getElementById('btn-show-join-screen');
+  if (expandBtn) qrContainer.appendChild(expandBtn);
+
   if (window.location.protocol === 'file:') {
     qrContainer.style.background = 'transparent';
-    qrContainer.innerHTML = '<div style="font-size:10px; color:var(--text-faint); width:56px; line-height:1.3;">Deploy to enable QR</div>';
+    const msg = document.createElement('div');
+    msg.style.cssText = 'font-size:10px; color:var(--text-faint); width:56px; line-height:1.3;';
+    msg.textContent = 'Deploy to enable QR';
+    qrContainer.appendChild(msg);
     return;
   }
   const joinUrl = window.location.origin + window.location.pathname + '?join=' + code;
 
   if (typeof QRCode === 'undefined') {
-    // QR library failed to load (CDN unreachable, ad-blocker, offline) — fall back to a
-    // readable join URL rather than showing a blank box. The 5-char code is still the
-    // primary join path either way.
     qrContainer.style.background = 'transparent';
-    qrContainer.innerHTML = '<div style="font-size:9px; color:var(--text-faint); width:56px; line-height:1.3; word-break:break-all;">QR unavailable — use code</div>';
+    const msg = document.createElement('div');
+    msg.style.cssText = 'font-size:9px; color:var(--text-faint); width:56px; line-height:1.3; word-break:break-all;';
+    msg.textContent = 'QR unavailable — use code';
+    qrContainer.appendChild(msg);
     return;
   }
 
@@ -4370,9 +4539,88 @@ function renderJoinQR(code) {
     });
   } catch (err) {
     qrContainer.style.background = 'transparent';
-    qrContainer.innerHTML = '<div style="font-size:9px; color:var(--text-faint); width:56px; line-height:1.3;">QR unavailable — use code</div>';
+    const msg = document.createElement('div');
+    msg.style.cssText = 'font-size:9px; color:var(--text-faint); width:56px; line-height:1.3;';
+    msg.textContent = 'QR unavailable — use code';
+    qrContainer.appendChild(msg);
   }
 }
+
+/* ---------- Full-screen join overlay ---------- */
+function openJoinScreen() {
+  const code = State.sessionCode;
+  if (!code) return;
+
+  const overlay = document.getElementById('join-screen-overlay');
+  const qrWrap = document.getElementById('join-screen-qr');
+  const codeEl = document.getElementById('join-screen-code');
+  const urlEl = document.getElementById('join-screen-url');
+  const countEl = document.getElementById('join-screen-count');
+
+  // Populate static content
+  codeEl.textContent = code;
+  const isFile = window.location.protocol === 'file:';
+  const joinUrl = isFile ? '' : (window.location.origin + window.location.pathname + '?join=' + code);
+  urlEl.textContent = joinUrl;
+  urlEl.style.display = joinUrl ? '' : 'none';
+
+  // Sync participant count from the live pill already being maintained
+  const liveCount = document.getElementById('participant-count').textContent;
+  countEl.textContent = liveCount;
+
+  // Generate a large QR — separate from the small header one so both can
+  // co-exist and neither has to be scaled, which looks blurry on retina
+  // screens. 260px is large enough to scan comfortably from a few metres.
+  qrWrap.innerHTML = '';
+  if (!isFile && typeof QRCode !== 'undefined' && joinUrl) {
+    try {
+      new QRCode(qrWrap, {
+        text: joinUrl,
+        width: 260,
+        height: 260,
+        colorDark: '#0A0C0E',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H // highest error correction for large display
+      });
+    } catch (err) {
+      qrWrap.textContent = 'QR unavailable — use code above';
+      qrWrap.style.background = 'transparent';
+    }
+  } else if (isFile) {
+    qrWrap.innerHTML = '<div style="font-size:13px; color:var(--text-faint); padding:20px; max-width:260px; line-height:1.5;">QR codes require a deployed URL.<br>Share the session code directly.</div>';
+    qrWrap.style.background = 'transparent';
+  }
+
+  overlay.classList.remove('hidden');
+  document.body.style.overflow = 'hidden'; // prevent background scroll while overlay is open
+}
+
+function closeJoinScreen() {
+  document.getElementById('join-screen-overlay').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+// Keep the participant count in the overlay in sync with the live pill —
+// called from the same listener that updates participant-count, so the
+// two stay in lockstep without a separate Firebase subscription.
+function syncJoinScreenCount() {
+  const overlay = document.getElementById('join-screen-overlay');
+  if (overlay.classList.contains('hidden')) return;
+  const liveCount = document.getElementById('participant-count').textContent;
+  document.getElementById('join-screen-count').textContent = liveCount;
+}
+
+document.getElementById('btn-show-join-screen').addEventListener('click', (e) => {
+  e.stopPropagation(); // don't bubble to any parent click handlers on the qr wrap
+  openJoinScreen();
+});
+
+document.getElementById('btn-close-join-screen').addEventListener('click', closeJoinScreen);
+
+// Tap the backdrop (but not the inner content) to dismiss
+document.getElementById('join-screen-overlay').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('join-screen-overlay')) closeJoinScreen();
+});
 
 function checkExpiryWarning(session) {
   const warningEl = document.getElementById('session-expiry-warning');
@@ -4449,8 +4697,8 @@ function renderDashboard(code, session) {
   }
 
   document.getElementById('participant-count').textContent =
-
     Object.keys(session.participants || {}).length + ' joined';
+  syncJoinScreenCount();
 
   renderUpNextHint(draftEntries);
   applyDashboardVisibility();
