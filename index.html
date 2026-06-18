@@ -1,0 +1,2275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
+<title>Tally ARS</title>
+
+<link rel="icon" type="image/webp" href="data:image/webp;base64,UklGRmABAABXRUJQVlA4IFQBAAAQCACdASogACAAPj0WiUMiISEb+qwAIAPEtQBS6WAtAFv/2Sme4DvAf0D8Va89/qPLH38DHmYm+52OcdIITcIDmf4FCQPY/54AAP7/sZhVUFl8VanK+Q3//ENt3w/D3x6ob7/Ii/X97f5ft4ld+8uxXtDPtO9PIJuSNfrf+h5P76Ku/6f3Rz/VnDe1sB5EeLQ83a3wyoRotoMrGl2PbyjFVx4FNbBmqyiTSE7tqOkFv3u1R9/n2iN7ZmkNVWDUUMXcdBQcdpZQUQjRa1/8KKNykspu/+qRTne9ubx4Qxwd1oZMVY0nlxuSJLSUblfbzMsbyEpyTtMC7kc8/vj3o+878m9U3sxdNaGd8TUfYG/5ZKaHUfjG7z7YTld2Bd/dGV2wd5nLsMP8uMn4nwHFX+PJR9As+AG3vF4/IUTcvFrBeFUMdVG1KtD9woH/SK2f+/BeMsAA">
+<link rel="apple-touch-icon" href="data:image/webp;base64,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">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIlRhbGx5IEFSUyIsICJzaG9ydF9uYW1lIjogIlRhbGx5IiwgImRlc2NyaXB0aW9uIjogIkxpdmUgYXVkaWVuY2UgcmVzcG9uc2Ugc3lzdGVtIGZvciBldmVudHMgYW5kIHByZXNlbnRhdGlvbnMuIiwgInN0YXJ0X3VybCI6ICIuIiwgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwQTBBMEEiLCAidGhlbWVfY29sb3IiOiAiIzBBMEEwQSIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSaTRMQUFCWFJVSlFWbEE0SUNJTEFBRFFPQUNkQVNyQUFNQUFQajBlalVTaUlhRVJLelRFSUFQRXB1ZGJwNGdSM1B3R3loYzUvRzc4d096VzNPOFA5TlJVL2xaOFEvMVQrWWZobjlCLzV6L0pmYUYrU2Y3djdnSDZOZjZyMGJ2NkI3SHZNQi9KZjZKLzJQOFI3cC8rVi9YRDNBZWdCL1JQN1YvLyt3ei9aSDJFLzJ2OUozOXV2Z3ovWjcvei82YjNLdjhKLzQ2VkZrUC9rZjI4ZHd1MGwvVmZ5eS9uM0hKY1AvcGYrQzQ1TlJwakw5R3pRdzlQZXdaK3NIL09VaXkxOVpmNWp1Sys3YnUxcTNMNHptM2NNb3kwT0g2ZFdONnhCNnh4b2g1OTJaZW9ib1VJdEZMamcwYXVydWdRQUxVcGNqeFB6bXFpUkNnYXYzcHlyczNRYXlqYS8rK09VNlRQbG0yK1NESDhraEVKWS9mL0NlZVM1d2FiMGxxYi9oVlJYMmpTcXhNOVZWenMvbGtNQ0ViSDUxWEtQd3dYOCtXUWJCLy9CazV5elJKcFpabno5a3F2c1BkajdYOFVLcHIvLzRLaFMwZk16NUlwS1QvWHd3OWdaTUdPQkU5anExaFVJdTBsUlp4SGNoMGhKK3ZuY0hPdkpCVTdiRDdnQ2pFTjR5S1pwUEdMYjRsVW1wQXBYTUNoZWNET2NDYnJGaENoZGJNNGwzM1E0OSsvU2Y0UlROaHVKV05BSFQ0YjZrT2dYUjNDSHR5eUxSN1JRUnRSRndXUjV2WmQ2dzRNbFIybkZaMDMxc3R2azcxaDB2WkNWTFZaOTNpSVZIOW5rVmlRQVA3OVY2U0tJNXN5M0lkS3Foc1E2Rnc5TkFKa3Fxc09nbG50QlBDUktURE92cHZyQXhISWdQeEgySGZKUE1yL2FtNTdvY3ErNllncVVMbzNLcWxCRzM0blNEc0VlM0JoSk45RmJKK2hhbzltR2ZST2laeGJqSmFmUG1reDQxVHlJR3NvT1E0TExaZmx3WkZ0RVNjakJDaHNZU1ZYMUxqMkFsUjNnSFlJaVlnMmpIQzJXczI0MjJ0N2hZZEhlYW90aDQ2UW5mNm1qQ2E2SkdKamdNWEY1dElQNUowOURwNGVVRkJjb3VrQm40VXlkTEVEUDE4K0graStkQmdnMms1NUlGZ2N2QlZnZnNMMC9HL3h1NytFYWVXN3MwcjcyaklQWktOQ1FJK2hiNnFmWTU2UEw0Mnd5M0NZaDI2VUlONEhwcVdEanhuTk1SN1VTVzhYWmUzRlVsZ3B1bnBFbzJoTDJMV3dURERRQUJ5SkZRdVVVYXY3b0lUSEhHdURMYVQ0ckEwVXp2NDBWS2hsOEpRSDB2bXdEaHlJMjREdU43ZGJ3bGVENDNhZ05paloxQUVsc2JrYXRvOXNGcGtzeitBdlBERXUzaFA3dVoxL0x1MmhLWDhXUFZzNUJDMVZkM2lnZjk3ZS96bENQY0J5bkYvNU52QnlUT013Y1RkQVNOeUtDWENTVnFhUGsvUmtmczRSNXJobGxJZjlVck5lRmxrZGxmdUZkSHFmZUIwcmdHSUdHNDFRay85RitDOUFodDFaNWtmRjE0MXVmRDNjb2VMYTlwZWVaTVJlRFlMMjhjVG5yK0lQVmZEODBaaW9zVjVvUjNjYU9Tc0lZekxNMFhmdXpWTVJyanJ5RmtnVHpOWEt0N1hwWnExRTZRbXNqZWhVRmljc09vYm9ndFBMYVVTTFV4Y001TktNMm5wcXhQSHQrRWxNT2swcVY1cnM2bElMLzRJRXNMUCtjV1g0aCtzNWZFdnkxbWMvQjl2NnMyWEQ0bVg5NjZ1RGtrWGZCRzdoY09RSCtTbjRyZ0FqQ2dBa3hQT2VNNW5lTG5wZCtqNGV3aVJ5WUw4M2FIcjI3b0pwdllSUzcxemV1ZnAvRTlGazA2Z3prSVJ3c2VkZzE2OHNucjljZDFSUGFpVTRjWlhUMmFjTWw2cTVLbm96NjYxNEVQUGdhMkJLalA5dk4vK2tSbFl0NUw5K2F5dU9xNEtJVWtzbklwQm0xRlg2dFBjSkdRUFhqR3pOOEwwMzhsT0VGckMzRTZLTFdUMUJKYmEzWkN4djhyYS9rWHd1N1I3eHBlemI1andOTWZxMVdjQjhNblE1YkVIcXFXaGRORDcrWThLdlh5bnBnWnpiT3E3bjdaYjgzZEE5UU5WQ0R0S1d1THpTakRQSkJRRWRZUkFiNTIzVTh0cXgzWEEzOUNDdXF2anM3TFBtRGc1b1NrNDdZVU1peVo5Rk00WW5MQ21DeXMyTmRtUERjbTB4NVM4RjRvQVREM3JyNTE2Q2YydHZsSjBJQjMrRmlaRm5VTzlhb2VzVkw4VU9mSzN2UzdDaCtlTXNQRTZVNUNEckxSRTE2ZU9iNGhGVlpOSllWa1hjRmhoYUROTGtyNitTZGZHT3ZWU05BYWdVTjNncmxkOHVDV0toN2FDUDBuaE50QlpMaVQ0MkY0TVRNSTAvN0k0Qm9xaXY0cUhCMU9HaGQ1UFN1c29ZdXZ5M3daU280NWRody8vRFBYaW1kWGcyNnhualZRcTUvQ3llZ25vVHFtNVRaNFgrTnBtanJWeDVoZEY0d2pDMk1CRXBScnJXWjZFNFhERjlFeTRyVVJnMForWGdqVUVYRGlpRzJZamZ4ZGVHdHhSUFVBZ1pXRi9tVCt3SjJISm1IUEhjaWI4RExjMURnVVhWUC9rWHpNZHFhQ2RERWdScXVxYmRkWHhaN2Q3ZFBTMFpLa2NPcTVKSGUxMWVSYU5UMFd3Wk5SNVJ0R295QmcvdXNUWUJQdEYzOXNDN0szWGpZU0ZrMXNtMWdzeHh1bHRnOForZkNVYkdGS2xTeDN6VmRxNFlPalZsYWRXNXEvUEszL21QZ2pvQ3ppOW9mVGZ5R3BTTGd3TzMwbU9FRHdUNjhZbTJxSjYvd2NFTFhYL29uUzYxaXpUd2dab1d4TXMvZGxRVE0zSUJ0VFJSMU15eUd0L3hObmxDeWtEMXk5bC9JQkN1dnI1dnRzSjJUL2cwSXRWa1ZRaERSQXdSdEFjdldtQzJWL1VzR2xzNlVUbzJnOWcycjFBanpmV0NaZzU1ZjU3ZlRneFNEUEpNMzNSM2dVNnJ3Tzl3amIybXdYTXhqdkQvQmxqUmZmdWl5UnhyUTdVTDFtQXN6enQrSGYzNnNFR2Z1L2gvNExqZmJqL3VUcUEveHI5MXQ0WnJHUFQ4U3RhQktaVXlhREUyQVNnSFF6RFc1SWFJMm1WUTFydjVxNnM3TFljcSs4LzlIMkp1LzY0S2NaTVY2dCtlbW9nQWxuWnN4U0ZqSGV1MDIwMDBCT1E2R2ZtOVA5RSs5U0txUzRBam9DR2NrL1QwQkxSdnRZTVdNMHEwN1djcm45T1BicXArR1BKNTAvUkc1cmp2N2Foa0c3VnZPaGNyNWxVc2Y1MUhrUkZIbTVaeVJTdTNhS1NSbE1Xd0I5QVJkQjJweStEV3RyaFhGcGJNa2t6NnZXbm5qZjZNblZuUjRSTW5JNUM0TzExNllFSVVoVUhtQnlnUTdhN2ZkVjJXMkdMVkk4eEh3SVlGd0kybkMwcE5tSkJVWlFsZ3JIeTMyL3lwMUhwM0dWUWVCeEFIY1k4cFJSZThzUWgyZ01vbk9nUU5ka0Y3TlYxZkQ1b3U0b1dFV2dGaXRjUUdnaEhncmNnT3kvR09sU1VpdHhWOE42NlBLY3VlMUZPSFJMYW9aOTZ5U3U0NWgvL3ZGNERPNFltdW4raDRPU1JkZWV2LzZtLytFTWd3VWhMLzNaVGlNMEFOSEZmaStkdWRTOFU4N3JuaG5tYWlPWDZRZGRDTm10RXVxSE53cTg4aHVNbDVONWdSa2tZUzEwQVgvTDNhSDl0NEErL2RvMGdoTDg3MFZGd3lrU2lTQnhtdmxwMThxM2t2Z0pGeWUyd1cvM3pKRE85NlcydFo0QVVhTXFRc1h4M2FnNGVhMENMTy9qV2N2WEJWWE9GY1lLemJ3RTB4VFNkYkdIb2IxMEd3NGtDblVMSHY2Z1B2TFpGSkR3WG54czNYbGZSbTdQZjYra2ZrOGVHTnZVVmo5eHRxMjh1akVGSzdZSk9vd0c3TTd5SEM2d1ZRYzQ4SllIcU5uZFhjRXlXTFJYamhNTTYxbDcreFZrL20vR0FDYnV3ZE1vV2NEc1NkODQwWUxsejZ6K2N3aGpQZVEvcVE1c0FNOUx2ZHB3WkFPNTREUGdSUTNvc1o4dzR4R0krQmlXMTQySVFac3MySFNPTTgxUC9zWm8yTXRITTk2MjZKS3lBeWRsa1cvcEpkYnlkQkhLNUVxSXRVOFo2UjEzeEk2bGxScXlwU0lPZGM0S2EvNGwzUkdJK2xGMzc0ZEM1bWhXZGtTSlpWNTgrTFVUR2JHdkRDRUl4L3lDSjk5NVpmSFBjMytpT0QvTHpZK1o5RXpOdVdrMXJpQkRhL3BhSnJvN1ZvN3FLRURBNll5UUl2U3RhRmJkU3haVXJ3Qk94amhVaFRHQ1ovZ0NuSFNmZFVYeW5QSm02TVdCcGd2MEU2cHNPWlRtQnJ3V1h4cVpIRXRzWmVGZnZkUzFtQ3RzZ2cxVkZ3OGtQSEh2NmtUMk5yYXVhRjdYM2NIRDN5a0xBRzZOeEx3V2g2cVVhRnorQ3J3TWUwMXdMenh6YkVPaXhMMHlPbk9qa28wNEtPRVZzTElncWV3RTY0MDBHT1dIaDBRRTNiRXdOV2dWWkJQYXRQbm5nMCt6M1NJSmh1WVZ0TU5uRDFlc1huVjF4d2pIYzZXRzVRR1kzRzgvdzloOEFyNW1ieG5jUHNnNUlVaXdQMDZob1ZkUFdQV3ZPNWN1Q0Rwd3FPVDMvaytWSTR5czEvM096UlRDM2RZUHhPZllHSzZaR0hIZTZ3Y2kwdmx6RDFNdGYxMjh1clNWVkYwRXJuRkI5aE1CN1ZFQ0lGSlF3SEdBb3VNeW4vWjBHc201dGN1ZEhnWmQ5VndGN0hlQU8zdjdSamN6MSsyQmhxUmh3NTU5RXBXSllnamgrSXdJeGpQN1l2UUFBPSIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2Uvd2VicCJ9LCB7InNyYyI6ICJkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSbVlnQUFCWFJVSlFWbEE0SUZvZ0FBQ1F4d0NkQVNvQUFnQUNQajBlamtVaUlhYWlvZFFJK05BSGlXVTZ5cFRON2JISDBTM1BSc0xLR04vWU42Vjd6Ky9ma1p6N2UwL2ZIK2tmdUgrQ3NjMzZRUGhKOFEvSFArdi9ZZi9kLzNmNjk5SnY5ajYxZk1BL1FqK3hmelAvUC9xdjlhZjdwNnMvNS82QXY0cC9QdjFzLzQzdzMvN245VXZjZC92L1VBLzNYL0g5TTcyWlAyNjlpWCtILzU3MDN2M2UrRVgrci83MzltUCt6OGpIOHgvc1AveS9kenUvK2x2azE2Ui9rZjBraUJYK2Yvclg1NWM2ZnE0OUJqK1FmMVg4cGY1UjZuUDF2OHFQYVA5dDRxZjBEL0wvM1gyaUpyUDQzcUFmNUxpTERLT2diNnIvWjM0Q3Y1aC9iZiswSFJFVUU4NThmS3dVYmRaelh0TVY0THZpV24xN1drYStJSnJOMHRQVGl6RXhVRzRoMU9Jb3J2ZXN3RStGd2REYjF0clZQNVhvdXVRelppMVYybWVJbFdOMzVBejBkWG5qVE94dUR2OW1yV21qSmFpdTdPQ0dXUGpGUmZGczdRM2hIKzJlSVBBdlRpZG1CY2paUG9USDEzTTUzNENmR05scENMWGc2Q0VrNXdGcGxaN0QyVC9GTnQwNDEwUTZoUGFFNnBnbVlkendLQjFrS3Fydi9wWFNLUm9IUkRnNlBjVEUvYnJKZDZidmQ5U0pCc0lVVHRDakJRaERNZzdXRitHZXdUbVpNUVM5MW1rY0xBZjExS0NqVW51aldvYUpJMzdqU3pHcmlIOEptbUs0ajlibm40cW92K2NDUEl2SCtlU2hOTnpKZ1A2b1BJeC9oalVHc1diZXNEU1ZLQlhON1JjWUpMTlJZQXdtN3JReG5yMWwySk5tNElqU2RsdG5JWVpCbkdJY0RjbkNWQzROWVFsQlhzSEQ1Mkh3UnRnbGMxNFV4TGtoYTN1eGY1ZjBickVQMFNzUEVZQXV5Q3EzOXJUSUt1WmZ2dExwczRkeVU0YTRhRXhva3dOS0dXYXZPL0xyczA2d3pTaEFBKzZHa2dqWHVCMFdIb1luWFFORHEwRCtpcjh2THhXcFVZWC9HS2prQUhjeXdtL0hNTC8zQVZUV21xUStwL0taN3pjaHZoSHNxTlpzeGt1U0pWVDRFdWR0UDR3MDI2Yk1zbzZ0NjhtdTVickx4ODNHS0V6TzNIdFRTbmRwNVZsRld1SzcwbVFxdmsrQVZjSTcxZEQzeUdaeUlHdVAzMDVDM09ROE5ROCtaaDFmOC9SWlArdHk2czlZbS8vMDVHM2pmTDFQMFlnTDVFbkRBZ2RKUkpGaGRCajhDWXpKcTkyRnA2RlNyRE5hMTdid2kxLy9sQzh5VVdvdEVGUC9tQjc0WHV2UTB1M3JBLytaOWFjcXViTjk0a3R4WXJCWEFTdkNVWWw3SVNrbmY5UWtxdUNMaFl5MHZSZjdSZllkWFhDc3hYaHJQOTZjWC85bFlNcEUvLzJxblpDL1lCckhPZjRST1lRVHo0eW96azZrV05TWGYrVGIxZjZrWDRBdFVLeXFZbjNRczl0US8yczM2Qi91NC9WYUxxaU1sY3FYb3kvemZ1NnJvNWJtMm1TdlY1SGxkbFVUQUlXU1l0b0haQkk4YjVlV1F0LzNsRjFSMnlEc04vV3NhL1BjZGZPcmRQeUhJcFhuTGx4cDJrVEJnVHExY01EV3FpaUk3dU9OY0QyblVjRzVEUm4vZGwrU1ZnM29yLzVXd2FYYnhkLzNqakQvMzI3Z0xyODBtZ0J1VTVzMERoUHhBbzhVV0RmYndXWTYwb0JvenYvTi9uKzNvdTA5WGUvK2dYSXNoLytxQWJIazgyOWNtbGFwTXpqWDRRaEJpcHFFOHB5M3d0LzBLZi9VUkFLRWxJRlgyYmhMOC9LVkU1NWdzbWdiUC83c0g0blJGRS85WFJiTEppT3JRcG5oQ09XZVkzRnhVR2xxaHA3NWozZnZYcXdYUXQ0NzhnNnRnb3NhS2h0MXM0eWdsU3lkU3hyMU92a3JtN1RXWTJzZ24yd3RRSHVzNDdjb1pyc1VmbXZ3SHpxV2JwTWpJUlE4SXVGc1NCbkdEUDFLSHozbmFHaU94dXFPTE1XZlY0RjZFSnR6THA4TFRYaGJSVHYrTlJRY0tLcWlDRzVnQ2phbS9ocjFLMzNOa0Z1Q08xTnJaUm9vRkR4UEt5MDFxMVRNMFRUYVlQTEJhK2NTeFI1eUxIWmJYamNJR1poZzYxbE02MzJjV1RjbzVEYVV2aVYzakRvZldQUmlRd1lORC9XTU14cStMOE9sdVhEZUtnd2RNTDNUWWR0N0tJeCtHYXRXK21wSjd2NnVScVcvSVQxREhKN1o3TW9xbkZXUXpsNjVlRzV3ZTVKQjQ5WTc0bjRoOTdVN1lIeFRiVXVzUFhVNTZ1RHpqeEErVGVibjd4U3pteDBOaW0zbzJSSTlTdmhkOTdkcUkzclhscnlJK2hvblIxZjZmMkhqS1hQeWx5RXRKZ2NQV3pid2ordWFsdzdSWU1WUlVLKzZvczdmNU5IaW1lYnMvSDZXR3BjeC9sUm0rWmlaZmtaQjFjdFQxMkg1SVlzQVZXa24zQ2dRbkhNcXRaYkxuVU9lTms0dkcxelppcXBpb2dlUWNyOElXY2tWb05KT0FWdDkvSXJZbzRNcGp5T2lJOHdxb0NWOFZJaEFCVkMvNlYzV0FHdFZlTmViOHpJQkN3bDAvV0RCQ1BZVnNiVndyeUhsYXE4Mi91Z0lpYVRRejhHRnRmNEZWVU02Q0E3VDYyTG93Q0xvbE5KUEY2ek50TGdBL3ZJRnVaUFRpVkRwaDcvVGd2OW80QTB4aUczVlJpSEVSdHpCQTFlS2hUUVlQRG9CN3QxU2c5bEhoQ1NBRVFONGdWa01aQTN3NkF5ZzlFNEFDWGdDSWVDRUFBQVNqREFUWFBENVNZdytwQmE3UUpZREI1aUtPY0ZkT1FCVkxYb2tvbks1R3BwZzVsb0FCSTh2c256dmtlUytxY2lrRGZUR2pCd3Z6RC90Z0dXenh1RmxkTUFOaUxTQVprdiszYTFHUjBxdW1rTUNsNlRRVitQNitMVnZOU3ZXd2JzOXZjalZLVm81ZzA3VFJnZmZhbHFJRjZYakVIUUU4aGk2akZrT0VuMTd3SlRnZFBnMGRvY3l1bUFGM3A0R1FGSjVLeHpiT0dpcFF6bGVqWXMvMUphcENiMk82Mm1LcnFnbXJDd2dHRVBML3JRb0RZWjlpbG15YlN5TW9BR2Q1cW1qT0lyRHBJNjRmS1FBeHBBeWNxSG9FQkp3TkxRQldXTmFKY285QTE5OWNiSUUyQXRabHRveUcxUjdDYTVSTUVHNnBmU3RMbUFKRFJFanZIcDFXbFJQaEl0aEZXSUhPSXZBSDNqdEhTUkVnaVB0MURuZUZudkhyMXkvUWxFeXBqclhUYXN5UWY4b3NBWXR1SC94NGc4RVZzVmMwMjhWYjFPTVhnZUlWaDZxQU9hQUMwRjdzMU42Sld0MHJUQ2NkRlM3VFdHaDVZbE9YZEZDSFJZNTVPZ1VRNm0xUCt2a2VXcFZ1aXZJTTlaaGM5dzJsdzRVN2hRNEkxbE1PTW1aeVJBRG04QVVUYUswQUtoQnVIcVVDMDRna2NQSWk5WnlGRmRYV2hGVjhoSGFrRVgvMjJiMEQyY2NWMUZBVUI0UU5uNUdTWTNkQXEvL1U1UGM3YUZJQ0xxcE1mTFh3SjVlN0YzbVZ0UGVDUEVISWxYdmMvd1BXbDZHZUZIM29BQUFBMHdLZ0JiQUMxbWMyd2VVWUIrYTBZNm5Fc0ZaQm1NeXdaT2czUktwc3l3RTg3QUFMSSszS0FMVGZ2d0tnbDBvY003bnlUSkhXRGhwS1lGK2NpeG9acm1LNlNXNHhwVUdJbWZlNFlRd1BKcFFsQ2gxSXpLeDRXS3Awb2QyWDlMRFByYUZNWU9mc0g5Qk9FOHhSUXd2U2RnV1U3REgwUlI1QUxKTkxaNHdGdG1lL2taME9FeGtRVlJaV2dUZ09UVVJoZy8zRGp1cWgyWEFkSG8va1pkQUZrSmJUb3hWNUZ6QXdJRkovekVjK1RRRk1DQXpodkRKVldQZW1YcHVJQzBFMnM1azhTSDlLazFrb2k3dGhpc1ltSExFQzVsc292eWdubGl3S0VldDFYWHdlL2xKcXpXUjFVS1pQNTZtSE5RYW52aklKcWlQZDFaaURaL3NsYlcwd2lBaUlIT0lDb3labkt3VndhTWtDS1p1SVVteHFIY1RBREVrQUIwcUpKL2gzL293Y3N0MVNhdllEeGhVZXVOVmRob1pMLzNPdHNWQlVZZlc1WkhibjVxL2I5bWZGakk1bmx6TjQ5NnJpNGVIQ09YNS9ic0JjZi9DQjhwZEJ2TEc0R1k5ZzJ1QXlnWHpzVzBhWmtxcXZWTkxFbDNDd0IrTis5YkJKQzBTdkRiaWFtdGgvZnZNRDNtR1NaempjdXBETXlQT3FWN2RSaEtwcUIrcC9HcHNQOFBrb3lKMC9VQkxyTGJodXVLbGFxN0wvWVh5dWl6SUU0TVdJdktVSWJVdzM4bys3bEJNMHIrbWVNekF6UkxVQ2kzcU5aVjdIQ3JmV3QxcDczMWJxOVc0WERQVGpGSVA4L01TZEtINDB1dFhHb2xGRDJtY2NhMmgydDIwOHUxRVNxMXJRaFRBZnJOV1JsQWdpSWZKMjBkWjF2NUVWVmxxSytqUmV5Tk95L0xsclRyUm1IckQ5R0p2aDhBQUE4QUJZdkc5Z0UxVXpVdXN6ZVZGb3FDN0ZBZHRDa2JPNU5PNW5Gc0JNZ0l5RjA0a2FQaDVWN3RPbDZzd25DU3htaDZkYk40ZWxFbUVpRWlzeGtZdEtIdHBBR2ZXVkFYQ3EvYy9tWVk2WUNGWmN4cDQ4RVFSd1pmNVFKYk8zeXVlT3BDOTVSUlVPVytTcUxDeXNzN0dKaXh1blBaTGQ5S21pdU9IdHhlVWFLSi9GOUNVWXNnS21sTUFvb0tMV2o0ZWk1a0ZyblNaNS96WmxwMWNVK2tISUZheXE5NlgyLzkreEEzZHdxenZ3T2VzV3Mvb3ZnVW9lVCtvUlNjU1EyMEF0SXVHdjJ0Q1Y3L0NSL1Y1eXk0aDVYRCtqNHh2Zmg4VUJPQ2cwOXNpTytOMnRycElkVUdmNDhlTlEzMm4raUdtUlh1T3NNN3hvVkZpQmo5ck1VZjhSZXRpbnFuVHZLNlJXMml4SEtKSlIzQmNpZFUxNlZxbjZHOXlVKzVWU0FUZEt0WmJqOEpwWTFzbElONzMxdXpmSHpGenU4bzFkeUZVbkN3cWRuMmdLbDN5M0dtRmtXRWpOc29rUDkya3QwMjFKSE9NZ1JDbUpTWVNuLy9ad2ZUbWhRTjNScytQMklueXZ1ejdHaTNHcGo3S2ZJNjNmZDRSbGFCNzhmYzVQU1crY0RoczBCN0RQVG1zMHFYZUhsS3pKY2V6VFFZcmE3OEZ1VlRsTGtDWVNSYk1FditQTUVVS2FYQUNZNU5MV2NCeUFzWXByS3JZMTJJeDNPdHZlUFFQTTdUWVc2WVdQR0FpS0xSN1B2NmpOeUNPamtia1pEdXBGMzZiSUdhcTlTM0lsUGhxZi9xeUFkMzAvUFBxeEVWUVpjMkp5dEdDZnhWWjErZHlDbjF5aW9EM1QycmcyS3JYeTl3WmtCanVTWW1YM2k0YVB6UzhwN0pWSWtSRXpBVVFwanJXODkydFgxMVIwbkQrdGRDbXk3MFRFWUZsZmFmTWgvRzBWcWNMeGUrL1Zsc202aUdkYklqNGZCNW8rQVo2a1ZnZnBpN2VhRGNESC9RNURhRU9LZmROV2VFRlJ1R0d4Tjl4bkwvS1lrblkvYU5xSDNpeng5REFRTEpKVkxRL1Z4blpRY2czN05JU0xRZnVKUzUvZGY1aEI3YzYzNkxQQUdsbjZNWldXZ1JUdW5mL0RVZlB3eDJwZzdkR1RINFZTV2pkK2VGdlV3ZGkwZklibmdWYnhqaHhSbDRVMFpKMndnRi9LWG1PSFkwSlE4bTNxZWNOcWI1cVhWRXNYdUhUWkgzVzJjT2ZYY25kNEZFZUNCWWhDd3ZVRWdpUlIxRDJnVGJETHU3cHcwMmw2UzJTUlRTT0syM1BQa3Jxc3I3dUxXeFV5aGVab0Y3TVF2Sit0TkpSTllVSXpFK002ZTFDRnc1a0JFUzVod00xUGprTUs2Y2c4cHpkdEU2cUhNN0FHZ2ZiTTNPeWs4bUFMWldqUUF5Q2prbmRCMWs1Tzg2cUM5OW1BN1VqeWJtaDFKMHdPZjFSTHdHYy9GalMzd3huWlZSc0V0Nnc5NHZ5K0R5cXBuV3VRK0lmZGo2RTJVdTJZKzFSR3oyRitzV2RZQnBQMXZIZ1pVZWhVYklHRHJDT0xQTjhZbU1HWUFUdEpNOHIwNU1UYXJyY3NwUjZ1Z1dhelBhRjZHYlpiQ3lTckxJUU1xdjlQZ0g3VXhzanFSazNFNmJpTGUyU1pxLzlpczNpL1ZSWm94RGpUalVvZVRYb0N2cmtqM0Q1MXNEaDV6NkYzeGd0aDVzN21PbXdqaWRJZXNkQTF4RnNjaVpqK2ZGM3ZEVnZqNGpVNmVIWGx2T1RubFNPdG5Hd1NneTZUSkVZZnI1YXBtaHlnQTZHSnpsNEhwaytZdUcxM2c0T0RzV3dNL2ZLNXh2QVVBRi95Tkk1OXBjM25BU1BRSXBUSE84R2NhaVpIVTZmSHFkZytxS3ZzKzdRNm5qbWQwM04zc2RPTE1INFJyakc0MUliTjBLbjdjdjRNSWFMZktXNlFrbDhHR3ZiSHpKY3J0Vk5oVDhDYUhIUGltZEU3cnh0VFpxY3JuZE9jWVFUSy8zdlQ5Y29uczBEL2JXK21iWHM4QUFSd1dzd3BFd05Td052VFVaY3BJWmduY0p1VEtHMGxBVGdkTSs5NW1KVWNiOEhJV1c2SkN3NEI5MmZpb2VDeDJwbGJyeGdKMjR0YTg5QnpSRWpoa0hYa2dUbUNIc2owR3phSENLNytrNTh6NHJJQUhBLyt1WXVqUXBMZVBZMkI1emEza1VhQXJlRngrQThudlZqRFVVb0tjVEFzR2FyeUEwVk92S2s4Zm5WTWJlQVM2OCs2V1lBZkN5alJZb2RmOGtvMTFKMzVtcnpnYXgyQ2xYdFJyQWNaczNJLy9hdmozTVlaNWU2QVVPQys0dXRMQURIUG8vVDU1SFUxL3gzekhCVm91RFVHcDlLUUNSaFVxUnluTUNlQlg1aU43VHBXYTBpWGYzdGYzbytiNHl4TjlPd2dLL1BRMnJnLzBYa3VqcmRvR3JRbmZSR25sZHZzUjBrVmlEWnFBWHVSV2wvcURoeTI1dGRlclk5a1Y4bXRXTE93dzB6bmhjV0gyaitsUUFvOTJjWjlpNkhidjR4czR5bW9SbVBLZGIvUS9YMkJ4K3RFZEVKYkVGdTNldWdkMW8wQlBEaWYzaHV0MFlOdEI3NjBBQ0lSRC9wL2FQdWVGeE1iRVFjWTdNU01sajl6YjZXMkQzQVdRVklZOVBBdEkyZWZoMmdVdjFSY3AyQzNFSnNCM0RzM2tQL0FoaGY4aHo0SkUrZUZubjNobmVsMkxZL1dvL3ZlTGFKcmpad1N3emlTN0IrdHBQUEZiWStEN1hhNmZvanpFeTJFRTJtMFB2ZDV0cDRhNG9ibG0rT0dJa00wU1hNT2NtQWl1b29mci9OR0lYbFRrYncvamdMTTlWMDMrcFNIZW1kTlVZbVZCaVNydDlyb0dOTGdHdmJCR3ljL0dLUXdka1FQVzMvYW9tMDRWclozVExBczE3dWlRTmdITlAzc1ZPTisycG9vdER4ODVjcFJUcjdRTHRPYytsUGRCdE93V0JJQ1JnVDM1NzVST2c4dnhuMkhNaFhPaFl5cWRqQUNtQ2c1LzRUSjRvdzUzTElpRTZwRnN3QUx4d1k4Y3VwU2s3Y0EzTXczNWJpNStVMVdVcTAxU2g4VFJlTjRGQ1FzVmlycmVJU3NuYkRycitKdll1aG5MTGhFN3ppYXhhd2hXNUJFNDAzL1RUK1FmaEwydFRyWTJLZzNBa2x6RmJMdjQwcGlaL2RORUErSzZUVDF5dG0zcEduR3RrbHVTWDdEQS96MXhrOC9hUkIxT0N6RXZtanh6OXEyd2RxTGd1bHVJQmt1bmlEZmdtckg3YjNrZjNzMGJndVNYL2Rjalo5TnJweUlmbVlReEZsNnlOeThGZDk0OW40ZURrS1dQRjdXajhnU2FMSW50T0tBQnpkeVZXSU9PTEVoSFBUWHlMZStFMlBrMjhYcytMOXdlb0pWTm9wTXhwM2MyL1k2Q0pQK2NVZVVTYWgxQm8xSkVoL3hzU0NRaEJOYWMzSDEyVDI3azdJS2V1enZmL05rMWNCODVVZWE4Y091aFZBNmFFNkRVY2hxZGswU2ZlL29Bd3hjZ3VscEN4a2RXeXJYZzJ6OVJTNFBVcVFOeHFGNUJXOUtKc0NzZkhkV0N5VTBxZ09OV0lsVTdMekw2RkhrNlc4RTBxbVJMQ0JVWGU2VjFIdW9oK0tFaEFkTVpQWTVmSUtPdE9ldmVqMG9ENFpZbHZHcVNZNFNHMnAwcTRpd050Y2Y0ZXJadGV4QnlpcjRUdzc1RCthcGowVmZmM3hOSDV3ZUxvajlpS0RYNmhxRWVOWXBtdnB2Z1JHVUFNTXIzTFdQVEZnUW1scnNPdkk4UGFqTEhQeGJ6bVpBODY4OS91Z1JWSlE0L3RUcWNpQXdPMU1VekJxcXRSd2NZQUNmd05LVlk1VlhJcXh4cVJZZkVITUtxb1JEZ1VNbHZLcFNvN3RURTU3MkZQVVBqU21Kbjd0cnhYbFprS1hNQzVqWmNYdU9ZazR1bWlhUUNxa2tzWlV1Ti9SSlhqMmRiL0FuVGpXM081M05ET3dKeGwzUU5rZ0JRMnZENHV1aW1YY3V5MnZXTzB5NkVaZWo2bzBZS1BSMUViWFV5ZG1aaU5SRU5nbUlTUXRBYWZFOTFjeHhyeWZXVjVSL09ReEhScFEybmNxR1dKbDlHMHRvcnYzUmI5a2tsVzI4NUxWWlRyOS93cGU3UVZ6c1JIN3JqUDBjTXh0RTk5NGRkL0QrU3hjQi96blpyYXdrMUJiUkwrcnBHMmphWGZMelpYUnV2allwVm4zSDJvWXJNNndKelFtVndqWmVnVmd3c2xyQVg1aWJibnBTTEUxbWYveCtOVVRJVFRUaVM3Wk8rVEJScGNpbEZjY0huc2d0R3pCbmV6MWo0Smh2V0tIR1FoWU1QblQ3L1ZaWk5TMFdxRnJacmFweXJFSTJQTzI0UkkzM0NEZzZxK3hGTzlETm5Yakh5Si91TXp6cEpad0dVczdzQ1podk5WL2QzY3BiN1g2MFpyKzJSYjZqVUxxWDVJOGZYcTk2SFBDS3JKR3BsSUl3akZ1dkR0NTd6aEN4YVVUcDZCL3lGUlhVcWFMclI2VEVNWlJXYnlJbkxkWm1yeFRUS21MMDY1Y0oyMTkxUW5YWjNhY1h2ZlQxVjBWMVl6aWhDekp6QjJwRkRIbVZ0dzNhZUlZbWp4YzB4VGdNQktiY1F0TVZQd0s5Wm5RaWVXSzBrSkxKeGJIdkxFalpNZDBnSFcxdXF0dkpIanVIV2tjbzZxamd5OW1VU1B2ZFVzU0dOMVJPaHEyOEdvUTdXbStoY0dLK1FRL0VXcHNObWJSMi9mMm9EM3pyZGZwRk9WQ0N1c3Z6aERjOUFXZEhpYzJzamYveEZNVnNXWmV1SGhpbjFOalU1NDNHRThnUmFidDBCZzNhSHVuR1Z0aitLaEg1SGJRU1RYaDgycE9IVkZidVNwclg4bHNTV3ZzTmErbG92NlYzclZDMXpyUm5VdnRUa2xtYm5HWWNkOFhIendQYjBFSFJaT0FyOHZsSGNOeFRFdFJaZUZzaDFFYWkzVFpMbVkyV2kzWmQ4VzNsSFpGMUV2MzZ5dVNzc3NRUWJEV1ZwbjY1Ykw1d2lRS2g4Y2VQQjZaZjk2MUJ4ZnpkeWFOcUFicC9SbENWY28zOUR3RXY5ZjVzVjFUTHZId3pJS0N0cUV5QjdjemRPZ3JySHlCZUg5OXNERjcxdVhnZ2VkUktFbjYrajhBNm1pdmtaRjRmK0FPaVJkRE5IOFZaejc2ODZIMHNHNzlzWjhaUC82QlZuVGw3dTVtNTdnWnJ1dHMybU1ZRU5SVnZ1OXhBTElBTHRORG4rSXU1cUJadFIwVU9USUp3dDdKOFVwWW5McitzWllKNG5YNjFLeDV2S0ZmMzN5b1M0MTFaaVN4QVdrTzluWno0RHJ4Tkg1M0JZbFJwV0pKQmpDcXRVNlFiM2xMdWprMmkwY2RuYTNDb29YV0dvQ2lLNTNrQzVKZmRURFhKR0c5aU05TkQwN0h2cjNJVmtOYnNLTldscTFEek9PN21Fc1JzSnJTMkV5dGtENlNaOXZudkM3dGxFTkxmdVJsOXFFbzluY1RkVEErcnBkM0ZwVjBEVlkyUGo2dE12U0h3TEIxT1B2amovSlgvTDlNRUdyV250K1dzZzVmRWVuWkxKNnhKVnRZdXJBQzhIK0lSZ2FUanBVNGxpREJXdm50L0dhMnozSTgvak9vOW55Y2lZQWhqK0owN3lBaWJOWlljbXg5SXpxcWNHY3dQVmd5YnBmY09teU8ycEJpY21kOG9EcXhPcHBZZTVBRFBFVitqMUdDeis1YTFlK2piVzZHWnp3aDVKQjRyWkZqdG8rRWVxZXp3YlFEemtrTEtFV2hkcUZlenl0UnhnZFcyKzMwM1BUaHBtTmxnQ1ZJT2RQWmw1ZWNYeHVJMjBTZnZmdXM3NjM4MStFVjZtQ0VkSDRKalFGR3FuNENrTVJXTmNCRy9pM0RsMmdRWDNIL3FEZWtubzVsaE53NVkwanEwdFNFZVhwWDMvTlNYdVVEUnZFMUFBQzA2YjVaTXJlWUVjczNScldib1JNZW11dkVhYWFrbmNNUVp5bFZEYW96UXVkMDZrNWp1WTl3NTB2MGR5U1VJOFA1VVpCZWZQd2M1dWVWMzZJdkJtclVQNnoyNnVocmx1NEV6UTVYak0xM1Uyb0RxTUd0VElvRVlYZW9TRHRySXptZmxMdGFmZGoyTFRGVis5NEVacSthd2M0c0E1UnNOL2czSGZ4YTg0UVdaaG84ZWRmVjlaK1QzeXdxS0RNU1NoRllyemxFRk55ZzdHd2NDSG9ScWN4Ylk5emI5M1JKYStGL0xoS0N5bnRXd1NQaGdYcHdpcURXWDFWTGg3RFQva2g5VGt3MnpUWklKRWJ6T2dERDRoOTNDRHZ5N2hEWGMzbnVIWE9TcU5TQjRzdWNIOG1GQitVNVA5eGo5MU82Ryt3WmIrWEZURFBzTHFnbFB1UTJrZC9ZbVRCRE9OYWNnd25mRmZtUE51dWN2Nlk5TnYvbEU2T3RpbEdCOG5Eak5uUC9sREEzUG5hSzQyaC9BNTUyNmZCK0w0QVV3VUc3clExR2ZVVUhucHhWRnVUVy9WcmtKc1IwRTJ0Uy9wbDZWN0N1bG1uOGdmU0RGMzlsRW8xTVhPM1d5UGNYTzNXc0YyaERPSTNuZXNXTXJ0bjl4cloyVGJQRGNUQkZDSTdVYkQxMU5lRlFtbmtmMDl2TjR2MXg0ZmpWUFpvaGxFeUVFeWx5Z3FzdmJiQTNpc0lub2xveDc1Yk9KcUNLbisyMFVsYjNBZFUvV0x5TGFOZUFTRVVXZmNhdysyYmg5TmUydmd5OFcwOW5KdHpGbUc1NUtjMXZpZjJHYWFTcURndVRzTXQ2cjBLUDUrQlFaM2ZMbi91U0RvSnE5WDdYaHZPZEFVTXdkWmVJNG9SK2cyZDk0WWhwTitVQTNPMk5IdUZTcElXM3FPcEN0aDVoYklUazExVDdKRFpyS2lVc3ZaUWFNc0pyeXZqMzBQd0w5Y3ZQZjNpQzdGbGJnc3pHdk9IYkdCZC9pUG56OCtJdDJSVUwyT0ladmhTWTIrN011QWkwUXZJc1BtVjVlRzRRYS9JSk9pSmFsUWYvOEdKM3Y2YjhoTFlHS2NxeVpMUTNvMk9SWmsyVWpWQU1qTVcraVRZRndNdzkvdFRrNk5BMEx2bDJQa0NlTlA3RUtSSENQa0twNEJkeGJDQkVROE9kNzBBLzdoS3hlNW0wRUFxYnFXWVo3dittcG5ZemwvSmJwcVNLSHIrNlI2RzhRb2NLTDgyNHhjQ1RzbzlBcm9ZNVoxVE9heXZPZXJlWUdYRGVDZ2l5U3EzSDA1NFc3TjRzcFVLOHhLS0QzcHlYZytBdWZRb2lnS1hkaGNyZS83d2J3b0tKQVFOTS9LajM1US9SNHIxSXh1ZTg5VW1SSlBqY0FGNU4wZStCcGRsTXhGYXlKYW1USGUxeWlxVCtRYThSWlJsRlM4bkpKbWJKY1MwVUhTUGdFOU1OS1JsVmlJSGtIdFFCdlVnL3UrMHFkSUF1MWVrN0J2N2w2eHJBandTWWRWWVVGMjJvQjFZTUp0Nld2UW55THlUYW1Ec0VQbks2V2xFdVk1Z3FqdWI4T1BYMFd5ZFdZSG41Umtrbm5KaEtRTytVbjJFSVd0M0x3SVJVQ2RHMnprS1FBcnlyZXBYZEhjbm5jbVRXUFJoZWJidThmQlo0ZnBRQzBzNlB4ay84NTYwVnJObDFYZ3J0clhpRllCaHdWdnphMWhnSkpvWWZTbWdxUVV1R001V3l5MTNqakpsaXRiL2hIOWJ4WmM3MXVZbVg4Tmx2REtnRk54L01JQW40WHRYa3kwUkR2WHdSaGdabVd5Sm5sTEFKZXdIUlUwQ3Rvb0lWVUwvbnhFWFNSeEZJdWJVby81WW5xYjl5NENoNVhPYVpuZ1c1QmEvNzFBb3Q3a1UzR1VSZVRYOFIrS2NLMFppMkZwUWs4cmhXTHBtbnJBYWRyNmVnL2pNV0ZGNjVzeHk1UmdoYjliRU1RWDlmYmZrVllHZkNubjNOd1hLcFE2c2s0Vmp4OHRUR1c0Ri9KTVhjV3NCNUdERW5PWUU5YUhJU0FESnNZdjM4R3RCY2hXaHZsNFc0OGRXYmt3NW1NOHQydlozWnA5UFJQZFc3ZEVRV2RQVGErZTlvZ2VaUjIvMW4xRHpCZXl1WWkremFDVnVZblljai9UK2JyUGZpZEFXZG9TUkVJWldQTGEyNG5PSm96TVBGaXJiWjZ1YzN0N1JsTC9hSTdYYUo2a0NvU2wwZC9ndUxzU096TCtrOGI0Q0luUTdhc3ZtTDFjYVdjVVhsYWZGbVNTKzZzQWJtMmY5UTBjN094OHI5K29Ydzl6Q2U2OUhDTFdQUzFHOC9SZTBQWkJsb1IzTVRkYVllYkdRNHcwM1QyU2VjMnZLMHhhczB1cnREQUk0YXgyWlo1OUJOTHBMMTNURUREckRBWllDNWVBYzRRYVBRb0prRERCSUVwTlV3VitHOE42UGlVUmh3eE81K0tSZHEvRC9CQTJqRTJPQUVmREpSL1BlUGpxS3ZmaXhsU3REZjRSZHFUM3hXbSsrOTlNSmlDa1hib3ViaWY5QnFmNVVzbVB4T1V2bjNXV0RhSFRtSHJGeTRYWit4b2tmOVZ5SUxtL21HOWRKZ1Z0SDE1Sk10L200RWI4UHFZOUsyRzVEUDlQY1VOdjA4eE9RdTZnM2M5VTdyWFhQM3lVemFvU1B6QlEvMnZZS25hc05BK3hCZjRnemhGRld1Mlp2V1BXelFPUnJXOFZJNEJhV1I5RWdJYXlvYTFNR29ZTW56dkoySEVTUTNqZGZMTlZCTENXSnY3ekV3WnY5di9jcStwd0JtT3lMY3Z6SHNJN2xrZyt5aHBwSDBDbVA0Q0lwenJJQ3VaMnIxemNGSmFJeklDU2c0cEZXT3VNNUpRN3pBUUhXejVVRTQ0RlFFZnYrQklQOUJnYVJGMFU2WTJBalJwc0thWjlIVDhWYUVHelNtdm1rbWdBdkg3OHBPMCtyZEJJcUZoUVhZdlFROE5QQ2NJN1FiaEIxVGgvOGVPQTBzUGRacmJhSjRZckpoWU56aVZOSGEyTDRJKzJmTTVrYkFpOEUzanlhc21DZS9qdHpXY2NxTVhZek5ZY01lcHpXTm9VT1BDVTdyS3VBcFFkWklUOEdaemhEem9qQU82NFFzcnBQZXNCRUVIeGJ1ZHdwbTczb0Z2bWt0Z3E1czJ5Q0NWY3VFNUo0RCtaSjZLZkNESHFJRm5FeXIyY1g1dVNST2ppd1FGeXFabFF3eW9lTFcyc05kYWh2K244MkFlN0preU92Qkg1YTc0YzdodVVPNWxyY1F5bGJhMjhqTjZPVVJqNTEzdk12NEd0bGg1Q0dab0NzdTVNbTY0bUxRdG0xTTlDRjIzVFVtNVdmZUpwU21xWkp2dXNzQ0FkdjdKeUZLYld4b01FVkgvalVmTjJ4NDdiZVB0M2lIY1VCeWNTRUFBbldNeE9tSkJzKzBnY01MU0k1RTRQeWNMOUlDZGcxUGxjOE5rNmtSemJOay93b2FRQUF5NEtxN0FCZ21iWDdrd3MwVTV3a2xBRFl3SGFWRWppd1huVVlhdnNKZTlRK3BuZEQ5SWxjenoxb2pMQU1xL0Y1c0djZ0t0QXFOaUhEOExLeXFvbGI0VVZwRHJ1eVVBQT09IiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS93ZWJwIn1dfQ==">
+<meta name="theme-color" content="#0A0A0A">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Firebase SDK (compat build — no bundler required) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<!-- QR code generation, no-build, draws to canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+  /* ============================================
+     TALLY ARS — Design Tokens
+     ============================================ */
+  :root {
+    --bg: #0A0A0A;
+    --surface: #141414;
+    --surface-2: #1A1A1A;
+    --surface-raised: #1F1F1F;
+    --border: #2A2A2A;
+    --border-soft: #1E1E1E;
+
+    --text: #E0E0E0;
+    --text-dim: #8C8C8C;
+    --text-faint: #565656;
+
+    /* Host / brand primary — matched directly from the app icon's blue (#2A8DF3) */
+    --teal: #2A8DF3;
+    --teal-bright: #5BA8F7;
+    --teal-dim: #1A4D87;
+    --teal-wash: rgba(42, 141, 243, 0.14);
+
+    /* Attendee accent — warm amber, kept distinct from cobalt for role separation */
+    --amber: #C97D3C;
+    --amber-bright: #DE9655;
+    --amber-dim: #4A3018;
+    --amber-wash: rgba(201, 125, 60, 0.12);
+
+    /* Tertiary data accents, for 3rd+ option in rotation */
+    --sage: #5E8C6B;
+    --sage-bright: #76A682;
+
+    --violet: #7A6FA8;
+    --violet-bright: #9388C2;
+
+    --danger: #B5483D;
+    --danger-bright: #CC6357;
+
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'DM Mono', 'SF Mono', monospace;
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+
+    /* Blueprint aesthetic: containers are defined by line, not fill —
+       shadow is kept minimal (just enough to lift modals off the page)
+       rather than the heavy drop-shadow look of the previous pass. */
+    --shadow-card: 0 1px 0 rgba(0,0,0,0.3);
+    --shadow-modal: 0 16px 48px rgba(0,0,0,0.55);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+    /* App-like feel, not a webpage: no incidental text selection from taps/drags.
+       Exceptions below restore selection where a host genuinely needs to copy
+       something (the session code) or type into a field. */
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  input, textarea,
+  .dash-code, .session-code-selectable {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+
+  /* Subtle ambient texture so pure dark doesn't feel flat on large displays */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(46,134,193,0.05), transparent),
+      radial-gradient(ellipse 60% 40% at 90% 100%, rgba(201,125,60,0.03), transparent);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Blueprint grid — dotted, architectural, reserved for the host dashboard
+     where a precision/command-center feel is the goal. Deliberately not used
+     on the attendee screen, where it would compete with the one thing that
+     matters: the question. */
+  .blueprint-grid {
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(224,224,224,0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  #app { position: relative; min-height: 100vh; display: flex; flex-direction: column; z-index: 1; }
+
+  [data-view] { display: none; }
+  [data-view].active { display: flex; flex-direction: column; flex: 1; }
+
+  button { font-family: var(--font-body); cursor: pointer; border: none; background: none; color: inherit; }
+  input { font-family: var(--font-body); }
+  .hidden { display: none !important; }
+
+  ::selection { background: var(--teal-dim); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--teal-bright);
+    outline-offset: 2px;
+  }
+
+  /* ============================================
+     Shared components
+     ============================================ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:active { transform: scale(0.97); }
+
+  .btn-primary { background: var(--teal); color: #06141A; }
+  .btn-primary:hover { background: var(--teal-bright); box-shadow: 0 0 0 4px var(--teal-wash); }
+
+  .btn-amber { background: var(--amber); color: #1A0F04; }
+  .btn-amber:hover { background: var(--amber-bright); box-shadow: 0 0 0 4px var(--amber-wash); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { color: var(--text); border-color: var(--text-dim); }
+
+  .btn-danger { background: transparent; color: var(--danger); border: 1px solid var(--danger); }
+  .btn-danger:hover { background: rgba(196,86,74,0.12); }
+
+  .btn-sm { padding: 9px 16px; font-size: 13px; }
+  .btn-block { width: 100%; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+  .icon-btn {
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 999px;
+    color: var(--text-dim);
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .icon-btn:hover { background: var(--surface-2); color: var(--text); }
+  .icon-btn svg { width: 20px; height: 20px; }
+
+  .input-field {
+    width: 100%;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    padding: 14px 16px;
+    font-size: 16px;
+    transition: border-color 0.15s ease;
+  }
+  .input-field:focus { outline: none; border-color: var(--teal); }
+  .input-field::placeholder { color: var(--text-faint); }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px clamp(16px, 4vw, 32px);
+    flex-shrink: 0;
+  }
+  .top-bar-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.01em;
+  }
+  .top-bar-title .tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--teal-bright);
+    background: var(--teal-wash);
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-left: 8px;
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+  }
+
+  .page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 clamp(16px, 4vw, 32px) clamp(24px, 5vw, 48px);
+    max-width: 880px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* ============================================
+     LANDING
+     ============================================ */
+  [data-view="landing"] {
+    text-align: center;
+  }
+  .landing-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .landing-content {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(28px, 6vw, 44px);
+    padding: 24px;
+  }
+  .landing-icon {
+    width: clamp(64px, 14vw, 84px);
+    height: clamp(64px, 14vw, 84px);
+    border-radius: 22%;
+    box-shadow: 0 8px 28px rgba(42, 141, 243, 0.18), 0 2px 8px rgba(0,0,0,0.5);
+  }
+  .landing-mark {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(48px, 10vw, 76px);
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .landing-mark .ars {
+    font-family: var(--font-mono);
+    font-size: clamp(16px, 3vw, 22px);
+    color: var(--teal-bright);
+    letter-spacing: 0.15em;
+    display: block;
+    margin-top: 10px;
+  }
+  .landing-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: min(360px, 80vw);
+  }
+  .landing-actions .btn { padding: 18px 28px; font-size: 16px; }
+
+  /* ============================================
+     JOIN
+     ============================================ */
+  [data-view="join"] { align-items: center; justify-content: center; }
+  .join-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: min(380px, 88vw);
+    text-align: center;
+  }
+  .code-input {
+    font-family: var(--font-mono);
+    font-size: clamp(28px, 7vw, 38px);
+    letter-spacing: 0.18em;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 18px 12px;
+  }
+  .error-text {
+    color: var(--danger-bright);
+    font-size: 14px;
+  }
+
+  /* ============================================
+     ATTENDEE VIEW — amber accent, large tap targets
+     ============================================ */
+  [data-view="attendee"] {
+    align-items: center;
+    justify-content: center;
+  }
+  .attendee-inner {
+    width: min(520px, 92vw);
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .attendee-status {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 15px;
+  }
+  .attendee-status .pulse-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--amber);
+    margin-right: 8px;
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  /* Skeleton screens — faint, pulsating placeholders shown while waiting on
+     the first Firebase snapshot, instead of an empty container. */
+  .skeleton-block {
+    background: var(--surface-2);
+    border-radius: var(--radius-sm);
+    animation: skeleton-pulse 1.6s ease-in-out infinite;
+  }
+  .skeleton-title {
+    height: clamp(24px, 5vw, 32px);
+    width: 90%;
+    margin: 0 auto 12px;
+    border-radius: 6px;
+  }
+  .skeleton-option {
+    height: 64px;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+  @keyframes skeleton-pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.9; }
+  }
+
+  .attendee-question-text {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 5.5vw, 34px);
+    line-height: 1.25;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .option-card {
+    display: block;
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px 22px;
+    font-size: 17px;
+    font-weight: 500;
+    text-align: left;
+    color: var(--text);
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+    margin-bottom: 12px;
+  }
+  .option-card:hover { border-color: var(--amber); background: var(--amber-wash); }
+  .option-card:active { transform: scale(0.98); }
+  .option-card:disabled:not(.option-card-selected) { opacity: 0.4; }
+  .option-card-selected {
+    border-color: var(--amber);
+    background: var(--amber-wash);
+    transform: scale(0.98);
+    transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  }
+
+  .voted-confirm {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 40px 0;
+  }
+  .voted-check {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--amber-wash);
+    border: 2px solid var(--amber);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .voted-check svg { width: 26px; height: 26px; color: var(--amber-bright); }
+
+  /* ============================================
+     HOST: shared bank/build styles
+     ============================================ */
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 4vw, 28px);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .section-sub {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .bank-item, .draft-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    margin-bottom: 10px;
+  }
+  .bank-item-text, .draft-item-text {
+    font-size: 15px;
+    font-weight: 500;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .bank-item-num {
+    font-family: var(--font-mono);
+    color: var(--teal-bright);
+    font-size: 13px;
+    margin-right: 10px;
+  }
+  .item-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+  .empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--text-faint);
+    border: 1.5px dashed var(--border);
+    border-radius: var(--radius-md);
+  }
+  .empty-state svg { width: 32px; height: 32px; margin-bottom: 12px; opacity: 0.5; }
+  .empty-state-text { font-size: 14px; }
+
+  .action-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .action-row-bottom {
+    margin-top: auto;
+    padding-top: 24px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* ============================================
+     HOST: Question editor (modal-style full screen)
+     ============================================ */
+  [data-view="question-editor"] { align-items: center; justify-content: center; }
+  .editor-box {
+    width: min(480px, 92vw);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .qe-option-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .qe-option-input { flex: 1; }
+  .qe-option-num {
+    font-family: var(--font-mono);
+    color: var(--text-faint);
+    font-size: 13px;
+    width: 20px;
+    text-align: center;
+  }
+  .qe-remove-option {
+    color: var(--text-faint);
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .qe-remove-option:hover { color: var(--danger-bright); background: rgba(196,86,74,0.12); }
+
+  .reveal-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .reveal-toggle-option {
+    text-align: left;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .reveal-toggle-option:hover { border-color: var(--text-dim); }
+  .reveal-toggle-option.selected {
+    border-color: var(--teal);
+    background: var(--teal-wash);
+  }
+  .reveal-toggle-title { font-size: 14px; font-weight: 600; }
+  .reveal-toggle-sub { font-size: 11.5px; color: var(--text-faint); line-height: 1.35; }
+  .reveal-toggle-option.selected .reveal-toggle-title { color: var(--teal-bright); }
+
+  /* ============================================
+     HOST: Dashboard
+     ============================================ */
+  .dash-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 20px clamp(16px, 4vw, 32px);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .dash-code-block {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .dash-code-label {
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .dash-code {
+    font-family: var(--font-mono);
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--teal-bright);
+  }
+  .dash-qr-wrap {
+    background: #fff;
+    padding: 6px;
+    border-radius: 8px;
+    display: flex;
+    line-height: 0;
+  }
+  .dash-qr-wrap img, .dash-qr-wrap canvas { display: block; width: 56px; height: 56px; }
+  .dash-meta {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .participant-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-dim);
+    background: var(--surface-2);
+    padding: 8px 14px;
+    border-radius: 999px;
+  }
+  .participant-pill svg { width: 14px; height: 14px; }
+  .expiry-warning {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--amber-bright);
+    background: var(--amber-wash);
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+
+  .dash-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(20px, 4vw, 40px) clamp(16px, 4vw, 32px);
+    max-width: 980px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .dash-body-split { max-width: 1320px; }
+
+  /* Command Center split-pane: a scaled-down mirror of the attendee screen on
+     the left, moderator controls on the right. Stacks vertically on narrow
+     viewports where a side-by-side split has no room to breathe. */
+  .command-split {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: clamp(20px, 3vw, 40px);
+    flex: 1;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .command-split { grid-template-columns: 1fr; }
+    .preview-pane { display: none; } /* preview adds little value at phone width where the host IS the only screen */
+  }
+
+  .preview-pane {
+    position: sticky;
+    top: 20px;
+  }
+  .preview-pane-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .preview-frame {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    width: 300px;
+    height: 560px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 0 1px var(--border-soft), 0 8px 30px rgba(0,0,0,0.5);
+  }
+  .preview-scale {
+    width: 390px;
+    height: 728px;
+    transform: scale(0.769); /* 300/390 — fits a real attendee phone width exactly into the frame */
+    transform-origin: top left;
+    background: var(--bg);
+    overflow: hidden;
+  }
+  .preview-scale .page { padding: 0 16px 24px; }
+  /* clamp()/vw values resolve against the real viewport, not this scaled
+     element, so the attendee's responsive type scale overflows here unless
+     pinned to fixed sizes sized for the true 390px width. */
+  .preview-scale .attendee-question-text { font-size: 22px !important; line-height: 1.25 !important; }
+  .preview-scale .option-card { padding: 14px 16px !important; font-size: 14px !important; margin-bottom: 8px !important; }
+  .preview-scale .eyebrow { font-size: 10px !important; }
+  .preview-scale .tally-label, .preview-scale .tally-count { font-size: 12px !important; }
+  .preview-scale .reveal-waiting-sub { font-size: 10px !important; }
+  .preview-scale .attendee-inner { width: 100% !important; max-width: 358px !important; }
+
+  .kbd-hint {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-faint);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-left: 10px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .question-display {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 4.5vw, 40px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: clamp(24px, 4vw, 40px);
+  }
+
+  .tally-bar-row {
+    display: grid;
+    grid-template-columns: clamp(110px,22%,220px) 1fr clamp(70px,12%,110px);
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .tally-label {
+    font-size: clamp(13px, 1.6vw, 17px);
+    font-weight: 500;
+    line-height: 1.3;
+    /* Wrap rather than truncate — a two-line option label is more honest in
+       front of a live audience than a silently cut-off answer choice. */
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .tally-track {
+    height: clamp(14px, 2.2vw, 22px);
+    background: var(--surface-2);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+  }
+  .tally-fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .tally-fill.c0 { background: linear-gradient(90deg, var(--teal-dim), var(--teal)); }
+  .tally-fill.c1 { background: linear-gradient(90deg, var(--amber-dim), var(--amber)); }
+  .tally-fill.c2 { background: linear-gradient(90deg, #233b29, var(--sage)); }
+  .tally-fill.c3 { background: linear-gradient(90deg, #2e2845, var(--violet)); }
+
+  /* Hidden-mode waiting state — shown in place of bars until the moderator reveals */
+  .reveal-waiting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(32px, 6vw, 56px) 20px;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-md);
+  }
+  .reveal-waiting-count {
+    font-family: var(--font-mono);
+    font-size: clamp(36px, 5vw, 52px);
+    color: var(--teal-bright);
+    font-weight: 500;
+    line-height: 1;
+  }
+  .reveal-waiting-label {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-top: 6px;
+  }
+  .reveal-waiting-sub {
+    font-size: 12px;
+    color: var(--text-faint);
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.03em;
+  }
+
+  .mode-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .mode-tag-hidden { color: var(--amber-bright); border-color: var(--amber-dim); }
+
+  /* faded comparison reference bar, sits beneath the live one */
+  .tally-compare-track {
+    height: 6px;
+    background: var(--surface-2);
+    border-radius: 999px;
+    margin-top: 4px;
+    overflow: hidden;
+  }
+  .tally-compare-fill {
+    height: 100%;
+    background: var(--text-faint);
+    opacity: 0.5;
+    border-radius: 999px;
+  }
+  .tally-compare-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-faint);
+    margin-top: 3px;
+  }
+
+  .tally-count {
+    font-family: var(--font-mono);
+    font-size: clamp(13px, 1.6vw, 16px);
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .draft-question-list .draft-item { cursor: default; }
+
+  .dashboard-footer {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 18px clamp(16px, 4vw, 32px);
+    border-top: 1px solid var(--border-soft);
+  }
+  .dashboard-footer .spacer { flex: 1; }
+
+  /* ============================================
+     HOST: Report
+     ============================================ */
+  .report-summary-bar {
+    display: flex;
+    gap: clamp(20px, 4vw, 40px);
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .report-stat .num {
+    font-family: var(--font-mono);
+    font-size: clamp(24px, 4vw, 32px);
+    color: var(--teal-bright);
+    font-weight: 500;
+  }
+  .report-stat .label {
+    font-size: 12px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .report-question-block {
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    padding: clamp(20px, 3vw, 28px);
+    margin-bottom: 16px;
+  }
+  .report-q-title {
+    font-family: var(--font-display);
+    font-size: clamp(17px, 2.2vw, 20px);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .report-total {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-faint);
+    margin-bottom: 16px;
+  }
+  .report-result-row {
+    display: grid;
+    grid-template-columns: 1fr clamp(60px,10%,90px);
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .report-result-bar-bg {
+    height: 8px;
+    background: var(--surface-2);
+    border-radius: 999px;
+    margin-top: 4px;
+    overflow: hidden;
+  }
+  .report-result-bar-fill { height: 100%; border-radius: 999px; }
+
+  .report-export-prompt {
+    text-align: center;
+    padding: 24px;
+    background: var(--teal-wash);
+    border: 1px solid var(--teal-dim);
+    border-radius: var(--radius-md);
+    margin-top: 8px;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  .report-export-prompt button { color: var(--teal-bright); font-weight: 600; text-decoration: underline; }
+
+  /* ============================================
+     SETTINGS MODAL
+     ============================================ */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5,6,7,0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+    animation: fadeIn 0.18s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .modal-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-modal);
+    width: min(460px, 100%);
+    max-height: 86vh;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 22px;
+    border-bottom: 1px solid var(--border-soft);
+    flex-shrink: 0;
+  }
+  .modal-title {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 700;
+  }
+  .modal-body {
+    padding: 8px 12px 20px;
+    overflow-y: auto;
+  }
+
+  .modal-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 12px 12px 0;
+  }
+  .modal-tab {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-faint);
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .modal-tab.active { color: var(--teal-bright); border-color: var(--teal); }
+
+  .modal-panel { display: none; padding: 20px 10px; flex-direction: column; gap: 14px; }
+  .modal-panel.active { display: flex; }
+
+  .settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 4px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .settings-row:last-child { border-bottom: none; }
+  .settings-row-label { font-size: 14px; font-weight: 500; }
+  .settings-row-sub { font-size: 12px; color: var(--text-faint); margin-top: 2px; }
+
+  .about-block { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+  .about-block .version-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-faint);
+    margin-top: 16px;
+    display: block;
+  }
+
+  /* ============================================
+     Responsive — three-tier scaling for the host
+     dashboard, which is the screen most likely to
+     be projected at conference scale.
+     ============================================ */
+  @media (min-width: 1400px) {
+    .dash-body { max-width: 1180px; }
+    .question-display { font-size: clamp(34px, 3.6vw, 52px); }
+    .tally-label, .tally-count { font-size: 19px; }
+    .dash-qr-wrap img, .dash-qr-wrap canvas { width: 72px; height: 72px; }
+  }
+
+  @media (max-width: 640px) {
+    .dash-header { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .dashboard-footer { justify-content: stretch; }
+    .dashboard-footer .btn { flex: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ===================== LANDING ===================== -->
+  <section data-view="landing" class="active">
+    <div class="top-bar">
+      <div></div>
+      <button class="icon-btn" data-open-settings aria-label="Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.3 2.4a1.5 1.5 0 0 1 3.4 0l.2.9a1.5 1.5 0 0 0 1.9 1.1l.9-.3a1.5 1.5 0 0 1 1.8 2.4l-.6.7a1.5 1.5 0 0 0 0 2.2l.6.7a1.5 1.5 0 0 1-1.8 2.4l-.9-.3a1.5 1.5 0 0 0-1.9 1.1l-.2.9a1.5 1.5 0 0 1-3.4 0l-.2-.9a1.5 1.5 0 0 0-1.9-1.1l-.9.3a1.5 1.5 0 0 1-1.8-2.4l.6-.7a1.5 1.5 0 0 0 0-2.2l-.6-.7a1.5 1.5 0 0 1 1.8-2.4l.9.3a1.5 1.5 0 0 0 1.9-1.1l.2-.9Z"/><circle cx="12" cy="9" r="2.6"/></svg>
+      </button>
+    </div>
+    <div class="landing-body">
+      <div class="landing-content">
+        <img src="data:image/webp;base64,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" alt="" class="landing-icon" width="84" height="84">
+        <div class="landing-mark">TALLY<span class="ars">A · R · S</span></div>
+        <div class="landing-actions">
+          <button class="btn btn-primary btn-block" id="btn-host">Host a Session</button>
+          <button class="btn btn-ghost btn-block" id="btn-join">Join a Session</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== JOIN ===================== -->
+  <section data-view="join">
+    <div class="top-bar">
+      <button class="icon-btn" id="btn-join-back" aria-label="Back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div></div>
+    </div>
+    <div class="page" style="align-items:center; justify-content:center;">
+      <div class="join-box">
+        <div class="eyebrow">Enter session code</div>
+        <input id="join-code-input" class="input-field code-input" maxlength="6" placeholder="• • • • •" autocomplete="off" autocapitalize="characters">
+        <button class="btn btn-amber btn-block" id="btn-join-submit">Join Session</button>
+        <p id="join-error" class="error-text hidden"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ATTENDEE ===================== -->
+  <section data-view="attendee">
+    <div class="page" style="align-items:center; justify-content:center; flex:1;">
+      <div class="attendee-inner">
+
+        <div id="attendee-skeleton" class="hidden">
+          <div class="skeleton-block skeleton-title"></div>
+          <div class="skeleton-block skeleton-title" style="width:70%;"></div>
+          <div style="margin-top:28px;">
+            <div class="skeleton-block skeleton-option"></div>
+            <div class="skeleton-block skeleton-option"></div>
+            <div class="skeleton-block skeleton-option"></div>
+          </div>
+        </div>
+
+        <div id="attendee-waiting">
+          <div class="attendee-status"><span class="pulse-dot"></span>Waiting for the next question…</div>
+        </div>
+
+        <div id="attendee-question" class="hidden">
+          <div class="attendee-question-text" id="attendee-question-text"></div>
+          <div style="margin-top:28px;" id="attendee-options"></div>
+        </div>
+
+        <div id="attendee-voted" class="hidden">
+          <div class="voted-confirm">
+            <div class="voted-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg></div>
+            <div style="font-weight:600; font-size:16px;">Vote received</div>
+            <div class="attendee-status" style="margin:0;">Waiting for results…</div>
+          </div>
+        </div>
+
+        <div id="attendee-closed" class="hidden">
+          <div class="eyebrow" style="text-align:center;">Final results</div>
+          <div class="attendee-question-text" id="attendee-closed-text" style="font-size:clamp(19px,4vw,24px); margin-bottom:24px;"></div>
+          <div id="attendee-results"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HOST: BUILD ===================== -->
+
+  <section data-view="build">
+    <div class="top-bar">
+      <div class="top-bar-title">TALLY<span class="tag">HOST</span></div>
+      <button class="icon-btn" data-open-settings aria-label="Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.3 2.4a1.5 1.5 0 0 1 3.4 0l.2.9a1.5 1.5 0 0 0 1.9 1.1l.9-.3a1.5 1.5 0 0 1 1.8 2.4l-.6.7a1.5 1.5 0 0 0 0 2.2l.6.7a1.5 1.5 0 0 1-1.8 2.4l-.9-.3a1.5 1.5 0 0 0-1.9 1.1l-.2.9a1.5 1.5 0 0 1-3.4 0l-.2-.9a1.5 1.5 0 0 0-1.9-1.1l-.9.3a1.5 1.5 0 0 1-1.8-2.4l.6-.7a1.5 1.5 0 0 0 0-2.2l-.6-.7a1.5 1.5 0 0 1 1.8-2.4l.9.3a1.5 1.5 0 0 0 1.9-1.1l.2-.9Z"/><circle cx="12" cy="9" r="2.6"/></svg>
+      </button>
+    </div>
+    <div class="page">
+      <div class="section-heading">Build session</div>
+      <div class="section-sub">Add the questions you'll poll. You can also add questions live once the session starts.</div>
+
+      <div id="question-bank-list"></div>
+      <div id="bank-empty" class="empty-state hidden">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 7h6M9 12h6M9 17h3"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg>
+        <div class="empty-state-text">No questions yet — add your first one below.</div>
+      </div>
+
+      <div class="action-row">
+        <button class="btn btn-ghost" id="btn-add-question">+ Add Question</button>
+      </div>
+
+      <div class="action-row-bottom">
+        <button class="btn btn-primary" id="btn-start-session">Start Session</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HOST: QUESTION EDITOR ===================== -->
+  <section data-view="question-editor">
+    <div class="top-bar">
+      <button class="icon-btn" id="qe-cancel" aria-label="Cancel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div></div>
+    </div>
+    <div class="page" style="align-items:center; justify-content:center;">
+      <div class="editor-box">
+        <div class="eyebrow">Question</div>
+        <input id="qe-text" class="input-field" placeholder="What do you want to ask?">
+        <div class="eyebrow" style="margin-top:8px;">Answer options</div>
+        <div id="qe-options"></div>
+        <button class="btn btn-ghost btn-sm" id="qe-add-option" style="align-self:flex-start;">+ Add Option</button>
+
+        <div class="eyebrow" style="margin-top:8px;">Results reveal</div>
+        <div class="reveal-toggle" id="qe-reveal-toggle" role="radiogroup" aria-label="Results reveal mode">
+          <button class="reveal-toggle-option" data-mode="live" type="button">
+            <span class="reveal-toggle-title">Live</span>
+            <span class="reveal-toggle-sub">Tally updates as votes arrive</span>
+          </button>
+          <button class="reveal-toggle-option" data-mode="hidden" type="button">
+            <span class="reveal-toggle-title">Hidden</span>
+            <span class="reveal-toggle-sub">Results stay hidden until you reveal them</span>
+          </button>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:12px;">
+          <button class="btn btn-primary" id="qe-save" style="flex:1;">Save Question</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HOST: DASHBOARD ===================== -->
+  <section data-view="dashboard">
+    <div class="blueprint-grid"></div>
+    <div class="dash-header">
+      <div class="dash-code-block">
+        <div>
+          <div class="dash-code-label">Session code</div>
+          <div class="dash-code" id="session-code-display"></div>
+        </div>
+        <div class="dash-qr-wrap" id="session-qr"></div>
+      </div>
+      <div class="dash-meta">
+        <div class="participant-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span id="participant-count">0 joined</span>
+        </div>
+        <div class="expiry-warning hidden" id="session-expiry-warning"></div>
+        <button class="icon-btn" data-open-settings aria-label="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.3 2.4a1.5 1.5 0 0 1 3.4 0l.2.9a1.5 1.5 0 0 0 1.9 1.1l.9-.3a1.5 1.5 0 0 1 1.8 2.4l-.6.7a1.5 1.5 0 0 0 0 2.2l.6.7a1.5 1.5 0 0 1-1.8 2.4l-.9-.3a1.5 1.5 0 0 0-1.9 1.1l-.2.9a1.5 1.5 0 0 1-3.4 0l-.2-.9a1.5 1.5 0 0 0-1.9-1.1l-.9.3a1.5 1.5 0 0 1-1.8-2.4l.6-.7a1.5 1.5 0 0 0 0-2.2l-.6-.7a1.5 1.5 0 0 1 1.8-2.4l.9.3a1.5 1.5 0 0 0 1.9-1.1l.2-.9Z"/><circle cx="12" cy="9" r="2.6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="dash-body dash-body-split">
+      <div id="dashboard-idle">
+        <div class="eyebrow">No question open <span class="kbd-hint">space to open next</span></div>
+        <div class="section-sub" style="margin-bottom:20px;">Choose a question below to start polling the room.</div>
+        <div id="dashboard-question-list" class="draft-question-list"></div>
+        <div id="dashboard-empty-drafts" class="empty-state hidden">
+          <div class="empty-state-text">All questions have been used. Add another or end the session.</div>
+        </div>
+      </div>
+
+      <div id="dashboard-live-wrap" class="hidden command-split">
+        <div class="preview-pane">
+          <div class="preview-pane-label">Attendee view</div>
+          <div class="preview-frame">
+            <div class="preview-scale" id="preview-scale-live"></div>
+          </div>
+        </div>
+        <div id="dashboard-live" style="display:flex; flex-direction:column;">
+          <div class="eyebrow"><span class="pulse-dot" style="background:var(--teal);"></span>Live now <span class="kbd-hint">space to close</span></div>
+          <div class="question-display" id="dashboard-question-text"></div>
+          <div id="dashboard-tally" style="flex:1;"></div>
+          <div style="margin-top:24px; display:flex; gap:12px;">
+            <button class="btn btn-primary hidden" id="btn-reveal-live">Show Results</button>
+            <button class="btn btn-amber" id="btn-close-question">Close Question</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="dashboard-closed-wrap" class="hidden command-split">
+        <div class="preview-pane">
+          <div class="preview-pane-label">Attendee view</div>
+          <div class="preview-frame">
+            <div class="preview-scale" id="preview-scale-closed"></div>
+          </div>
+        </div>
+        <div id="dashboard-closed" style="display:flex; flex-direction:column;">
+          <div class="eyebrow">Results — closed <span class="kbd-hint">space for next</span></div>
+          <div class="question-display" id="dashboard-closed-text"></div>
+          <div id="dashboard-final-tally" style="flex:1;"></div>
+          <div style="margin-top:24px; display:flex; gap:12px;">
+            <button class="btn btn-primary hidden" id="btn-reveal-closed">Show Results</button>
+            <button class="btn btn-primary" id="btn-next-question">Open Next Question</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="dashboard-footer">
+      <button class="btn btn-ghost btn-sm" id="btn-add-question-live">+ Add Question</button>
+      <div class="spacer"></div>
+      <button class="btn btn-danger btn-sm" id="btn-end-session">End Session</button>
+    </div>
+  </section>
+
+  <!-- ===================== HOST: REPORT ===================== -->
+  <section data-view="report">
+    <div class="top-bar">
+      <div class="top-bar-title">TALLY<span class="tag">REPORT</span></div>
+      <button class="icon-btn" data-open-settings aria-label="Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.3 2.4a1.5 1.5 0 0 1 3.4 0l.2.9a1.5 1.5 0 0 0 1.9 1.1l.9-.3a1.5 1.5 0 0 1 1.8 2.4l-.6.7a1.5 1.5 0 0 0 0 2.2l.6.7a1.5 1.5 0 0 1-1.8 2.4l-.9-.3a1.5 1.5 0 0 0-1.9 1.1l-.2.9a1.5 1.5 0 0 1-3.4 0l-.2-.9a1.5 1.5 0 0 0-1.9-1.1l-.9.3a1.5 1.5 0 0 1-1.8-2.4l.6-.7a1.5 1.5 0 0 0 0-2.2l-.6-.7a1.5 1.5 0 0 1 1.8-2.4l.9.3a1.5 1.5 0 0 0 1.9-1.1l.2-.9Z"/><circle cx="12" cy="9" r="2.6"/></svg>
+      </button>
+    </div>
+    <div class="page">
+      <div class="section-heading">Session report</div>
+      <div class="section-sub" id="report-session-sub"></div>
+
+      <div class="report-summary-bar" id="report-summary-bar"></div>
+      <div id="report-content"></div>
+
+      <div class="report-export-prompt">
+        Need a copy of this? Open <button data-open-settings>Settings → Export</button> to download the PDF or raw JSON.
+      </div>
+
+      <div class="action-row-bottom">
+        <button class="btn btn-primary" id="btn-new-session">Start New Session</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ===================== SETTINGS MODAL ===================== -->
+<div class="modal-overlay hidden" id="settings-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">Settings</div>
+      <button class="icon-btn" id="settings-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" data-tab="data">Import / Export</button>
+      <button class="modal-tab" data-tab="about">About / Help</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="modal-panel active" data-panel="data">
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">Import past session</div>
+            <div class="settings-row-sub">Reload a question bank from a previous export</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="btn-import-session">Choose File</button>
+        </div>
+        <input type="file" id="import-file-input" accept="application/json" class="hidden">
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">Export session data</div>
+            <div class="settings-row-sub" id="export-json-sub">Available after a session has ended</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="btn-download-json" disabled>Download JSON</button>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">Export report</div>
+            <div class="settings-row-sub" id="export-pdf-sub">Available after a session has ended</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="btn-download-report" disabled>Download PDF</button>
+        </div>
+      </div>
+
+      <div class="modal-panel" data-panel="about">
+        <div class="about-block">
+          <p><strong>Tally ARS</strong> is a live audience response system. Attendees join with a code or QR scan from their own phone — no app install, no account.</p>
+          <p style="margin-top:12px;">Build your questions, start a session, and open one question at a time. Votes tally live on the host dashboard. When you're done, end the session to generate a formal report and export your data.</p>
+          <p style="margin-top:12px;">Sessions are temporary — once a session ends, its data is exported to your device and removed from the live system. Import a past export any time to reuse its questions, with the option to compare against prior results.</p>
+          <span class="version-tag">TALLY ARS · v1.0 · LAZLAB Creations</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   TALLY ARS — Application Logic
+   ============================================================ */
+
+/* ---------- Firebase config ----------
+   Paste your Firebase project's config object below.
+   Get this from: Firebase Console → Project Settings → General → Your apps → SDK setup and configuration
+   This is safe to expose publicly — Firebase access control is enforced via Database Rules, not by hiding this object.
+*/
+const firebaseConfig = {
+  apiKey: "PASTE_API_KEY_HERE",
+  authDomain: "PASTE_PROJECT_ID_HERE.firebaseapp.com",
+  databaseURL: "https://PASTE_PROJECT_ID_HERE-default-rtdb.firebaseio.com",
+  projectId: "PASTE_PROJECT_ID_HERE",
+};
+
+let firebaseReady = false;
+let db = null;
+
+function initFirebase() {
+  try {
+    if (firebaseConfig.apiKey === "PASTE_API_KEY_HERE") {
+      console.warn("Tally ARS: Firebase config not set yet. Live sync will not work until you add your project config.");
+      return;
+    }
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.database();
+    firebaseReady = true;
+  } catch (err) {
+    console.error("Firebase init failed:", err);
+  }
+}
+initFirebase();
+
+/* ---------- Data layer ---------- */
+const DataLayer = {
+  sessionRef(code) { return db.ref('sessions/' + code); },
+  questionRef(code, qid) { return db.ref('sessions/' + code + '/questions/' + qid); },
+  votesRef(code, qid) { return db.ref('sessions/' + code + '/questions/' + qid + '/votes'); },
+  participantsRef(code) { return db.ref('sessions/' + code + '/participants'); },
+
+  createSession(code, sessionData) { return this.sessionRef(code).set(sessionData); },
+  deleteSession(code) { return this.sessionRef(code).remove(); },
+  addQuestion(code, qid, questionData) { return this.questionRef(code, qid).set(questionData); },
+  openQuestion(code, qid) {
+    return this.questionRef(code, qid).update({ status: 'open', openedAt: firebase.database.ServerValue.TIMESTAMP });
+  },
+  closeQuestion(code, qid) {
+    return this.questionRef(code, qid).update({ status: 'closed', closedAt: firebase.database.ServerValue.TIMESTAMP });
+  },
+  castVote(code, qid, participantId, optionIndex) {
+    return this.votesRef(code, qid).child(participantId).set(optionIndex);
+  },
+  registerParticipant(code, participantId) {
+    return this.participantsRef(code).child(participantId).set(firebase.database.ServerValue.TIMESTAMP);
+  },
+  onSessionChange(code, callback) { this.sessionRef(code).on('value', callback); },
+  offSession(code) { this.sessionRef(code).off(); },
+  getSessionOnce(code) { return this.sessionRef(code).once('value'); }
+};
+
+/* ---------- App State ---------- */
+const State = {
+  role: null,
+  sessionCode: null,
+  participantId: null,
+  questionBank: [],
+  activeQuestionId: null,
+  compareMode: false,
+  importedResults: null,
+  lastExport: null,
+};
+
+const TALLY_COLORS = ['c0', 'c1', 'c2', 'c3'];
+
+/* ---------- Utilities ---------- */
+function generateSessionCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for (let i = 0; i < 5; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return code;
+}
+
+function generateId() {
+  return 'id_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 9);
+}
+
+function getOrCreateParticipantId() {
+  let pid = localStorage.getItem('tally_participant_id');
+  if (!pid) {
+    pid = generateId();
+    localStorage.setItem('tally_participant_id', pid);
+  }
+  return pid;
+}
+
+function showView(name) {
+  document.querySelectorAll('[data-view]').forEach(el => el.classList.remove('active'));
+  const target = document.querySelector('[data-view="' + name + '"]');
+  if (target) target.classList.add('active');
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+/* ---------- Settings modal ---------- */
+function openSettings() {
+  document.getElementById('settings-modal').classList.remove('hidden');
+}
+function closeSettings() {
+  document.getElementById('settings-modal').classList.add('hidden');
+}
+document.querySelectorAll('[data-open-settings]').forEach(el => el.addEventListener('click', openSettings));
+document.getElementById('settings-close').addEventListener('click', closeSettings);
+document.getElementById('settings-modal').addEventListener('click', (e) => {
+  if (e.target.id === 'settings-modal') closeSettings();
+});
+document.querySelectorAll('.modal-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.modal-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelector('[data-panel="' + tab.dataset.tab + '"]').classList.add('active');
+  });
+});
+
+/* ---------- Deep link ---------- */
+function checkDeepLink() {
+  const params = new URLSearchParams(window.location.search);
+  const joinCode = params.get('join');
+  if (joinCode) {
+    document.getElementById('join-code-input').value = joinCode.toUpperCase();
+    showView('join');
+  }
+}
+
+/* ---------- Landing ---------- */
+document.getElementById('btn-host').addEventListener('click', () => {
+  State.role = 'host';
+  showView('build');
+});
+document.getElementById('btn-join').addEventListener('click', () => {
+  State.role = 'attendee';
+  showView('join');
+});
+
+/* ---------- Join flow ---------- */
+document.getElementById('btn-join-back').addEventListener('click', () => showView('landing'));
+
+document.getElementById('btn-join-submit').addEventListener('click', async () => {
+  const code = document.getElementById('join-code-input').value.trim().toUpperCase();
+  const errorEl = document.getElementById('join-error');
+  errorEl.classList.add('hidden');
+  if (!code) return;
+
+  if (!firebaseReady) {
+    errorEl.textContent = 'Connection not configured yet.';
+    errorEl.classList.remove('hidden');
+    return;
+  }
+
+  try {
+    const snap = await DataLayer.sessionRef(code).once('value');
+    if (!snap.exists()) {
+      errorEl.textContent = 'Session not found. Check the code and try again.';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+    State.sessionCode = code;
+    State.participantId = getOrCreateParticipantId();
+    await DataLayer.registerParticipant(code, State.participantId);
+    enterAttendeeSession(code);
+  } catch (err) {
+    errorEl.textContent = 'Could not connect. Check your network and try again.';
+    errorEl.classList.remove('hidden');
+  }
+});
+
+document.getElementById('join-code-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') document.getElementById('btn-join-submit').click();
+});
+
+/* ---------- Attendee session ---------- */
+function enterAttendeeSession(code) {
+  showView('attendee');
+  showAttendeeSkeleton();
+  let firstSnapshot = true;
+  DataLayer.onSessionChange(code, (snap) => {
+    firstSnapshot = false;
+    const session = snap.val();
+    if (!session) { renderAttendeeWaiting(); return; }
+    const questions = session.questions || {};
+    const openQ = Object.entries(questions).find(([id, q]) => q.status === 'open');
+    const closedQs = Object.entries(questions).filter(([id, q]) => q.status === 'closed');
+
+    if (openQ) {
+      renderAttendeeQuestion(code, openQ[0], openQ[1]);
+    } else if (closedQs.length > 0) {
+      const recent = closedQs.sort((a, b) => (b[1].closedAt || 0) - (a[1].closedAt || 0))[0];
+      renderAttendeeClosed(recent[0], recent[1]);
+    } else {
+      renderAttendeeWaiting();
+    }
+  });
+}
+
+function showAttendeeSkeleton() {
+  document.getElementById('attendee-waiting').classList.add('hidden');
+  document.getElementById('attendee-question').classList.add('hidden');
+  document.getElementById('attendee-voted').classList.add('hidden');
+  document.getElementById('attendee-closed').classList.add('hidden');
+  document.getElementById('attendee-skeleton').classList.remove('hidden');
+}
+
+function renderAttendeeWaiting() {
+  document.getElementById('attendee-skeleton').classList.add('hidden');
+  document.getElementById('attendee-waiting').classList.remove('hidden');
+  document.getElementById('attendee-question').classList.add('hidden');
+  document.getElementById('attendee-voted').classList.add('hidden');
+  document.getElementById('attendee-closed').classList.add('hidden');
+}
+
+function renderAttendeeQuestion(code, qid, qdata) {
+  const votes = qdata.votes || {};
+  const alreadyVoted = votes.hasOwnProperty(State.participantId);
+
+  document.getElementById('attendee-skeleton').classList.add('hidden');
+  document.getElementById('attendee-waiting').classList.add('hidden');
+  document.getElementById('attendee-closed').classList.add('hidden');
+
+  if (alreadyVoted) {
+    document.getElementById('attendee-question').classList.add('hidden');
+    document.getElementById('attendee-voted').classList.remove('hidden');
+    return;
+  }
+
+  document.getElementById('attendee-voted').classList.add('hidden');
+  document.getElementById('attendee-question').classList.remove('hidden');
+  document.getElementById('attendee-question-text').textContent = qdata.text;
+
+  const optionsEl = document.getElementById('attendee-options');
+  optionsEl.innerHTML = '';
+  (qdata.options || []).forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-card';
+    btn.textContent = opt;
+    btn.addEventListener('click', async () => {
+      // Participant Pulse: visible press feedback before the network round-trip
+      // resolves, so the tap always feels instant even on a slow connection.
+      btn.disabled = true;
+      btn.classList.add('option-card-selected');
+      await DataLayer.castVote(code, qid, State.participantId, idx);
+    });
+    optionsEl.appendChild(btn);
+  });
+}
+
+function renderAttendeeClosed(qid, qdata) {
+  document.getElementById('attendee-skeleton').classList.add('hidden');
+  document.getElementById('attendee-waiting').classList.add('hidden');
+  document.getElementById('attendee-question').classList.add('hidden');
+  document.getElementById('attendee-voted').classList.add('hidden');
+  document.getElementById('attendee-closed').classList.remove('hidden');
+
+  document.getElementById('attendee-closed-text').textContent = qdata.text;
+  const mode = qdata.revealMode || 'live';
+  const revealed = mode === 'live' ? true : (qdata.revealed === true);
+  const resultsEl = document.getElementById('attendee-results');
+
+  if (!revealed) {
+    resultsEl.innerHTML = `
+      <div class="reveal-waiting">
+        <div class="reveal-waiting-sub" style="margin-top:0;">Results will appear when the host reveals them</div>
+      </div>`;
+    return;
+  }
+
+  const counts = tallyVotes(qdata);
+  const total = counts.reduce((a, b) => a + b, 0);
+
+  resultsEl.innerHTML = '';
+  (qdata.options || []).forEach((opt, idx) => {
+    const pct = total > 0 ? Math.round((counts[idx] / total) * 100) : 0;
+    const colorClass = TALLY_COLORS[idx % TALLY_COLORS.length];
+    const row = document.createElement('div');
+    row.className = 'tally-bar-row';
+    row.innerHTML = `
+      <span class="tally-label">${escapeHtml(opt)}</span>
+      <div class="tally-track"><div class="tally-fill ${colorClass}" style="width:${pct}%"></div></div>
+      <span class="tally-count">${pct}%</span>`;
+    resultsEl.appendChild(row);
+  });
+}
+
+/* ---------- Host: Build Session ---------- */
+function renderQuestionBank() {
+  const list = document.getElementById('question-bank-list');
+  const empty = document.getElementById('bank-empty');
+  list.innerHTML = '';
+
+  if (State.questionBank.length === 0) {
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+
+  State.questionBank.forEach((q, i) => {
+    const item = document.createElement('div');
+    item.className = 'bank-item';
+    item.innerHTML = `<span class="bank-item-text"><span class="bank-item-num">${String(i + 1).padStart(2, '0')}</span>${escapeHtml(q.text)}</span>`;
+    const actions = document.createElement('div');
+    actions.className = 'item-actions';
+
+    const editBtn = document.createElement('button');
+    editBtn.className = 'btn btn-ghost btn-sm';
+    editBtn.textContent = 'Edit';
+    editBtn.addEventListener('click', () => openQuestionEditor(i));
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'icon-btn';
+    delBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>';
+    delBtn.setAttribute('aria-label', 'Delete question');
+    delBtn.addEventListener('click', () => {
+      State.questionBank.splice(i, 1);
+      renderQuestionBank();
+      persistDraft();
+    });
+
+    actions.appendChild(editBtn);
+    actions.appendChild(delBtn);
+    item.appendChild(actions);
+    list.appendChild(item);
+  });
+}
+
+function persistDraft() {
+  localStorage.setItem('tally_draft_bank', JSON.stringify(State.questionBank));
+}
+function loadDraft() {
+  const saved = localStorage.getItem('tally_draft_bank');
+  if (saved) {
+    try { State.questionBank = JSON.parse(saved); } catch (e) { State.questionBank = []; }
+  }
+}
+
+let editingIndex = null;
+let qeRevealMode = null; // no default — moderator must choose, per design decision
+
+function openQuestionEditor(index) {
+  editingIndex = index;
+  const q = index !== null ? State.questionBank[index] : { text: '', options: ['', ''], revealMode: null };
+  document.getElementById('qe-text').value = q.text;
+  renderOptionInputs(q.options);
+  setRevealToggle(q.revealMode || null);
+  showView('question-editor');
+}
+
+function setRevealToggle(mode) {
+  qeRevealMode = mode;
+  document.querySelectorAll('.reveal-toggle-option').forEach(btn => {
+    btn.classList.toggle('selected', btn.dataset.mode === mode);
+  });
+}
+
+document.querySelectorAll('.reveal-toggle-option').forEach(btn => {
+  btn.addEventListener('click', () => setRevealToggle(btn.dataset.mode));
+});
+
+function renderOptionInputs(options) {
+  const container = document.getElementById('qe-options');
+  container.innerHTML = '';
+  options.forEach((opt, i) => addOptionRow(opt));
+}
+
+function addOptionRow(value) {
+  const container = document.getElementById('qe-options');
+  const row = document.createElement('div');
+  row.className = 'qe-option-row';
+  const num = document.createElement('span');
+  num.className = 'qe-option-num';
+  num.textContent = (container.children.length + 1) + '.';
+  const input = document.createElement('input');
+  input.className = 'input-field qe-option-input';
+  input.value = value || '';
+  input.placeholder = 'Option text';
+  const removeBtn = document.createElement('button');
+  removeBtn.className = 'qe-remove-option';
+  removeBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  removeBtn.addEventListener('click', () => { row.remove(); renumberOptions(); });
+  row.appendChild(num);
+  row.appendChild(input);
+  row.appendChild(removeBtn);
+  container.appendChild(row);
+}
+
+function renumberOptions() {
+  document.querySelectorAll('.qe-option-row').forEach((row, i) => {
+    row.querySelector('.qe-option-num').textContent = (i + 1) + '.';
+  });
+}
+
+document.getElementById('qe-add-option').addEventListener('click', () => addOptionRow(''));
+
+document.getElementById('qe-cancel').addEventListener('click', () => {
+  editingIndex = null;
+  showView(State.sessionCode ? 'dashboard' : 'build');
+});
+
+document.getElementById('qe-save').addEventListener('click', () => {
+  const text = document.getElementById('qe-text').value.trim();
+  const optionInputs = Array.from(document.querySelectorAll('.qe-option-input'));
+  const options = optionInputs.map(i => i.value.trim()).filter(v => v.length > 0);
+
+  if (!text || options.length < 2) {
+    alert('A question needs text and at least two options.');
+    return;
+  }
+  if (!qeRevealMode) {
+    alert('Choose a results reveal mode — Live or Hidden — before saving.');
+    return;
+  }
+  const questionObj = { text, options, revealMode: qeRevealMode };
+
+  if (State.sessionCode) {
+    const qid = generateId();
+    DataLayer.addQuestion(State.sessionCode, qid, { ...questionObj, status: 'draft', createdAt: Date.now(), revealed: qeRevealMode === 'live' });
+    showView('dashboard');
+  } else {
+    if (editingIndex !== null) State.questionBank[editingIndex] = questionObj;
+    else State.questionBank.push(questionObj);
+    persistDraft();
+    renderQuestionBank();
+    showView('build');
+  }
+  editingIndex = null;
+});
+
+
+
+document.getElementById('btn-add-question').addEventListener('click', () => openQuestionEditor(null));
+document.getElementById('btn-add-question-live').addEventListener('click', () => openQuestionEditor(null));
+
+/* ---------- Host: Start Session ---------- */
+document.getElementById('btn-start-session').addEventListener('click', async () => {
+  if (State.questionBank.length === 0) {
+    alert('Add at least one question before starting.');
+    return;
+  }
+  if (!firebaseReady) {
+    alert('Firebase is not configured yet. Add your project config at the top of the file.');
+    return;
+  }
+
+  const code = generateSessionCode();
+  const now = Date.now();
+  const questionsObj = {};
+  State.questionBank.forEach(q => {
+    const qid = generateId();
+    const revealMode = q.revealMode || 'live'; // questions imported from older exports may predate this field
+    questionsObj[qid] = {
+      text: q.text,
+      options: q.options,
+      status: 'draft',
+      createdAt: now,
+      revealMode: revealMode,
+      revealed: revealMode === 'live', // hidden-mode questions start unrevealed; live mode has nothing to hide
+    };
+  });
+
+  const sessionData = {
+    createdAt: now,
+    expiresAt: now + (3 * 60 * 60 * 1000),
+    status: 'live',
+    questions: questionsObj,
+  };
+
+  await DataLayer.createSession(code, sessionData);
+  State.sessionCode = code;
+  enterHostDashboard(code);
+});
+
+/* ---------- Host: Dashboard ---------- */
+function enterHostDashboard(code) {
+  showView('dashboard');
+  document.getElementById('session-code-display').textContent = code;
+  renderJoinQR(code);
+
+  DataLayer.onSessionChange(code, (snap) => {
+    const session = snap.val();
+    if (!session) return;
+    renderDashboard(code, session);
+    checkExpiryWarning(session);
+  });
+}
+
+function renderJoinQR(code) {
+  const qrContainer = document.getElementById('session-qr');
+  qrContainer.innerHTML = '';
+  if (window.location.protocol === 'file:') {
+    qrContainer.style.background = 'transparent';
+    qrContainer.innerHTML = '<div style="font-size:10px; color:var(--text-faint); width:56px; line-height:1.3;">Deploy to enable QR</div>';
+    return;
+  }
+  const joinUrl = window.location.origin + window.location.pathname + '?join=' + code;
+
+  if (typeof QRCode === 'undefined') {
+    // QR library failed to load (CDN unreachable, ad-blocker, offline) — fall back to a
+    // readable join URL rather than showing a blank box. The 5-char code is still the
+    // primary join path either way.
+    qrContainer.style.background = 'transparent';
+    qrContainer.innerHTML = '<div style="font-size:9px; color:var(--text-faint); width:56px; line-height:1.3; word-break:break-all;">QR unavailable — use code</div>';
+    return;
+  }
+
+  try {
+    new QRCode(qrContainer, {
+      text: joinUrl,
+      width: 56,
+      height: 56,
+      colorDark: '#0A0C0E',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  } catch (err) {
+    qrContainer.style.background = 'transparent';
+    qrContainer.innerHTML = '<div style="font-size:9px; color:var(--text-faint); width:56px; line-height:1.3;">QR unavailable — use code</div>';
+  }
+}
+
+function checkExpiryWarning(session) {
+  const warningEl = document.getElementById('session-expiry-warning');
+  const remaining = session.expiresAt - Date.now();
+  if (remaining < 30 * 60 * 1000 && remaining > 0) {
+    warningEl.textContent = 'Expires in ' + Math.max(1, Math.round(remaining / 60000)) + ' min';
+    warningEl.classList.remove('hidden');
+  } else {
+    warningEl.classList.add('hidden');
+  }
+}
+
+function renderDashboard(code, session) {
+  const questions = session.questions || {};
+  const entries = Object.entries(questions);
+  const openEntry = entries.find(([id, q]) => q.status === 'open');
+  const draftEntries = entries.filter(([id, q]) => q.status === 'draft');
+  const lastClosed = entries.filter(([id, q]) => q.status === 'closed')
+    .sort((a, b) => (b[1].closedAt || 0) - (a[1].closedAt || 0))[0];
+
+  document.getElementById('dashboard-idle').classList.add('hidden');
+  document.getElementById('dashboard-live-wrap').classList.add('hidden');
+  document.getElementById('dashboard-closed-wrap').classList.add('hidden');
+
+  if (openEntry) {
+    const [qid, qdata] = openEntry;
+    const isNewQuestion = State.activeQuestionId !== qid;
+    State.activeQuestionId = qid;
+    document.getElementById('dashboard-live-wrap').classList.remove('hidden');
+    document.getElementById('dashboard-question-text').textContent = qdata.text;
+    renderLiveTally(qdata, 'dashboard-tally', isNewQuestion);
+    renderPreviewPane('preview-scale-live', code, qid, qdata, false);
+    updateRevealControls(code, qid, qdata);
+    document.getElementById('btn-close-question').onclick = () => DataLayer.closeQuestion(code, qid);
+  } else if (lastClosed) {
+    const [qid, qdata] = lastClosed;
+    const isNewQuestion = State.activeQuestionId !== qid;
+    State.activeQuestionId = qid;
+    document.getElementById('dashboard-closed-wrap').classList.remove('hidden');
+    document.getElementById('dashboard-closed-text').textContent = qdata.text;
+    renderLiveTally(qdata, 'dashboard-final-tally', isNewQuestion);
+    renderPreviewPane('preview-scale-closed', code, qid, qdata, true);
+    updateRevealControls(code, qid, qdata, true);
+    const nextBtn = document.getElementById('btn-next-question');
+    if (draftEntries.length === 0) {
+      nextBtn.disabled = true;
+      nextBtn.textContent = 'No more questions — add one or end session';
+    } else {
+      nextBtn.disabled = false;
+      nextBtn.textContent = 'Open Next Question';
+      nextBtn.onclick = () => DataLayer.openQuestion(code, draftEntries[0][0]);
+    }
+  } else {
+    State.activeQuestionId = null;
+    document.getElementById('dashboard-idle').classList.remove('hidden');
+    renderDraftList(code, draftEntries);
+  }
+
+  document.getElementById('participant-count').textContent =
+
+    Object.keys(session.participants || {}).length + ' joined';
+}
+
+/* Shows/hides the "Show Results" button and the live-override toggle depending
+   on the question's reveal mode and whether it's already been revealed. */
+function updateRevealControls(code, qid, qdata, isClosedView) {
+  const revealBtnId = isClosedView ? 'btn-reveal-closed' : 'btn-reveal-live';
+  const btn = document.getElementById(revealBtnId);
+  if (!btn) return;
+
+  const mode = qdata.revealMode || 'live';
+  const revealed = qdata.revealed !== false; // live-mode questions default revealed=true
+
+  if (mode === 'hidden' && !revealed) {
+    btn.classList.remove('hidden');
+    btn.onclick = () => DataLayer.questionRef(code, qid).update({ revealed: true });
+  } else {
+    btn.classList.add('hidden');
+  }
+}
+
+/* Mirrors what an attendee currently sees into the scaled preview pane.
+   This is a read-only reflection — no click handlers, no participant-specific
+   voted state — since it represents "what the room sees," not any one person.
+*/
+function renderPreviewPane(targetId, code, qid, qdata, isClosed) {
+  const target = document.getElementById(targetId);
+  if (!target) return;
+
+  if (!isClosed) {
+    target.innerHTML = `
+      <div class="attendee-inner" style="padding-top:60px;">
+        <div class="attendee-question-text">${escapeHtml(qdata.text)}</div>
+        <div style="margin-top:28px;">
+          ${(qdata.options || []).map(opt => `<div class="option-card" style="cursor:default;">${escapeHtml(opt)}</div>`).join('')}
+        </div>
+      </div>`;
+    return;
+  }
+
+  const mode = qdata.revealMode || 'live';
+  const revealed = mode === 'live' ? true : (qdata.revealed === true);
+
+  if (!revealed) {
+    target.innerHTML = `
+      <div class="attendee-inner" style="padding-top:60px;">
+        <div class="eyebrow" style="text-align:center;">Final results</div>
+        <div class="attendee-question-text" style="font-size:18px; margin-bottom:24px;">${escapeHtml(qdata.text)}</div>
+        <div class="reveal-waiting">
+          <div class="reveal-waiting-sub" style="margin-top:0;">Results will appear when the host reveals them</div>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const counts = tallyVotes(qdata);
+  const total = counts.reduce((a, b) => a + b, 0);
+  const rows = (qdata.options || []).map((opt, idx) => {
+    const pct = total > 0 ? Math.round((counts[idx] / total) * 100) : 0;
+    const colorClass = TALLY_COLORS[idx % TALLY_COLORS.length];
+    return `<div class="tally-bar-row">
+      <span class="tally-label">${escapeHtml(opt)}</span>
+      <div class="tally-track"><div class="tally-fill ${colorClass}" style="width:${pct}%"></div></div>
+      <span class="tally-count">${pct}%</span>
+    </div>`;
+  }).join('');
+
+  target.innerHTML = `
+    <div class="attendee-inner" style="padding-top:60px;">
+      <div class="eyebrow" style="text-align:center;">Final results</div>
+      <div class="attendee-question-text" style="font-size:18px; margin-bottom:24px;">${escapeHtml(qdata.text)}</div>
+      <div>${rows}</div>
+    </div>`;
+}
+
+function renderDraftList(code, draftEntries) {
+  const list = document.getElementById('dashboard-question-list');
+  const empty = document.getElementById('dashboard-empty-drafts');
+  list.innerHTML = '';
+
+  if (draftEntries.length === 0) {
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+
+  draftEntries.forEach(([qid, qdata], i) => {
+    const item = document.createElement('div');
+    item.className = 'draft-item';
+    const modeTag = (qdata.revealMode || 'live') === 'hidden' ? '<span class="mode-tag mode-tag-hidden">Hidden</span>' : '<span class="mode-tag">Live</span>';
+    item.innerHTML = `<span class="draft-item-text"><span class="bank-item-num">${String(i + 1).padStart(2, '0')}</span>${escapeHtml(qdata.text)} ${modeTag}</span>`;
+    const openBtn = document.createElement('button');
+    openBtn.className = 'btn btn-primary btn-sm';
+    openBtn.textContent = 'Open';
+    openBtn.addEventListener('click', () => DataLayer.openQuestion(code, qid));
+    item.appendChild(openBtn);
+    list.appendChild(item);
+  });
+}
+
+function tallyVotes(qdata) {
+  const votes = qdata.votes || {};
+  const counts = (qdata.options || []).map(() => 0);
+  Object.values(votes).forEach(optionIdx => { if (counts[optionIdx] !== undefined) counts[optionIdx]++; });
+  return counts;
+}
+
+function getComparisonCounts(qdata) {
+  if (!State.compareMode || !State.importedResults) return null;
+  const match = Object.values(State.importedResults).find(q => q.text === qdata.text);
+  if (!match) return null;
+  const counts = (qdata.options || []).map(() => 0);
+  const votes = match.votes || {};
+  Object.values(votes).forEach(optionIdx => { if (counts[optionIdx] !== undefined) counts[optionIdx]++; });
+  return counts;
+}
+
+/* Renders tally bars into the given container.
+   - In 'live' mode, bars always show current counts (animates smoothly as votes land).
+   - In 'hidden' mode while unrevealed, shows a waiting state with the response
+     count but no breakdown — attendees and moderator see the same suspense.
+   - On the moment a hidden question becomes revealed (isNewReveal flag), bars
+     animate from 0% with a staggered bar-by-bar drumroll, matching the
+     "theatrical reveal" direction over a simultaneous one.
+*/
+let lastRevealedState = {}; // tracks qid -> revealed boolean we last rendered, to detect the reveal transition
+
+function renderLiveTally(qdata, containerId, isNewQuestion) {
+  const counts = tallyVotes(qdata);
+  const total = counts.reduce((a, b) => a + b, 0);
+  const mode = qdata.revealMode || 'live';
+  const revealed = mode === 'live' ? true : (qdata.revealed === true);
+  const qKey = containerId + ':' + (qdata.text || '');
+
+  const tallyEl = document.getElementById(containerId);
+  if (!tallyEl) return;
+
+  if (!revealed) {
+    tallyEl.innerHTML = `
+      <div class="reveal-waiting">
+        <div class="reveal-waiting-count">${total}</div>
+        <div class="reveal-waiting-label">response${total === 1 ? '' : 's'} collected</div>
+        <div class="reveal-waiting-sub">Results are hidden until you reveal them</div>
+      </div>`;
+    lastRevealedState[qKey] = false;
+    return;
+  }
+
+  const justRevealed = lastRevealedState[qKey] === false; // was hidden last render, now isn't — trigger the drumroll
+  lastRevealedState[qKey] = true;
+
+  const compareCounts = getComparisonCounts(qdata);
+  const compareTotal = compareCounts ? compareCounts.reduce((a, b) => a + b, 0) : 0;
+  const shouldAnimateIn = justRevealed || isNewQuestion;
+
+  tallyEl.innerHTML = '';
+  (qdata.options || []).forEach((opt, idx) => {
+    const pct = total > 0 ? Math.round((counts[idx] / total) * 100) : 0;
+    const colorClass = TALLY_COLORS[idx % TALLY_COLORS.length];
+
+    let compareHtml = '';
+    if (compareCounts) {
+      const cPct = compareTotal > 0 ? Math.round((compareCounts[idx] / compareTotal) * 100) : 0;
+      compareHtml = `<div class="tally-compare-track"><div class="tally-compare-fill" style="width:${cPct}%"></div></div>
+        <div class="tally-compare-label">Last time: ${cPct}%</div>`;
+    }
+
+    const row = document.createElement('div');
+    row.className = 'tally-bar-row';
+    row.innerHTML = `
+      <span class="tally-label">${escapeHtml(opt)}</span>
+      <div>
+        <div class="tally-track"><div class="tally-fill ${colorClass}" data-target-width="${pct}" style="width:${shouldAnimateIn ? '0%' : pct + '%'}"></div></div>
+        ${compareHtml}
+      </div>
+      <span class="tally-count">${counts[idx]} · ${pct}%</span>`;
+    tallyEl.appendChild(row);
+  });
+
+  if (shouldAnimateIn) {
+    // Staggered drumroll: each bar's transition starts slightly after the previous one.
+    const fills = tallyEl.querySelectorAll('.tally-fill');
+    requestAnimationFrame(() => {
+      fills.forEach((fill, i) => {
+        const target = fill.dataset.targetWidth;
+        setTimeout(() => { fill.style.width = target + '%'; }, i * 140);
+      });
+    });
+  }
+}
+
+
+
+/* ---------- Host: End Session → Export + Report ---------- */
+document.getElementById('btn-end-session').addEventListener('click', async () => {
+  if (!confirm('End this session? This will generate the final report and close the session for all attendees.')) return;
+
+  const snap = await DataLayer.getSessionOnce ? await DataLayer.getSessionOnce(State.sessionCode) : await DataLayer.sessionRef(State.sessionCode).once('value');
+  const session = snap.val();
+  const exportData = {
+    appVersion: 'tally-ars-v1',
+    sessionCode: State.sessionCode,
+    exportedAt: Date.now(),
+    session: session,
+  };
+
+  State.lastExport = exportData;
+  DataLayer.offSession(State.sessionCode);
+  await DataLayer.deleteSession(State.sessionCode);
+
+  document.getElementById('btn-download-json').disabled = false;
+  document.getElementById('btn-download-report').disabled = false;
+  document.getElementById('export-json-sub').textContent = 'Session ' + State.sessionCode + ' · ready to download';
+  document.getElementById('export-pdf-sub').textContent = 'Session ' + State.sessionCode + ' · ready to download';
+
+  renderReport(exportData);
+  showView('report');
+});
+
+function renderReport(exportData) {
+  const session = exportData.session;
+  const questions = Object.entries(session.questions || {});
+  const totalParticipants = Object.keys(session.participants || {}).length;
+  const totalVotes = questions.reduce((sum, [id, q]) => sum + Object.keys(q.votes || {}).length, 0);
+
+  document.getElementById('report-session-sub').textContent =
+    'Session ' + exportData.sessionCode + ' · ' + new Date(exportData.exportedAt).toLocaleString();
+
+  const summaryBar = document.getElementById('report-summary-bar');
+  summaryBar.innerHTML = `
+    <div class="report-stat"><div class="num">${questions.length}</div><div class="label">Questions</div></div>
+    <div class="report-stat"><div class="num">${totalParticipants}</div><div class="label">Attendees</div></div>
+    <div class="report-stat"><div class="num">${totalVotes}</div><div class="label">Total votes</div></div>
+  `;
+
+  const content = document.getElementById('report-content');
+  content.innerHTML = '';
+  questions.forEach(([qid, qdata], i) => {
+    const counts = tallyVotes(qdata);
+    const total = counts.reduce((a, b) => a + b, 0);
+    const block = document.createElement('div');
+    block.className = 'report-question-block';
+    let rows = (qdata.options || []).map((opt, idx) => {
+      const pct = total > 0 ? Math.round((counts[idx] / total) * 100) : 0;
+      const colorClass = TALLY_COLORS[idx % TALLY_COLORS.length];
+      return `<div class="report-result-row">
+        <div>
+          <span>${escapeHtml(opt)}</span>
+          <div class="report-result-bar-bg"><div class="report-result-bar-fill ${colorClass.replace('c', 'tally-fill c')}" style="width:${pct}%"></div></div>
+        </div>
+        <span style="text-align:right; font-family:var(--font-mono);">${counts[idx]} · ${pct}%</span>
+      </div>`;
+    }).join('');
+    block.innerHTML = `<div class="report-q-title">${i + 1}. ${escapeHtml(qdata.text)}</div><div class="report-total">${total} responses</div>${rows}`;
+    content.appendChild(block);
+  });
+}
+
+document.getElementById('btn-download-json').addEventListener('click', () => {
+  if (!State.lastExport) return;
+  const blob = new Blob([JSON.stringify(State.lastExport, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'tally-session-' + State.lastExport.sessionCode + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('btn-download-report').addEventListener('click', () => {
+  // Simple print-to-PDF path for v1 — opens the browser print dialog scoped to report content.
+  window.print();
+});
+
+document.getElementById('btn-new-session').addEventListener('click', () => {
+  State.sessionCode = null;
+  State.questionBank = [];
+  State.activeQuestionId = null;
+  State.compareMode = false;
+  State.importedResults = null;
+  localStorage.removeItem('tally_draft_bank');
+  showView('build');
+  renderQuestionBank();
+});
+
+/* ---------- Host: Import Session ---------- */
+document.getElementById('btn-import-session').addEventListener('click', () => {
+  document.getElementById('import-file-input').click();
+});
+
+document.getElementById('import-file-input').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (evt) => {
+    try {
+      const data = JSON.parse(evt.target.result);
+      handleImportedSession(data);
+    } catch (err) {
+      alert('Could not read that file — it may not be a valid Tally ARS export.');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+});
+
+function handleImportedSession(data) {
+  const questions = Object.values((data.session && data.session.questions) || {});
+  const totalResponses = questions.reduce((sum, q) => sum + Object.keys(q.votes || {}).length, 0);
+
+  const useAsComparison = confirm(
+    `Imported session: ${questions.length} question(s), ${totalResponses} prior responses.\n\n` +
+    `OK = Show as Comparison (prior results shown alongside new live results)\n` +
+    `Cancel = Start Fresh (clean slate, just reuse the questions)`
+  );
+
+  State.compareMode = useAsComparison;
+  State.importedResults = useAsComparison ? data.session.questions : null;
+  State.questionBank = questions.map(q => ({ text: q.text, options: q.options }));
+
+  persistDraft();
+  renderQuestionBank();
+  closeSettings();
+  showView('build');
+}
+
+/* ---------- Keyboard shortcuts (moderator only — dashboard view) ----------
+   Spacebar triggers whichever single primary action is currently visible on
+   the dashboard: open the next question, close the live question, or open
+   the next one after results. Guarded against firing while any text field,
+   the settings modal, or the question editor has focus, so a moderator
+   typing a question doesn't accidentally trigger "close question" mid-keystroke.
+*/
+document.addEventListener('keydown', (e) => {
+  if (e.code !== 'Space' && e.key !== ' ') return;
+
+  const activeTag = document.activeElement ? document.activeElement.tagName : '';
+  const isTyping = activeTag === 'INPUT' || activeTag === 'TEXTAREA';
+  const dashboardActive = document.querySelector('[data-view="dashboard"]').classList.contains('active');
+  const settingsOpen = !document.getElementById('settings-modal').classList.contains('hidden');
+
+  if (isTyping || !dashboardActive || settingsOpen) return;
+
+  e.preventDefault(); // stop the page from scrolling on spacebar
+
+  const liveVisible = !document.getElementById('dashboard-live-wrap').classList.contains('hidden');
+  const closedVisible = !document.getElementById('dashboard-closed-wrap').classList.contains('hidden');
+  const idleVisible = !document.getElementById('dashboard-idle').classList.contains('hidden');
+
+  if (liveVisible) {
+    document.getElementById('btn-close-question').click();
+  } else if (closedVisible) {
+    const nextBtn = document.getElementById('btn-next-question');
+    if (!nextBtn.disabled) nextBtn.click();
+  } else if (idleVisible) {
+    const firstOpenBtn = document.querySelector('#dashboard-question-list .btn-primary');
+    if (firstOpenBtn) firstOpenBtn.click();
+  }
+});
+
+/* ---------- Boot ---------- */
+loadDraft();
+renderQuestionBank();
+checkDeepLink();
+
+</script>
+</body>
+</html>
