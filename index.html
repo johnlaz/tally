@@ -2349,6 +2349,28 @@
           </div>
           <button class="btn btn-ghost btn-sm" id="btn-download-report" disabled>Download PDF</button>
         </div>
+
+        <div class="library-section-title" style="margin-top:18px; margin-bottom:10px;">Firebase Rules</div>
+        <div style="background:var(--surface-2); border:1px solid var(--border-soft); border-radius:var(--radius-sm); padding:12px 14px;">
+          <div class="settings-row-label" style="margin-bottom:6px;">Required for Share Results feature</div>
+          <div class="settings-row-sub" style="margin-bottom:10px;">The "Share Results" button requires a <code style="font-family:var(--font-mono); font-size:11px; color:var(--teal-bright);">results/</code> path in your Firebase Realtime Database rules. Paste this into <strong>Firebase Console → Realtime Database → Rules</strong>:</div>
+          <pre style="font-family:var(--font-mono); font-size:11px; color:var(--teal-bright); background:var(--bg); padding:10px 12px; border-radius:6px; overflow-x:auto; white-space:pre; margin:0;">{
+  "rules": {
+    "sessions": {
+      "$code": {
+        ".read": true,
+        ".write": true
+      }
+    },
+    "results": {
+      "$code": {
+        ".read": true,
+        ".write": true
+      }
+    }
+  }
+}</pre>
+        </div>
       </div>
 
       <div class="modal-panel" data-panel="display">
@@ -5216,9 +5238,18 @@ document.getElementById('btn-end-session').addEventListener('click', async () =>
   // results/{code} is independent and stays live until the moderator
   // retracts it from the report screen.
   if (choice === 'share') {
-    const payload = buildSharePayload(exportData);
-    await DataLayer.publishResults(State.sessionCode, payload);
-    shareResultsActive = true;
+    try {
+      const payload = buildSharePayload(exportData);
+      await DataLayer.publishResults(State.sessionCode, payload);
+      shareResultsActive = true;
+    } catch (err) {
+      console.error('publishResults failed during end-session:', err);
+      // Don't block ending the session — just warn and continue without sharing.
+      await appAlert(
+        'Results could not be shared — your Firebase rules likely need to allow the "results/" path. The session will still end normally.\n\nIn Firebase console → Realtime Database → Rules, add:\n"results": { ".read": true, ".write": true }',
+        { title: 'Could not share results' }
+      );
+    }
   }
 
   State.lastExport = exportData;
@@ -5404,20 +5435,32 @@ document.getElementById('btn-share-results').addEventListener('click', async () 
   const sub = document.getElementById('share-results-sub');
 
   if (shareResultsActive) {
-    await DataLayer.retractResults(code);
+    try {
+      await DataLayer.retractResults(code);
+    } catch (err) {
+      console.warn('retractResults failed (rules?):', err);
+    }
     shareResultsActive = false;
     card.classList.remove('active');
     btn.textContent = 'Share';
     btn.className = 'btn btn-ghost btn-sm';
     sub.textContent = 'Attendees still on their results screen will see the full tally and leaderboard.';
   } else {
-    const payload = buildSharePayload(State.lastExport);
-    await DataLayer.publishResults(code, payload);
-    shareResultsActive = true;
-    card.classList.add('active');
-    btn.textContent = 'Stop Sharing';
-    btn.className = 'btn btn-danger btn-sm';
-    sub.textContent = 'Results are live — attendees can see them now. Press Stop Sharing to retract.';
+    try {
+      const payload = buildSharePayload(State.lastExport);
+      await DataLayer.publishResults(code, payload);
+      shareResultsActive = true;
+      card.classList.add('active');
+      btn.textContent = 'Stop Sharing';
+      btn.className = 'btn btn-danger btn-sm';
+      sub.textContent = 'Results are live — attendees can see them now. Press Stop Sharing to retract.';
+    } catch (err) {
+      console.error('publishResults failed:', err);
+      await appAlert(
+        'Could not share results — your Firebase rules likely need to allow the "results/" path.\n\nIn the Firebase console → Realtime Database → Rules, make sure your rules include:\n\n"results": { ".read": true, ".write": true }',
+        { title: 'Firebase rules update needed' }
+      );
+    }
   }
 });
 
