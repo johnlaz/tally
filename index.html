@@ -394,6 +394,25 @@
     font-size: 14px;
   }
 
+  .app-dialog-title {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .app-dialog-body {
+    font-size: 14.5px;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+  .app-dialog-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+  .app-dialog-actions .btn { min-width: 88px; }
+
   /* ============================================
      ATTENDEE VIEW — amber accent, large tap targets
      ============================================ */
@@ -1324,6 +1343,51 @@
     .dashboard-footer { justify-content: stretch; }
     .dashboard-footer .btn { flex: 1; }
   }
+
+  /* ============================================
+     Print — scoped specifically to the report's
+     own content. Without this, "Download PDF"
+     printed whatever happened to be on screen
+     (usually the Settings modal that triggered
+     it), repeated across several blank-looking
+     pages. Everything is hidden by default; only
+     the report content is explicitly shown.
+     ============================================ */
+  @media print {
+    body::before, .blueprint-grid { display: none !important; }
+    html, body { background: #fff !important; }
+    body * { visibility: hidden; }
+    #print-report-root, #print-report-root * { visibility: visible; }
+    #print-report-root {
+      position: absolute; left: 0; top: 0; width: 100%;
+      background: #fff; color: #1A1A1A; padding: 24px;
+    }
+    #print-report-root .print-report-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      border-bottom: 2px solid #1A1A1A; padding-bottom: 12px; margin-bottom: 20px;
+    }
+    #print-report-root .print-report-title { font-family: var(--font-display); font-size: 24px; font-weight: 700; }
+    #print-report-root .print-report-meta { font-family: var(--font-mono); font-size: 11px; color: #555; }
+    /* The on-screen report relies on a dark surface for contrast. On paper,
+       which is always white regardless of theme, those same elements need
+       real borders and dark text instead — these are the actual class
+       names rendered by renderReport(), verified against the function
+       rather than guessed. */
+    #print-report-root .report-question-block {
+      background: #fff !important; border: 1px solid #ccc !important;
+      break-inside: avoid;
+    }
+    #print-report-root .report-q-title,
+    #print-report-root .report-total,
+    #print-report-root .report-result-row span,
+    #print-report-root .print-report-title,
+    #print-report-root .report-stat .num,
+    #print-report-root .report-stat .label {
+      color: #1A1A1A !important;
+    }
+    #print-report-root .report-result-bar-bg { background: #E5E5E5 !important; }
+    @page { margin: 1.4cm; }
+  }
 </style>
 </head>
 <body>
@@ -1424,6 +1488,10 @@
     <div class="page">
       <div class="section-heading">Build session</div>
       <div class="section-sub">Build your deck of polls and slides. You can also add to it live once the session starts.</div>
+
+      <div class="eyebrow" style="margin-top:4px;">Session label (optional)</div>
+      <input id="session-label-input" class="input-field" placeholder="e.g. Q3 All-Hands, Tuesday Training" maxlength="80">
+      <div class="settings-row-sub" style="margin-top:4px; margin-bottom:18px;">Shown on the report and used to name your export file — easier to find later than a session code alone.</div>
 
       <div id="question-bank-list"></div>
       <div id="bank-empty" class="empty-state hidden">
@@ -1594,7 +1662,7 @@
       </button>
     </div>
     <div class="page">
-      <div class="section-heading">Session report</div>
+      <div class="section-heading" id="report-heading">Session report</div>
       <div class="section-sub" id="report-session-sub"></div>
 
       <div class="report-summary-bar" id="report-summary-bar"></div>
@@ -1605,6 +1673,7 @@
       </div>
 
       <div class="action-row-bottom">
+        <button class="btn btn-ghost" id="btn-rerun-session">Back to Build</button>
         <button class="btn btn-primary" id="btn-new-session">Start New Session</button>
       </div>
     </div>
@@ -1873,6 +1942,22 @@
   </div>
 </div>
 
+<!-- ===================== APP-THEMED DIALOG ===================== -->
+<!-- Replaces native alert()/confirm() everywhere in the app — those are
+     jarring system popups that break the whole "dark luxury" feel and, on
+     some mobile browsers, can be visually indistinguishable from an OS-
+     level security prompt. This single dialog serves both jobs: alert
+     mode shows one button, confirm mode shows two and resolves a promise. -->
+<div class="modal-overlay hidden" id="app-dialog" role="alertdialog" aria-modal="true">
+  <div class="modal-box" style="max-width:380px;">
+    <div class="modal-body" style="padding:28px 24px 24px;">
+      <div class="app-dialog-title" id="app-dialog-title"></div>
+      <div class="app-dialog-body" id="app-dialog-body"></div>
+      <div class="app-dialog-actions" id="app-dialog-actions"></div>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ============================================================
    TALLY ARS — Application Logic
@@ -1953,6 +2038,16 @@ const State = {
   compareMode: false,
   importedResults: null,
   lastExport: null,
+  // Optional human label for the current session — distinct from
+  // sessionCode (the random 5-character join code, which stays
+  // machine-generated for uniqueness). The label is what actually makes a
+  // session findable later; it's freeform and never required.
+  sessionLabel: '',
+  // True once the current session's export has been downloaded at least
+  // once. Reset to false whenever a new session starts. Checked before any
+  // exit from the report screen (rerun, start new, or navigating away) so
+  // a host is never surprised by silently losing data they meant to keep.
+  hasBackedUpExport: false,
   // Moderator display preferences — a device setting, not session data, so
   // it persists across every session this host runs from this browser
   // rather than living in Firebase or the per-session export.
@@ -2021,6 +2116,82 @@ function showView(name) {
   document.querySelectorAll('[data-view]').forEach(el => el.classList.remove('active'));
   const target = document.querySelector('[data-view="' + name + '"]');
   if (target) target.classList.add('active');
+  syncHistoryGuard(name);
+}
+
+/* ---------- Back / close protection ----------
+   Views where leaving by accident is genuinely costly: a live session
+   (host dashboard or attendee's own screen) or unsaved work in an editor
+   modal. Everything else (landing, build's own home base, join, report)
+   is safe to leave freely — Build is the deck home, not a state to
+   protect; only the editors stacked on top of it are.
+
+   The browser has no native concept of "screens" in a single-page app,
+   so without this, the physical/gesture back button does whatever the
+   browser would do on any plain page: leave entirely, often silently
+   losing a live session. This pushes a history entry on entering a
+   protected view and intercepts popstate to show an in-app confirmation
+   instead of letting the navigation happen, immediately restoring the
+   history entry if the person cancels so back isn't "spent" on a no-op. */
+const PROTECTED_VIEWS = ['dashboard', 'attendee', 'question-editor', 'slide-editor', 'report'];
+let historyGuardActive = false;
+
+function syncHistoryGuard(viewName) {
+  const shouldGuard = PROTECTED_VIEWS.includes(viewName);
+  if (shouldGuard && !historyGuardActive) {
+    history.pushState({ tallyGuard: true }, '');
+    historyGuardActive = true;
+  } else if (!shouldGuard && historyGuardActive) {
+    historyGuardActive = false;
+  }
+}
+
+window.addEventListener('popstate', () => {
+  if (!historyGuardActive) return;
+  // Immediately push the guard entry back so this back press doesn't
+  // silently consume the only history entry standing between the user
+  // and actually leaving — the confirmation, not the browser, decides.
+  history.pushState({ tallyGuard: true }, '');
+  showLeaveConfirm();
+});
+
+function showLeaveConfirm() {
+  const activeView = document.querySelector('[data-view].active');
+  const viewName = activeView ? activeView.getAttribute('data-view') : null;
+
+  // Report gets its own path: the backup check IS the gate here, so
+  // showing a second generic "leave?" dialog on top of it would just be
+  // two confirmations in a row asking roughly the same thing.
+  if (viewName === 'report') {
+    confirmBackupBeforeExit(() => {
+      historyGuardActive = false;
+      showView('landing');
+    });
+    return;
+  }
+
+  const isLive = viewName === 'dashboard' || viewName === 'attendee';
+  appConfirm({
+    title: isLive ? 'Leave the live session?' : 'Leave without saving?',
+    body: isLive
+      ? 'This session is still running. Going back won\'t end it, but you\'ll lose this view until you return.'
+      : 'Any unsaved changes here will be lost.',
+    confirmLabel: 'Leave',
+    cancelLabel: 'Stay',
+    danger: true,
+  }).then((confirmed) => {
+    if (!confirmed) return;
+    historyGuardActive = false;
+    if (viewName === 'question-editor' || viewName === 'slide-editor') {
+      showView('build');
+    } else if (viewName === 'dashboard') {
+      // Live session stays alive in Firebase regardless — this only
+      // changes what this device is looking at, never ends the session.
+      showView('build');
+    } else if (viewName === 'attendee') {
+      showView('join');
+    }
+  });
 }
 
 function escapeHtml(str) {
@@ -2028,6 +2199,100 @@ function escapeHtml(str) {
   div.textContent = str;
   return div.innerHTML;
 }
+
+/* ---------- App-themed dialog (replaces native alert/confirm) ----------
+   One shared modal serves both jobs. appAlert() shows a single
+   acknowledgement button; appConfirm() shows two and resolves true/false
+   based on which was pressed. Both return a Promise so call sites read
+   almost identically to the native functions they replace — `if (!confirm(...))`
+   becomes `if (!await appConfirm(...))` — without scattering bespoke
+   modal markup throughout the app for every individual warning. */
+let appDialogResolve = null;
+
+function closeAppDialog(result) {
+  document.getElementById('app-dialog').classList.add('hidden');
+  if (appDialogResolve) {
+    const resolve = appDialogResolve;
+    appDialogResolve = null;
+    resolve(result);
+  }
+}
+
+function renderAppDialog(opts) {
+  document.getElementById('app-dialog-title').textContent = opts.title || '';
+  document.getElementById('app-dialog-body').textContent = opts.body || '';
+
+  const actions = document.getElementById('app-dialog-actions');
+  actions.innerHTML = '';
+
+  if (opts.mode === 'alert') {
+    const okBtn = document.createElement('button');
+    okBtn.className = 'btn btn-primary';
+    okBtn.textContent = opts.confirmLabel || 'OK';
+    okBtn.addEventListener('click', () => closeAppDialog(true));
+    actions.appendChild(okBtn);
+  } else {
+    const cancelBtn = document.createElement('button');
+    cancelBtn.className = 'btn btn-ghost';
+    cancelBtn.textContent = opts.cancelLabel || 'Cancel';
+    cancelBtn.addEventListener('click', () => closeAppDialog(false));
+
+    const confirmBtn = document.createElement('button');
+    confirmBtn.className = opts.danger ? 'btn btn-danger' : 'btn btn-primary';
+    confirmBtn.textContent = opts.confirmLabel || 'Confirm';
+    confirmBtn.addEventListener('click', () => closeAppDialog(true));
+
+    actions.appendChild(cancelBtn);
+    actions.appendChild(confirmBtn);
+  }
+
+  document.getElementById('app-dialog').classList.remove('hidden');
+  // Focus the rightmost (primary) action so keyboard users land somewhere
+  // sensible immediately, matching how the native dialogs being replaced
+  // would have behaved.
+  const lastBtn = actions.lastElementChild;
+  if (lastBtn) lastBtn.focus();
+}
+
+function appAlert(message, opts) {
+  opts = opts || {};
+  return new Promise((resolve) => {
+    appDialogResolve = resolve;
+    renderAppDialog({ mode: 'alert', title: opts.title || 'Heads up', body: message, confirmLabel: opts.confirmLabel });
+  });
+}
+
+function appConfirm(opts) {
+  if (typeof opts === 'string') opts = { body: opts };
+  return new Promise((resolve) => {
+    appDialogResolve = resolve;
+    renderAppDialog({
+      mode: 'confirm',
+      title: opts.title || 'Are you sure?',
+      body: opts.body || '',
+      confirmLabel: opts.confirmLabel,
+      cancelLabel: opts.cancelLabel,
+      danger: opts.danger,
+    });
+  });
+}
+
+// Escape cancels (mirrors native confirm/alert dismissal); Enter confirms,
+// since the primary action button already holds focus by default.
+document.getElementById('app-dialog').addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeAppDialog(false);
+});
+
+/* Also catches an actual tab close / external navigation / refresh while a
+   live session or unsaved editor is open — the one case the popstate
+   handler above can't intercept, since there's no in-app UI possible at
+   that point. This is the browser's own native prompt; it cannot be
+   themed, but it's the real safety net underneath everything else here. */
+window.addEventListener('beforeunload', (e) => {
+  if (!historyGuardActive) return;
+  e.preventDefault();
+  e.returnValue = '';
+});
 
 /* ---------- Settings modal ---------- */
 function openSettings() {
@@ -2080,7 +2345,7 @@ function refreshGroqKeyStatus() {
 document.getElementById('btn-save-groq-key').addEventListener('click', () => {
   const value = document.getElementById('groq-api-key-input').value.trim();
   if (!value) {
-    alert('Paste a Groq API key first, or use Clear to remove the saved one.');
+    appAlert('Paste a Groq API key first, or use Clear to remove the saved one.', { title: 'No key entered' });
     return;
   }
   localStorage.setItem('tally_groq_key', value);
@@ -2482,11 +2747,18 @@ function renderQuestionBank() {
 
 function persistDraft() {
   localStorage.setItem('tally_draft_bank', JSON.stringify(State.questionBank));
+  localStorage.setItem('tally_session_label', State.sessionLabel || '');
 }
 function loadDraft() {
   const saved = localStorage.getItem('tally_draft_bank');
   if (saved) {
     try { State.questionBank = JSON.parse(saved); } catch (e) { State.questionBank = []; }
+  }
+  const savedLabel = localStorage.getItem('tally_session_label');
+  if (savedLabel) {
+    State.sessionLabel = savedLabel;
+    const labelInput = document.getElementById('session-label-input');
+    if (labelInput) labelInput.value = savedLabel;
   }
 }
 
@@ -2654,11 +2926,11 @@ document.getElementById('qe-save').addEventListener('click', () => {
   const options = optionInputs.map(i => i.value.trim()).filter(v => v.length > 0);
 
   if (!text || options.length < 2) {
-    alert('A question needs text and at least two options.');
+    appAlert('A question needs text and at least two options.', { title: 'Almost there' });
     return;
   }
   if (!qeRevealMode) {
-    alert('Choose a results reveal mode — Live or Hidden — before saving.');
+    appAlert('Choose a results reveal mode — Live or Hidden — before saving.', { title: 'Almost there' });
     return;
   }
   const questionObj = { type: 'poll', text, options, revealMode: qeRevealMode };
@@ -2697,6 +2969,11 @@ document.getElementById('choose-type-poll').addEventListener('click', () => {
 document.getElementById('choose-type-slide').addEventListener('click', () => {
   closeTypeChooser();
   openSlideEditor(null);
+});
+
+document.getElementById('session-label-input').addEventListener('input', (e) => {
+  State.sessionLabel = e.target.value;
+  persistDraft();
 });
 
 document.getElementById('btn-add-question').addEventListener('click', openTypeChooser);
@@ -2954,11 +3231,11 @@ document.getElementById('se-cancel').addEventListener('click', () => {
 
 document.getElementById('se-save').addEventListener('click', () => {
   if (!seContentType) {
-    alert('Choose what kind of slide this is — Image, Audio, or Text only.');
+    appAlert('Choose what kind of slide this is — Image, Audio, or Text only.', { title: 'Almost there' });
     return;
   }
   if ((seContentType === 'image' || seContentType === 'audio') && !seMediaData) {
-    alert('Choose a file for this slide, or switch to "Text only" if you don\'t need media.');
+    appAlert('Choose a file for this slide, or switch to "Text only" if you don\'t need media.', { title: 'Almost there' });
     return;
   }
   const caption = document.getElementById('se-caption').value.trim();
@@ -2990,11 +3267,11 @@ document.getElementById('se-save').addEventListener('click', () => {
 /* ---------- Host: Start Session ---------- */
 document.getElementById('btn-start-session').addEventListener('click', async () => {
   if (State.questionBank.length === 0) {
-    alert('Add at least one question before starting.');
+    await appAlert('Add at least one question before starting.', { title: 'Empty deck' });
     return;
   }
   if (!firebaseReady) {
-    alert('Firebase is not configured yet. Add your project config at the top of the file.');
+    await appAlert('Firebase is not configured yet. Add your project config at the top of the file.', { title: 'Not configured' });
     return;
   }
 
@@ -3029,11 +3306,13 @@ document.getElementById('btn-start-session').addEventListener('click', async () 
     expiresAt: now + (3 * 60 * 60 * 1000),
     status: 'live',
     theme: State.theme || 'dark',
+    label: State.sessionLabel || '',
     questions: questionsObj,
   };
 
   await DataLayer.createSession(code, sessionData);
   State.sessionCode = code;
+  State.hasBackedUpExport = false;
   enterHostDashboard(code);
 });
 
@@ -3411,7 +3690,14 @@ function renderLiveTally(qdata, containerId, isNewQuestion) {
 
 /* ---------- Host: End Session → Export + Report ---------- */
 document.getElementById('btn-end-session').addEventListener('click', async () => {
-  if (!confirm('End this session? This will generate the final report and close the session for all attendees.')) return;
+  const confirmed = await appConfirm({
+    title: 'End this session?',
+    body: 'This generates the final report and closes the session for every attendee — there\'s no resuming it after this.',
+    confirmLabel: 'End Session',
+    cancelLabel: 'Keep Running',
+    danger: true,
+  });
+  if (!confirmed) return;
 
   const snap = await DataLayer.getSessionOnce ? await DataLayer.getSessionOnce(State.sessionCode) : await DataLayer.sessionRef(State.sessionCode).once('value');
   const session = snap.val();
@@ -3440,7 +3726,9 @@ function renderReport(exportData) {
   const questions = Object.entries(session.questions || {});
   const totalParticipants = Object.keys(session.participants || {}).length;
   const totalVotes = questions.reduce((sum, [id, q]) => sum + Object.keys(q.votes || {}).length, 0);
+  const label = session.label;
 
+  document.getElementById('report-heading').textContent = label || 'Session report';
   document.getElementById('report-session-sub').textContent =
     'Session ' + exportData.sessionCode + ' · ' + new Date(exportData.exportedAt).toLocaleString();
 
@@ -3454,10 +3742,21 @@ function renderReport(exportData) {
   const content = document.getElementById('report-content');
   content.innerHTML = '';
   questions.forEach(([qid, qdata], i) => {
-    const counts = tallyVotes(qdata);
-    const total = counts.reduce((a, b) => a + b, 0);
     const block = document.createElement('div');
     block.className = 'report-question-block';
+
+    if (qdata.type === 'slide') {
+      // Slides have no votes to tally — showing "0 responses" here would be
+      // actively misleading, since that phrasing implies a poll nobody
+      // answered rather than a slide that was simply shown.
+      const caption = (qdata.slide && qdata.slide.caption) || '(untitled slide)';
+      block.innerHTML = `<div class="report-q-title">${i + 1}. ${escapeHtml(caption)}</div><div class="report-total">Slide — shown to the room, no votes collected</div>`;
+      content.appendChild(block);
+      return;
+    }
+
+    const counts = tallyVotes(qdata);
+    const total = counts.reduce((a, b) => a + b, 0);
     let rows = (qdata.options || []).map((opt, idx) => {
       const pct = total > 0 ? Math.round((counts[idx] / total) * 100) : 0;
       const colorClass = TALLY_COLORS[idx % TALLY_COLORS.length];
@@ -3474,23 +3773,135 @@ function renderReport(exportData) {
   });
 }
 
-document.getElementById('btn-download-json').addEventListener('click', () => {
+/* Builds a filesystem-safe slug from the session label, e.g.
+   "Q3 All-Hands!" -> "q3-all-hands". Falls back to nothing if there's no
+   label, so the filename degrades gracefully rather than showing
+   "undefined" or an empty double-dash. */
+function slugifyLabel(label) {
+  if (!label) return '';
+  return label.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40);
+}
+
+/* A readable date (2026-06-18) is a far better memory cue than a random
+   5-character session code when scanning a downloads folder weeks later
+   — the code is kept too, since it's still the unique cross-reference
+   back to what's shown on screen, just no longer the only identifying
+   information in the filename. */
+function buildExportFilename(exportData, extension) {
+  const date = new Date(exportData.exportedAt);
+  const dateStr = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
+  const slug = slugifyLabel(exportData.session && exportData.session.label);
+  const parts = ['tally', dateStr];
+  if (slug) parts.push(slug);
+  parts.push(exportData.sessionCode);
+  return parts.join('-') + '.' + extension;
+}
+
+function downloadSessionBackup() {
   if (!State.lastExport) return;
   const blob = new Blob([JSON.stringify(State.lastExport, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'tally-session-' + State.lastExport.sessionCode + '.json';
+  a.download = buildExportFilename(State.lastExport, 'json');
   a.click();
   URL.revokeObjectURL(url);
-});
+  State.hasBackedUpExport = true;
+}
+
+document.getElementById('btn-download-json').addEventListener('click', downloadSessionBackup);
 
 document.getElementById('btn-download-report').addEventListener('click', () => {
-  // Simple print-to-PDF path for v1 — opens the browser print dialog scoped to report content.
+  // The previous version called window.print() directly, which captured
+  // whatever was literally on screen — almost always the Settings modal
+  // this button lives inside, printed across several near-blank pages.
+  // This builds a throwaway print-only clone of the actual report content,
+  // positioned via the @media print rules to be the only visible thing,
+  // then removes itself once the print dialog closes so it never lingers
+  // in the live DOM.
+  closeSettings();
+
+  const existing = document.getElementById('print-report-root');
+  if (existing) existing.remove();
+
+  const root = document.createElement('div');
+  root.id = 'print-report-root';
+
+  const reportTitle = document.getElementById('report-heading').textContent || 'Tally — Session Report';
+  const header = document.createElement('div');
+  header.className = 'print-report-header';
+  header.innerHTML = `
+    <span class="print-report-title">${escapeHtml(reportTitle)}</span>
+    <span class="print-report-meta">${escapeHtml(document.getElementById('report-session-sub').textContent)}</span>
+  `;
+  root.appendChild(header);
+  root.appendChild(document.getElementById('report-summary-bar').cloneNode(true));
+  root.appendChild(document.getElementById('report-content').cloneNode(true));
+
+  document.body.appendChild(root);
   window.print();
+  State.hasBackedUpExport = true;
+  // afterprint fires once the dialog is dismissed, whether printed or
+  // cancelled — either way the clone has done its job and should go away.
+  window.addEventListener('afterprint', () => root.remove(), { once: true });
 });
 
-document.getElementById('btn-new-session').addEventListener('click', () => {
+/* ---------- Backup-before-exit gate ----------
+   Only relevant once a session has ended and produced real export data
+   (State.lastExport). Doesn't fire the moment the report renders — the
+   host should see their results uninterrupted — only when they actually
+   try to leave via Rerun, Start New, or navigating away from the report
+   screen entirely, and only if they haven't already downloaded a backup
+   this round. */
+function confirmBackupBeforeExit(proceedFn) {
+  if (!State.lastExport || State.hasBackedUpExport) {
+    proceedFn();
+    return;
+  }
+  appConfirm({
+    title: 'Back up this session first?',
+    body: 'You haven\'t downloaded a copy of this session yet. Save a quick backup now, or continue without one.',
+    confirmLabel: 'Save Backup',
+    cancelLabel: 'Continue Without Saving',
+  }).then((shouldBackup) => {
+    if (shouldBackup) downloadSessionBackup();
+    proceedFn();
+  });
+}
+
+function runRerunSession() {
+  // Reconstructs State.questionBank from the just-ended session's export
+  // rather than from Firebase (which no longer has this session — it was
+  // deleted the moment the session ended). Strips vote data, status, and
+  // timestamps, since those belong to the session that just finished, not
+  // to a fresh deck about to be reused. Order is preserved using each
+  // item's original createdAt, since Firebase objects don't guarantee key
+  // order the way an array does.
+  if (!State.lastExport || !State.lastExport.session) {
+    appAlert('No previous session data available to reload.', { title: 'Nothing to reload' });
+    return;
+  }
+
+  const entries = Object.entries(State.lastExport.session.questions || {});
+  entries.sort((a, b) => (a[1].createdAt || 0) - (b[1].createdAt || 0));
+
+  State.questionBank = entries.map(([qid, q]) => {
+    if (q.type === 'slide') {
+      return { type: 'slide', slide: q.slide };
+    }
+    return { type: 'poll', text: q.text, options: q.options, revealMode: q.revealMode || 'live' };
+  });
+
+  State.sessionCode = null;
+  State.activeQuestionId = null;
+  State.compareMode = false;
+  State.importedResults = null;
+  persistDraft();
+  showView('build');
+  renderQuestionBank();
+}
+
+function runStartNewSession() {
   State.sessionCode = null;
   State.questionBank = [];
   State.activeQuestionId = null;
@@ -3499,6 +3910,14 @@ document.getElementById('btn-new-session').addEventListener('click', () => {
   localStorage.removeItem('tally_draft_bank');
   showView('build');
   renderQuestionBank();
+}
+
+document.getElementById('btn-rerun-session').addEventListener('click', () => {
+  confirmBackupBeforeExit(runRerunSession);
+});
+
+document.getElementById('btn-new-session').addEventListener('click', () => {
+  confirmBackupBeforeExit(runStartNewSession);
 });
 
 /* ---------- Host: Import Session ---------- */
@@ -3515,26 +3934,33 @@ document.getElementById('import-file-input').addEventListener('change', (e) => {
       const data = JSON.parse(evt.target.result);
       handleImportedSession(data);
     } catch (err) {
-      alert('Could not read that file — it may not be a valid Tally ARS export.');
+      appAlert('Could not read that file — it may not be a valid Tally ARS export.', { title: 'Import failed' });
     }
   };
   reader.readAsText(file);
   e.target.value = '';
 });
 
-function handleImportedSession(data) {
+async function handleImportedSession(data) {
   const questions = Object.values((data.session && data.session.questions) || {});
   const totalResponses = questions.reduce((sum, q) => sum + Object.keys(q.votes || {}).length, 0);
 
-  const useAsComparison = confirm(
-    `Imported session: ${questions.length} question(s), ${totalResponses} prior responses.\n\n` +
-    `OK = Show as Comparison (prior results shown alongside new live results)\n` +
-    `Cancel = Start Fresh (clean slate, just reuse the questions)`
-  );
+  const useAsComparison = await appConfirm({
+    title: 'Imported ' + questions.length + ' question(s)',
+    body: totalResponses + ' prior response(s) found. Show those alongside new live results, or just reuse the questions on a clean slate?',
+    confirmLabel: 'Show as Comparison',
+    cancelLabel: 'Start Fresh',
+  });
 
   State.compareMode = useAsComparison;
   State.importedResults = useAsComparison ? data.session.questions : null;
-  State.questionBank = questions.map(q => ({ text: q.text, options: q.options }));
+  // Preserve type/slide/revealMode on import — a previous version of this
+  // stripped everything down to {text, options}, which silently dropped
+  // any slide in the imported deck and reset every poll's reveal mode.
+  State.questionBank = questions.map(q => {
+    if (q.type === 'slide') return { type: 'slide', slide: q.slide };
+    return { type: 'poll', text: q.text, options: q.options, revealMode: q.revealMode || 'live' };
+  });
 
   persistDraft();
   renderQuestionBank();
