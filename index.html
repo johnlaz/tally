@@ -1433,27 +1433,6 @@
   }
   @keyframes slideUp { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
-  /* QR expand button — sits on top of the QR thumbnail in the dash header */
-  .qr-expand-btn {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(5,6,7,0.55);
-    border: none;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    cursor: pointer;
-    transition: opacity 0.15s ease;
-    color: #fff;
-  }
-  .qr-expand-btn svg { width: 18px; height: 18px; }
-  .dash-qr-wrap:hover .qr-expand-btn { opacity: 1; }
-  .dash-qr-wrap { position: relative; cursor: pointer; }
-
   /* Full-screen join overlay */
   #join-screen-overlay {
     position: fixed;
@@ -1991,11 +1970,6 @@
           <div class="dash-code-label">Session code</div>
           <div class="dash-code" id="session-code-display"></div>
         </div>
-        <div class="dash-qr-wrap" id="session-qr" title="Show join screen">
-          <button class="qr-expand-btn" id="btn-show-join-screen" aria-label="Show join screen">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-          </button>
-        </div>
       </div>
       <div class="dash-meta">
         <div class="participant-pill" id="participant-pill">
@@ -2003,6 +1977,9 @@
           <span id="participant-count">0 joined</span>
         </div>
         <div class="expiry-warning hidden" id="session-expiry-warning"></div>
+        <button class="icon-btn" id="btn-show-join-screen" aria-label="Show join screen" title="Show join screen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="4" height="4" rx="0.5"/></svg>
+        </button>
         <button class="icon-btn" id="btn-toggle-visibility-strip" aria-label="Display options">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
         </button>
@@ -4499,52 +4476,11 @@ function enterHostDashboard(code) {
   });
 }
 
-function renderJoinQR(code) {
-  const qrContainer = document.getElementById('session-qr');
-  qrContainer.innerHTML = '';
-
-  // Preserve the expand button — renderJoinQR replaces innerHTML, which
-  // would wipe it. Re-append after clearing, then fill the rest of the
-  // container with the actual QR canvas/image as before.
-  const expandBtn = document.getElementById('btn-show-join-screen');
-  if (expandBtn) qrContainer.appendChild(expandBtn);
-
-  if (window.location.protocol === 'file:') {
-    qrContainer.style.background = 'transparent';
-    const msg = document.createElement('div');
-    msg.style.cssText = 'font-size:10px; color:var(--text-faint); width:56px; line-height:1.3;';
-    msg.textContent = 'Deploy to enable QR';
-    qrContainer.appendChild(msg);
-    return;
-  }
-  const joinUrl = window.location.origin + window.location.pathname + '?join=' + code;
-
-  if (typeof QRCode === 'undefined') {
-    qrContainer.style.background = 'transparent';
-    const msg = document.createElement('div');
-    msg.style.cssText = 'font-size:9px; color:var(--text-faint); width:56px; line-height:1.3; word-break:break-all;';
-    msg.textContent = 'QR unavailable — use code';
-    qrContainer.appendChild(msg);
-    return;
-  }
-
-  try {
-    new QRCode(qrContainer, {
-      text: joinUrl,
-      width: 56,
-      height: 56,
-      colorDark: '#0A0C0E',
-      colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.M
-    });
-  } catch (err) {
-    qrContainer.style.background = 'transparent';
-    const msg = document.createElement('div');
-    msg.style.cssText = 'font-size:9px; color:var(--text-faint); width:56px; line-height:1.3;';
-    msg.textContent = 'QR unavailable — use code';
-    qrContainer.appendChild(msg);
-  }
-}
+// renderJoinQR previously rendered a 56px thumbnail in the dashboard header.
+// The thumbnail is gone — the QR now only appears in the full-screen overlay,
+// generated fresh each time openJoinScreen() is called. This stub is kept so
+// enterHostDashboard's call site doesn't need to change.
+function renderJoinQR(code) { /* no-op — QR generated on demand in openJoinScreen */ }
 
 /* ---------- Full-screen join overlay ---------- */
 function openJoinScreen() {
@@ -4557,20 +4493,17 @@ function openJoinScreen() {
   const urlEl = document.getElementById('join-screen-url');
   const countEl = document.getElementById('join-screen-count');
 
-  // Populate static content
   codeEl.textContent = code;
   const isFile = window.location.protocol === 'file:';
   const joinUrl = isFile ? '' : (window.location.origin + window.location.pathname + '?join=' + code);
   urlEl.textContent = joinUrl;
   urlEl.style.display = joinUrl ? '' : 'none';
 
-  // Sync participant count from the live pill already being maintained
   const liveCount = document.getElementById('participant-count').textContent;
   countEl.textContent = liveCount;
 
-  // Generate a large QR — separate from the small header one so both can
-  // co-exist and neither has to be scaled, which looks blurry on retina
-  // screens. 260px is large enough to scan comfortably from a few metres.
+  // Generate a large QR fresh each open — 260px, highest error correction
+  // level so it scans reliably from a few metres away on a laptop screen.
   qrWrap.innerHTML = '';
   if (!isFile && typeof QRCode !== 'undefined' && joinUrl) {
     try {
@@ -4580,7 +4513,7 @@ function openJoinScreen() {
         height: 260,
         colorDark: '#0A0C0E',
         colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.H // highest error correction for large display
+        correctLevel: QRCode.CorrectLevel.H
       });
     } catch (err) {
       qrWrap.textContent = 'QR unavailable — use code above';
@@ -4592,7 +4525,7 @@ function openJoinScreen() {
   }
 
   overlay.classList.remove('hidden');
-  document.body.style.overflow = 'hidden'; // prevent background scroll while overlay is open
+  document.body.style.overflow = 'hidden';
 }
 
 function closeJoinScreen() {
@@ -4600,9 +4533,6 @@ function closeJoinScreen() {
   document.body.style.overflow = '';
 }
 
-// Keep the participant count in the overlay in sync with the live pill —
-// called from the same listener that updates participant-count, so the
-// two stay in lockstep without a separate Firebase subscription.
 function syncJoinScreenCount() {
   const overlay = document.getElementById('join-screen-overlay');
   if (overlay.classList.contains('hidden')) return;
@@ -4610,14 +4540,9 @@ function syncJoinScreenCount() {
   document.getElementById('join-screen-count').textContent = liveCount;
 }
 
-document.getElementById('btn-show-join-screen').addEventListener('click', (e) => {
-  e.stopPropagation(); // don't bubble to any parent click handlers on the qr wrap
-  openJoinScreen();
-});
-
+document.getElementById('btn-show-join-screen').addEventListener('click', openJoinScreen);
 document.getElementById('btn-close-join-screen').addEventListener('click', closeJoinScreen);
 
-// Tap the backdrop (but not the inner content) to dismiss
 document.getElementById('join-screen-overlay').addEventListener('click', (e) => {
   if (e.target === document.getElementById('join-screen-overlay')) closeJoinScreen();
 });
