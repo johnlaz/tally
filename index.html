@@ -28,6 +28,9 @@
 <!-- QR code generation, no-build, draws to canvas -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
+<!-- DOM-to-canvas for PNG report export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <style>
   /* ============================================
      TALLY ARS — Design Tokens
@@ -432,6 +435,11 @@
     justify-content: flex-end;
   }
   .app-dialog-actions .btn { min-width: 88px; }
+  .app-dialog-actions.stacked {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .app-dialog-actions.stacked .btn { width: 100%; min-width: unset; }
 
   /* ============================================
      ATTENDEE VIEW — amber accent, large tap targets
@@ -2206,7 +2214,13 @@
           </div>
           <div class="share-results-sub" id="share-results-sub">Attendees still on their results screen will see the full tally and leaderboard.</div>
         </div>
-        <button class="btn btn-ghost btn-sm" id="btn-share-results">Share</button>
+        <div style="display:flex; gap:8px; flex-shrink:0; align-items:center;">
+          <button class="btn btn-ghost btn-sm" id="btn-download-png" title="Save results as PNG image">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="14" height="14"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            Save PNG
+          </button>
+          <button class="btn btn-ghost btn-sm" id="btn-share-results">Share</button>
+        </div>
       </div>
 
       <div class="action-row-bottom">
@@ -2870,6 +2884,7 @@ function renderAppDialog(opts) {
 
   const actions = document.getElementById('app-dialog-actions');
   actions.innerHTML = '';
+  actions.classList.toggle('stacked', opts.mode === 'choice');
 
   if (opts.mode === 'alert') {
     const okBtn = document.createElement('button');
@@ -2877,6 +2892,24 @@ function renderAppDialog(opts) {
     okBtn.textContent = opts.confirmLabel || 'OK';
     okBtn.addEventListener('click', () => closeAppDialog(true));
     actions.appendChild(okBtn);
+  } else if (opts.mode === 'choice') {
+    // Stacked multi-option dialog — each choice has { label, value, style }
+    // where style maps to a btn class suffix (primary, ghost, danger, amber).
+    // Resolves with the chosen value string, or null if Escaped/dismissed.
+    (opts.choices || []).forEach(choice => {
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-' + (choice.style || 'ghost');
+      btn.textContent = choice.label;
+      btn.addEventListener('click', () => {
+        document.getElementById('app-dialog').classList.add('hidden');
+        if (appDialogResolve) {
+          const resolve = appDialogResolve;
+          appDialogResolve = null;
+          resolve(choice.value);
+        }
+      });
+      actions.appendChild(btn);
+    });
   } else {
     const cancelBtn = document.createElement('button');
     cancelBtn.className = 'btn btn-ghost';
@@ -2893,10 +2926,6 @@ function renderAppDialog(opts) {
   }
 
   document.getElementById('app-dialog').classList.remove('hidden');
-  // Prompt mode focuses the text field itself so typing can start
-  // immediately; alert/confirm focus the rightmost (primary) action so
-  // keyboard users land somewhere sensible, matching how the native
-  // dialogs being replaced would have behaved.
   if (opts.mode === 'prompt') {
     input.focus();
     input.select();
@@ -2949,6 +2978,22 @@ function appPrompt(opts) {
   });
 }
 
+// Multi-option stacked dialog — resolves with the value string of whichever
+// choice the user tapped, or null if dismissed via Escape. Used anywhere
+// three or more distinct actions are needed and a binary confirm/cancel
+// would force the user to make a second decision in a follow-up dialog.
+function appChoice(opts) {
+  return new Promise((resolve) => {
+    appDialogResolve = resolve;
+    renderAppDialog({
+      mode: 'choice',
+      title: opts.title || '',
+      body: opts.body || '',
+      choices: opts.choices || [],
+    });
+  });
+}
+
 // Enter submits a prompt dialog directly from the text field, same as a
 // native browser prompt() — without this, Enter would just be swallowed
 // by the input with no way to confirm except reaching for the mouse.
@@ -2959,7 +3004,10 @@ document.getElementById('app-dialog-input').addEventListener('keydown', (e) => {
 // Escape cancels (mirrors native confirm/alert dismissal); Enter confirms,
 // since the primary action button already holds focus by default.
 document.getElementById('app-dialog').addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeAppDialog(false);
+  if (e.key === 'Escape') {
+    // choice mode resolves null (no selection made) rather than false
+    closeAppDialog(appDialogMode === 'choice' ? null : false);
+  }
 });
 
 document.addEventListener('keydown', (e) => {
@@ -5141,16 +5189,19 @@ function renderLiveTally(qdata, containerId, isNewQuestion) {
 
 /* ---------- Host: End Session → Export + Report ---------- */
 document.getElementById('btn-end-session').addEventListener('click', async () => {
-  const confirmed = await appConfirm({
+  const choice = await appChoice({
     title: 'End this session?',
-    body: 'This generates the final report and closes the session for every attendee — there\'s no resuming it after this.',
-    confirmLabel: 'End Session',
-    cancelLabel: 'Keep Running',
-    danger: true,
+    body: 'Choose how to close out. Results can\'t be reopened after the session ends.',
+    choices: [
+      { label: '📊 Share Results & End', value: 'share', style: 'primary' },
+      { label: 'End Without Sharing', value: 'end', style: 'danger' },
+      { label: 'Keep Running', value: 'cancel', style: 'ghost' },
+    ],
   });
-  if (!confirmed) return;
 
-  const snap = await DataLayer.getSessionOnce ? await DataLayer.getSessionOnce(State.sessionCode) : await DataLayer.sessionRef(State.sessionCode).once('value');
+  if (!choice || choice === 'cancel') return;
+
+  const snap = await DataLayer.getSessionOnce(State.sessionCode);
   const session = snap.val();
   const exportData = {
     appVersion: 'tally-ars-v1',
@@ -5158,6 +5209,17 @@ document.getElementById('btn-end-session').addEventListener('click', async () =>
     exportedAt: Date.now(),
     session: session,
   };
+
+  // Publish results to Firebase BEFORE deleting the session, so attendees
+  // transition to the results screen rather than a disconnected blank state.
+  // The session deletion fires immediately after, but the results node at
+  // results/{code} is independent and stays live until the moderator
+  // retracts it from the report screen.
+  if (choice === 'share') {
+    const payload = buildSharePayload(exportData);
+    await DataLayer.publishResults(State.sessionCode, payload);
+    shareResultsActive = true;
+  }
 
   State.lastExport = exportData;
   DataLayer.offSession(State.sessionCode);
@@ -5168,8 +5230,20 @@ document.getElementById('btn-end-session').addEventListener('click', async () =>
   document.getElementById('export-json-sub').textContent = 'Session ' + State.sessionCode + ' · ready to download';
   document.getElementById('export-pdf-sub').textContent = 'Session ' + State.sessionCode + ' · ready to download';
 
-  // Reset share card to unshared state for this new report
+  // Sync share card state on the report screen to reflect what was chosen
   resetShareResultsCard();
+  if (choice === 'share') {
+    // Mark as already sharing so the card shows the active/stop state
+    const card = document.getElementById('share-results-card');
+    const btn = document.getElementById('btn-share-results');
+    const sub = document.getElementById('share-results-sub');
+    shareResultsActive = true;
+    card.classList.add('active');
+    btn.textContent = 'Stop Sharing';
+    btn.className = 'btn btn-danger btn-sm';
+    sub.textContent = 'Results are live — attendees can see them now. Press Stop Sharing to retract.';
+  }
+
   renderReport(exportData);
   showView('report');
 });
@@ -5485,6 +5559,149 @@ document.getElementById('btn-download-report').addEventListener('click', () => {
   // afterprint fires once the dialog is dismissed, whether printed or
   // cancelled — either way the clone has done its job and should go away.
   window.addEventListener('afterprint', () => root.remove(), { once: true });
+});
+
+/* ---------- PNG Report Export ----------
+   Builds a fixed-width offscreen clone of the report content with all CSS
+   variables baked in as inline styles — html2canvas reads computed styles
+   but can't follow var() references to :root, so every colour and font
+   needs to be explicit on the container or its children. Dark theme always;
+   the PNG is a branded artifact regardless of what mode the host's screen is in. */
+document.getElementById('btn-download-png').addEventListener('click', async () => {
+  if (!State.lastExport) return;
+
+  const btn = document.getElementById('btn-download-png');
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="14" height="14"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> Rendering…';
+  btn.disabled = true;
+
+  try {
+    if (typeof html2canvas === 'undefined') {
+      await appAlert('The PNG export library didn\'t load — check your connection and try again.', { title: 'Library unavailable' });
+      return;
+    }
+
+    const RENDER_WIDTH = 800;
+    const wrap = document.createElement('div');
+    wrap.style.cssText = [
+      'position:absolute', 'top:-99999px', 'left:-99999px',
+      `width:${RENDER_WIDTH}px`,
+      'background:#0A0A0A',
+      'padding:48px 48px 56px',
+      'box-sizing:border-box',
+      'font-family:\'DM Sans\',-apple-system,BlinkMacSystemFont,sans-serif',
+      'color:#E0E0E0',
+      'font-size:15px',
+      'line-height:1.55',
+    ].join(';');
+
+    // Header
+    const reportTitle = document.getElementById('report-heading').textContent || 'Session Report';
+    const reportMeta = document.getElementById('report-session-sub').textContent || '';
+    const header = document.createElement('div');
+    header.style.cssText = 'margin-bottom:28px; padding-bottom:20px; border-bottom:1px solid #2A2A2A;';
+    header.innerHTML = `
+      <div style="font-family:'Playfair Display',Georgia,serif; font-size:26px; font-weight:700; color:#E0E0E0; margin-bottom:6px;">${escapeHtml(reportTitle)}</div>
+      <div style="font-family:'DM Mono','SF Mono',monospace; font-size:12px; color:#565656; letter-spacing:0.06em;">${escapeHtml(reportMeta)}</div>
+      <div style="font-family:'Playfair Display',Georgia,serif; font-size:13px; color:#2A8DF3; letter-spacing:0.12em; text-transform:uppercase; margin-top:10px;">TALLY · A·R·S</div>`;
+    wrap.appendChild(header);
+
+    // Summary stats
+    const summaryClone = document.getElementById('report-summary-bar').cloneNode(true);
+    summaryClone.querySelectorAll('.report-stat .num').forEach(el => {
+      el.style.cssText = 'font-family:\'Playfair Display\',Georgia,serif; font-size:28px; font-weight:700; color:#E0E0E0;';
+    });
+    summaryClone.querySelectorAll('.report-stat .label').forEach(el => {
+      el.style.cssText = 'font-size:11px; color:#565656; text-transform:uppercase; letter-spacing:0.08em; font-family:\'DM Mono\',monospace;';
+    });
+    summaryClone.style.cssText = 'display:flex; gap:24px; margin-bottom:28px; padding:20px; background:#141414; border-radius:12px; border:1px solid #1E1E1E;';
+    wrap.appendChild(summaryClone);
+
+    // Leaderboard
+    const lbEl = document.getElementById('report-leaderboard');
+    if (!lbEl.classList.contains('hidden')) {
+      const lbClone = lbEl.cloneNode(true);
+      lbClone.style.cssText = 'background:#141414; border:1px solid #1E1E1E; border-radius:12px; padding:20px; margin-bottom:24px;';
+      lbClone.querySelectorAll('.leaderboard-title').forEach(el => {
+        el.style.cssText = 'font-family:\'Playfair Display\',Georgia,serif; font-size:16px; font-weight:700; color:#E0E0E0; margin-bottom:12px;';
+      });
+      lbClone.querySelectorAll('.leaderboard-row').forEach(el => {
+        el.style.cssText = 'display:flex; align-items:center; gap:14px; padding:9px 0; border-top:1px solid #1E1E1E;';
+      });
+      lbClone.querySelectorAll('.leaderboard-rank').forEach(el => {
+        el.style.cssText = 'font-family:\'DM Mono\',monospace; color:#565656; width:22px; text-align:right; font-size:13px;';
+      });
+      lbClone.querySelectorAll('.leaderboard-name').forEach(el => {
+        el.style.cssText = 'flex:1; font-weight:600; color:#E0E0E0; font-size:14px;';
+      });
+      lbClone.querySelectorAll('.leaderboard-score').forEach(el => {
+        el.style.cssText = 'font-family:\'DM Mono\',monospace; color:#5BA8F7; font-size:13px;';
+      });
+      wrap.appendChild(lbClone);
+    }
+
+    // Per-question results
+    const contentClone = document.getElementById('report-content').cloneNode(true);
+    contentClone.querySelectorAll('.report-question-block').forEach(block => {
+      block.style.cssText = 'background:#141414; border:1px solid #1E1E1E; border-radius:12px; padding:20px; margin-bottom:16px;';
+    });
+    contentClone.querySelectorAll('.report-q-title').forEach(el => {
+      el.style.cssText = 'font-size:15px; font-weight:600; color:#E0E0E0; margin-bottom:8px; line-height:1.4;';
+    });
+    contentClone.querySelectorAll('.report-total').forEach(el => {
+      el.style.cssText = 'font-size:12px; color:#565656; margin-bottom:14px; font-family:\'DM Mono\',monospace;';
+    });
+    contentClone.querySelectorAll('.report-result-row').forEach(el => {
+      el.style.cssText = 'display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; margin-bottom:10px;';
+    });
+    contentClone.querySelectorAll('.report-result-row > div > span').forEach(el => {
+      el.style.cssText = 'font-size:13px; color:#E0E0E0; display:block; margin-bottom:5px;';
+    });
+    contentClone.querySelectorAll('.report-result-bar-bg').forEach(el => {
+      el.style.cssText = 'height:6px; background:#1A1A1A; border-radius:999px; overflow:hidden;';
+    });
+    const FILL_COLORS = { c0:'#2A8DF3', c1:'#C97D3C', c2:'#5E8C6B', c3:'#7A6FA8' };
+    contentClone.querySelectorAll('.tally-fill').forEach(el => {
+      const key = Object.keys(FILL_COLORS).find(k => el.classList.contains(k));
+      el.style.cssText = `height:6px; border-radius:999px; background:${FILL_COLORS[key] || '#2A8DF3'}; width:${el.style.width || '0%'};`;
+    });
+    contentClone.querySelectorAll('.report-result-row > span').forEach(el => {
+      el.style.cssText = 'font-family:\'DM Mono\',monospace; font-size:12px; color:#8C8C8C; white-space:nowrap;';
+    });
+    wrap.appendChild(contentClone);
+
+    // Footer brand strip
+    const footer = document.createElement('div');
+    footer.style.cssText = 'margin-top:32px; padding-top:16px; border-top:1px solid #1E1E1E; display:flex; justify-content:space-between;';
+    footer.innerHTML = `
+      <span style="font-family:'DM Mono',monospace; font-size:11px; color:#565656;">Generated by TALLY · A·R·S</span>
+      <span style="font-family:'DM Mono',monospace; font-size:11px; color:#565656;">${new Date().toLocaleDateString()}</span>`;
+    wrap.appendChild(footer);
+
+    document.body.appendChild(wrap);
+
+    const canvas = await html2canvas(wrap, {
+      backgroundColor: '#0A0A0A',
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      width: RENDER_WIDTH,
+    });
+
+    wrap.remove();
+
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = buildExportFilename(State.lastExport, 'png');
+    a.click();
+
+  } catch (err) {
+    console.error('PNG export failed:', err);
+    await appAlert('Something went wrong generating the PNG. Try the PDF export instead.', { title: 'Export failed' });
+  } finally {
+    btn.innerHTML = originalHTML;
+    btn.disabled = false;
+  }
 });
 
 /* ---------- Backup-before-exit gate ----------
