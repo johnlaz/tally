@@ -4935,9 +4935,8 @@ function setWceRevealToggle(mode) {
   });
 }
 
-document.getElementById('wce-reveal-toggle').addEventListener('click', (e) => {
-  const btn = e.target.closest('[data-reveal-mode]');
-  if (btn) setWceRevealToggle(btn.dataset.revealMode);
+document.querySelectorAll('#wce-reveal-toggle .reveal-toggle-option').forEach(btn => {
+  btn.addEventListener('click', () => setWceRevealToggle(btn.dataset.revealMode));
 });
 
 document.getElementById('wce-has-timer').addEventListener('change', (e) => {
@@ -5130,9 +5129,8 @@ function setOteRevealToggle(mode) {
   });
 }
 
-document.getElementById('ote-reveal-toggle').addEventListener('click', (e) => {
-  const btn = e.target.closest('[data-reveal-mode]');
-  if (btn) setOteRevealToggle(btn.dataset.revealMode);
+document.querySelectorAll('#ote-reveal-toggle .reveal-toggle-option').forEach(btn => {
+  btn.addEventListener('click', () => setOteRevealToggle(btn.dataset.revealMode));
 });
 
 document.getElementById('ote-has-timer').addEventListener('change', (e) => {
@@ -5449,14 +5447,12 @@ function setRteRevealToggle(mode) {
   });
 }
 
-document.getElementById('rte-scale-toggle').addEventListener('click', (e) => {
-  const btn = e.target.closest('[data-scale]');
-  if (btn) setRteScaleToggle(btn.dataset.scale);
+document.querySelectorAll('#rte-scale-toggle .reveal-toggle-option').forEach(btn => {
+  btn.addEventListener('click', () => setRteScaleToggle(btn.dataset.scale));
 });
 
-document.getElementById('rte-reveal-toggle').addEventListener('click', (e) => {
-  const btn = e.target.closest('[data-reveal-mode]');
-  if (btn) setRteRevealToggle(btn.dataset.revealMode);
+document.querySelectorAll('#rte-reveal-toggle .reveal-toggle-option').forEach(btn => {
+  btn.addEventListener('click', () => setRteRevealToggle(btn.dataset.revealMode));
 });
 
 document.getElementById('rte-has-timer').addEventListener('change', (e) => {
