@@ -299,6 +299,22 @@
     padding: 18px clamp(16px, 4vw, 32px);
     flex-shrink: 0;
   }
+  /* Editor views use a centered close button instead of left-aligned,
+     so it reads as "dismiss this editor" rather than "go back to previous
+     screen". position:relative on the bar + absolute centering keeps the
+     button visually in the middle regardless of whether there are other
+     elements on either side. */
+  .top-bar-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px clamp(16px, 4vw, 32px);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .top-bar-centered .icon-btn {
+    /* Already centered by flexbox — nothing else needed */
+  }
   .top-bar-title {
     font-family: var(--font-display);
     font-weight: 700;
@@ -2347,11 +2363,10 @@
 
   <!-- ===================== HOST: QUESTION EDITOR ===================== -->
   <section data-view="question-editor">
-    <div class="top-bar">
-      <button class="icon-btn" id="qe-cancel" aria-label="Cancel">
+    <div class="top-bar-centered">
+      <button class="icon-btn" id="qe-cancel" aria-label="Close editor">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
-      <div></div>
     </div>
     <div class="page" style="align-items:center; justify-content:center;">
       <div class="editor-box">
@@ -2559,11 +2574,10 @@
 
   <!-- ===================== HOST: RATING SCALE EDITOR ===================== -->
   <section data-view="rating-editor">
-    <div class="top-bar">
-      <button class="icon-btn" id="rte-back" aria-label="Cancel">
+    <div class="top-bar-centered">
+      <button class="icon-btn" id="rte-back" aria-label="Close editor">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
-      <div></div>
     </div>
     <div class="page" style="align-items:center; justify-content:center;">
       <div class="editor-box">
@@ -2623,11 +2637,10 @@
 
   <!-- ===================== HOST: OPEN TEXT EDITOR ===================== -->
   <section data-view="opentext-editor">
-    <div class="top-bar">
-      <button class="icon-btn" id="ote-back" aria-label="Cancel">
+    <div class="top-bar-centered">
+      <button class="icon-btn" id="ote-back" aria-label="Close editor">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
-      <div></div>
     </div>
     <div class="page" style="align-items:center; justify-content:center;">
       <div class="editor-box">
@@ -2665,11 +2678,10 @@
 
   <!-- ===================== HOST: WORD CLOUD EDITOR ===================== -->
   <section data-view="wordcloud-editor">
-    <div class="top-bar">
-      <button class="icon-btn" id="wce-back" aria-label="Cancel">
+    <div class="top-bar-centered">
+      <button class="icon-btn" id="wce-back" aria-label="Close editor">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
-      <div></div>
     </div>
     <div class="page" style="align-items:center; justify-content:center;">
       <div class="editor-box">
@@ -2707,11 +2719,10 @@
 
   <!-- ===================== HOST: SLIDE EDITOR ===================== -->
   <section data-view="slide-editor">
-    <div class="top-bar">
-      <button class="icon-btn" id="se-cancel" aria-label="Cancel">
+    <div class="top-bar-centered">
+      <button class="icon-btn" id="se-cancel" aria-label="Close editor">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
-      <div></div>
     </div>
     <div class="page" style="align-items:center; justify-content:center;">
       <div class="editor-box">
@@ -4920,7 +4931,7 @@ let wceRevealMode = null;
 function setWceRevealToggle(mode) {
   wceRevealMode = mode;
   document.querySelectorAll('#wce-reveal-toggle .reveal-toggle-option').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.revealMode === mode);
+    btn.classList.toggle('selected', btn.dataset.revealMode === mode);
   });
 }
 
@@ -5115,7 +5126,7 @@ function openOpenTextEditor(index) {
 function setOteRevealToggle(mode) {
   oteRevealMode = mode;
   document.querySelectorAll('#ote-reveal-toggle .reveal-toggle-option').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.revealMode === mode);
+    btn.classList.toggle('selected', btn.dataset.revealMode === mode);
   });
 }
 
@@ -5427,14 +5438,14 @@ function openRatingEditor(index) {
 function setRteScaleToggle(scale) {
   rteScaleType = scale;
   document.querySelectorAll('#rte-scale-toggle .reveal-toggle-option').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.scale === scale);
+    btn.classList.toggle('selected', btn.dataset.scale === scale);
   });
 }
 
 function setRteRevealToggle(mode) {
   rteRevealMode = mode;
   document.querySelectorAll('#rte-reveal-toggle .reveal-toggle-option').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.revealMode === mode);
+    btn.classList.toggle('selected', btn.dataset.revealMode === mode);
   });
 }
 
