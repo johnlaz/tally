@@ -1516,8 +1516,292 @@
   }
 
   /* ============================================
-     SETTINGS MODAL
+     WORD CLOUD
      ============================================ */
+  /* Attendee submission UI */
+  .wc-input-wrap {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .wc-input {
+    flex: 1;
+    background: var(--surface-2);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    font-size: 17px;
+    color: var(--text);
+    font-family: var(--font-body);
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .wc-input:focus { border-color: var(--amber); }
+  .wc-input::placeholder { color: var(--text-faint); }
+  .wc-submit-btn {
+    background: var(--amber);
+    color: #1A0F04;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0 22px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: background 0.15s ease;
+    white-space: nowrap;
+  }
+  .wc-submit-btn:hover { background: var(--amber-bright); }
+  .wc-submit-btn:disabled { opacity: 0.45; cursor: default; }
+
+  /* The cloud itself — flex wrap with word sizes driven by inline font-size */
+  .word-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px 14px;
+    padding: 24px 16px;
+    min-height: 120px;
+  }
+  .word-cloud-word {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.1;
+    transition: font-size 0.4s ease, opacity 0.3s ease;
+    animation: wordPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    cursor: default;
+  }
+  @keyframes wordPop {
+    from { opacity: 0; transform: scale(0.6); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .wc-waiting {
+    text-align: center;
+    padding: 32px 16px;
+    color: var(--text-faint);
+    font-size: 14px;
+  }
+  /* Colour palette for cloud words — cycles through brand accents */
+  .wc-c0 { color: var(--teal-bright); }
+  .wc-c1 { color: var(--amber-bright); }
+  .wc-c2 { color: var(--sage-bright); }
+  .wc-c3 { color: var(--violet-bright); }
+  .wc-c4 { color: #E06B8B; } /* rose — only needed at 5+ unique words */
+
+  /* ============================================
+     OPEN TEXT / Q&A
+     ============================================ */
+  /* Attendee text input — larger than word cloud, multi-line */
+  .ot-textarea {
+    width: 100%;
+    background: var(--surface-2);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    font-size: 16px;
+    color: var(--text);
+    font-family: var(--font-body);
+    outline: none;
+    resize: none;
+    min-height: 100px;
+    transition: border-color 0.15s ease;
+    margin-top: 20px;
+    box-sizing: border-box;
+  }
+  .ot-textarea:focus { border-color: var(--amber); }
+  .ot-textarea::placeholder { color: var(--text-faint); }
+
+  /* Host dashboard response list */
+  .ot-response-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 320px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .ot-response-card {
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    transition: border-color 0.15s ease;
+  }
+  .ot-response-card.pinned {
+    border-color: var(--teal);
+    background: var(--teal-wash);
+  }
+  .ot-response-body { flex: 1; min-width: 0; }
+  .ot-response-name {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--text-faint);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .ot-response-text {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+    word-break: break-word;
+  }
+  .ot-response-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .ot-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    color: var(--text-faint);
+    background: none;
+    border: 1px solid var(--border-soft);
+    border-radius: 6px;
+    padding: 4px 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.12s, border-color 0.12s, background 0.12s;
+  }
+  .ot-action-btn:hover { color: var(--text); border-color: var(--border); background: var(--surface-2); }
+  .ot-action-btn.active { color: var(--teal-bright); border-color: var(--teal-dim); background: var(--teal-wash); }
+  .ot-action-btn svg { width: 12px; height: 12px; }
+  .ot-empty {
+    text-align: center;
+    padding: 32px 16px;
+    color: var(--text-faint);
+    font-size: 14px;
+  }
+  /* Attendee display of top responses after reveal */
+  .ot-revealed-list { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+  .ot-revealed-card {
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .ot-revealed-card.pinned {
+    border-color: var(--teal);
+    background: var(--teal-wash);
+    order: -1; /* pinned card floats to top */
+  }
+  .ot-revealed-name { font-size: 11px; font-family: var(--font-mono); color: var(--text-faint); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* ============================================
+     RATING SCALE
+     ============================================ */
+  /* Attendee tap-to-select number strip */
+  .rating-strip {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 24px 0 8px;
+  }
+  .rating-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    color: var(--text-dim);
+    font-size: 17px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: border-color 0.12s, background 0.12s, color 0.12s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .rating-btn:hover { border-color: var(--amber); color: var(--text); }
+  .rating-btn:active { transform: scale(0.94); }
+  .rating-btn.selected {
+    border-color: var(--amber);
+    background: var(--amber-wash);
+    color: var(--amber-bright);
+  }
+  .rating-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-faint);
+    font-family: var(--font-mono);
+    margin-bottom: 20px;
+    padding: 0 2px;
+  }
+  /* Dashboard / display — the big average readout */
+  .rating-avg-display {
+    text-align: center;
+    padding: 20px 0 8px;
+  }
+  .rating-avg-num {
+    font-family: var(--font-display);
+    font-size: clamp(52px, 8vw, 72px);
+    font-weight: 700;
+    color: var(--amber-bright);
+    line-height: 1;
+  }
+  .rating-avg-denom {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--text-faint);
+  }
+  .rating-avg-label {
+    font-size: 12px;
+    color: var(--text-faint);
+    font-family: var(--font-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+  .rating-dist {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .rating-dist-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+  }
+  .rating-dist-label {
+    width: 18px;
+    text-align: right;
+    color: var(--text-faint);
+    flex-shrink: 0;
+  }
+  .rating-dist-track {
+    flex: 1;
+    height: 8px;
+    background: var(--surface-2);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .rating-dist-fill {
+    height: 100%;
+    background: var(--amber);
+    border-radius: 999px;
+    transition: width 0.4s ease;
+  }
+  .rating-dist-count {
+    width: 28px;
+    color: var(--text-faint);
+    flex-shrink: 0;
+  }
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -1915,6 +2199,49 @@
 
         <div id="attendee-slide" class="hidden"></div>
 
+        <!-- Word cloud — shown when a wordcloud question is open -->
+        <div id="attendee-wordcloud" class="hidden">
+          <div class="attendee-question-text" id="attendee-wc-text"></div>
+          <div id="attendee-wc-input-area">
+            <div class="wc-input-wrap">
+              <input class="wc-input" id="attendee-wc-input" maxlength="40" placeholder="Type your word…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              <button class="wc-submit-btn" id="attendee-wc-submit">Send</button>
+            </div>
+          </div>
+          <div id="attendee-wc-submitted" class="hidden" style="text-align:center; padding:20px 0; color:var(--text-faint); font-size:14px;">
+            ✓ Submitted — watching the cloud grow
+          </div>
+        </div>
+
+        <!-- Open text / Q&A — shown when an opentext question is open -->
+        <div id="attendee-opentext" class="hidden">
+          <div class="attendee-question-text" id="attendee-ot-text"></div>
+          <div id="attendee-ot-input-area">
+            <textarea class="ot-textarea" id="attendee-ot-input" maxlength="500" placeholder="Write your response…" rows="4"></textarea>
+            <button class="wc-submit-btn" id="attendee-ot-submit" style="width:100%; margin-top:10px; padding:14px 0;">Submit</button>
+          </div>
+          <div id="attendee-ot-submitted" class="hidden" style="text-align:center; padding:20px 0; color:var(--text-faint); font-size:14px;">
+            ✓ Submitted
+          </div>
+          <!-- Shown after host reveals — displays pinned + top responses -->
+          <div id="attendee-ot-results" class="hidden">
+            <div class="ot-revealed-list" id="attendee-ot-results-list"></div>
+          </div>
+        </div>
+
+        <!-- Rating scale — shown when a rating question is open -->
+        <div id="attendee-rating" class="hidden">
+          <div class="attendee-question-text" id="attendee-rating-text"></div>
+          <div id="attendee-rating-input-area">
+            <div class="rating-strip" id="attendee-rating-strip"></div>
+            <div class="rating-labels" id="attendee-rating-labels"></div>
+            <button class="wc-submit-btn" id="attendee-rating-submit" style="width:100%; padding:14px 0;" disabled>Select a rating to submit</button>
+          </div>
+          <div id="attendee-rating-submitted" class="hidden" style="text-align:center; padding:20px 0; color:var(--text-faint); font-size:14px;">
+            ✓ Rating submitted
+          </div>
+        </div>
+
         <div id="attendee-ended" class="hidden">
           <div class="attendee-ended-inner">
             <div class="attendee-ended-icon">
@@ -2230,6 +2557,154 @@
     </div>
   </section>
 
+  <!-- ===================== HOST: RATING SCALE EDITOR ===================== -->
+  <section data-view="rating-editor">
+    <div class="top-bar">
+      <button class="icon-btn" id="rte-back" aria-label="Cancel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div></div>
+    </div>
+    <div class="page" style="align-items:center; justify-content:center;">
+      <div class="editor-box">
+        <div class="eyebrow">Rating Scale question</div>
+        <textarea id="rte-text" class="input-field" rows="3" placeholder="e.g. How useful was today's session?" maxlength="200" style="resize:none;"></textarea>
+
+        <div class="eyebrow" style="margin-top:8px;">Scale</div>
+        <div class="reveal-toggle cols-3" id="rte-scale-toggle" role="radiogroup" aria-label="Rating scale">
+          <button class="reveal-toggle-option" data-scale="5" type="button">
+            <span class="reveal-toggle-title">1 – 5</span>
+            <span class="reveal-toggle-sub">Stars / satisfaction</span>
+          </button>
+          <button class="reveal-toggle-option" data-scale="10" type="button">
+            <span class="reveal-toggle-title">1 – 10</span>
+            <span class="reveal-toggle-sub">General rating</span>
+          </button>
+          <button class="reveal-toggle-option" data-scale="nps" type="button">
+            <span class="reveal-toggle-title">0 – 10</span>
+            <span class="reveal-toggle-sub">NPS / likelihood</span>
+          </button>
+        </div>
+
+        <div class="eyebrow" style="margin-top:8px;">Endpoint labels (optional)</div>
+        <div style="display:flex; gap:10px;">
+          <input id="rte-label-low" class="input-field" placeholder="e.g. Not at all" maxlength="30" style="flex:1;">
+          <input id="rte-label-high" class="input-field" placeholder="e.g. Extremely" maxlength="30" style="flex:1;">
+        </div>
+
+        <div class="eyebrow" style="margin-top:8px;">Results</div>
+        <div class="reveal-toggle cols-2" id="rte-reveal-toggle" role="radiogroup" aria-label="Reveal mode">
+          <button class="reveal-toggle-option" data-reveal-mode="live" type="button">
+            <span class="reveal-toggle-title">Live</span>
+            <span class="reveal-toggle-sub">Average updates in real-time</span>
+          </button>
+          <button class="reveal-toggle-option" data-reveal-mode="hidden" type="button">
+            <span class="reveal-toggle-title">Hidden</span>
+            <span class="reveal-toggle-sub">Reveal when you're ready</span>
+          </button>
+        </div>
+
+        <label class="qe-checkbox-row" style="margin-top:8px;">
+          <input type="checkbox" id="rte-has-timer">
+          <span>Countdown timer</span>
+        </label>
+        <div id="rte-timer-row" class="hidden" style="display:flex; align-items:center; gap:10px; margin-top:6px;">
+          <input type="number" id="rte-timer-seconds" class="input-field" style="width:90px;" min="5" max="600" value="30">
+          <span class="settings-row-sub" style="margin:0;">seconds</span>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:8px;">
+          <button class="btn btn-ghost" id="rte-cancel" style="flex:1;" type="button">Cancel</button>
+          <button class="btn btn-primary" id="rte-save" style="flex:1;" type="button">Save</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HOST: OPEN TEXT EDITOR ===================== -->
+  <section data-view="opentext-editor">
+    <div class="top-bar">
+      <button class="icon-btn" id="ote-back" aria-label="Cancel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div></div>
+    </div>
+    <div class="page" style="align-items:center; justify-content:center;">
+      <div class="editor-box">
+        <div class="eyebrow">Open Text / Q&A question</div>
+        <textarea id="ote-text" class="input-field" rows="3" placeholder="e.g. What's your biggest challenge right now?" maxlength="200" style="resize:none;"></textarea>
+
+        <div class="eyebrow" style="margin-top:8px;">Results</div>
+        <div class="reveal-toggle cols-2" id="ote-reveal-toggle" role="radiogroup" aria-label="Reveal mode">
+          <button class="reveal-toggle-option" data-reveal-mode="live" type="button">
+            <span class="reveal-toggle-title">Live</span>
+            <span class="reveal-toggle-sub">Responses appear as they're submitted</span>
+          </button>
+          <button class="reveal-toggle-option" data-reveal-mode="hidden" type="button">
+            <span class="reveal-toggle-title">Hidden</span>
+            <span class="reveal-toggle-sub">Collect responses privately, reveal when ready</span>
+          </button>
+        </div>
+
+        <label class="qe-checkbox-row" style="margin-top:8px;">
+          <input type="checkbox" id="ote-has-timer">
+          <span>Countdown timer</span>
+        </label>
+        <div id="ote-timer-row" class="hidden" style="display:flex; align-items:center; gap:10px; margin-top:6px;">
+          <input type="number" id="ote-timer-seconds" class="input-field" style="width:90px;" min="5" max="600" value="60">
+          <span class="settings-row-sub" style="margin:0;">seconds</span>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:8px;">
+          <button class="btn btn-ghost" id="ote-cancel" style="flex:1;" type="button">Cancel</button>
+          <button class="btn btn-primary" id="ote-save" style="flex:1;" type="button">Save</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HOST: WORD CLOUD EDITOR ===================== -->
+  <section data-view="wordcloud-editor">
+    <div class="top-bar">
+      <button class="icon-btn" id="wce-back" aria-label="Cancel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div></div>
+    </div>
+    <div class="page" style="align-items:center; justify-content:center;">
+      <div class="editor-box">
+        <div class="eyebrow">Word Cloud question</div>
+        <textarea id="wce-text" class="input-field" rows="3" placeholder="e.g. Describe today's session in one word" maxlength="200" style="resize:none;"></textarea>
+
+        <div class="eyebrow" style="margin-top:8px;">Results</div>
+        <div class="reveal-toggle cols-2" id="wce-reveal-toggle" role="radiogroup" aria-label="Reveal mode">
+          <button class="reveal-toggle-option" data-reveal-mode="live" type="button">
+            <span class="reveal-toggle-title">Live</span>
+            <span class="reveal-toggle-sub">Cloud builds in real-time as words land</span>
+          </button>
+          <button class="reveal-toggle-option" data-reveal-mode="hidden" type="button">
+            <span class="reveal-toggle-title">Hidden</span>
+            <span class="reveal-toggle-sub">Collect words silently, reveal all at once</span>
+          </button>
+        </div>
+
+        <label class="qe-checkbox-row" style="margin-top:8px;">
+          <input type="checkbox" id="wce-has-timer">
+          <span>Countdown timer</span>
+        </label>
+        <div id="wce-timer-row" class="hidden" style="display:flex; align-items:center; gap:10px; margin-top:6px;">
+          <input type="number" id="wce-timer-seconds" class="input-field" style="width:90px;" min="5" max="600" value="30">
+          <span class="settings-row-sub" style="margin:0;">seconds</span>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:8px;">
+          <button class="btn btn-ghost" id="wce-cancel" style="flex:1;" type="button">Cancel</button>
+          <button class="btn btn-primary" id="wce-save" style="flex:1;" type="button">Save</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== HOST: SLIDE EDITOR ===================== -->
   <section data-view="slide-editor">
     <div class="top-bar">
@@ -2488,6 +2963,33 @@
           <span class="deck-type-sub">A question attendees vote on, with live or hidden results</span>
         </span>
       </button>
+      <button class="deck-type-option" id="choose-type-wordcloud">
+        <span class="deck-type-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><text x="3" y="13" font-size="7" fill="currentColor" stroke="none" font-weight="bold">Aa</text><text x="10" y="18" font-size="5" fill="currentColor" stroke="none">word</text><text x="3" y="21" font-size="4" fill="currentColor" stroke="none">cloud</text><text x="13" y="10" font-size="9" fill="currentColor" stroke="none" font-weight="bold">W</text></svg>
+        </span>
+        <span class="deck-type-text">
+          <span class="deck-type-title">Word Cloud</span>
+          <span class="deck-type-sub">Attendees type a word or phrase — popular answers grow bigger</span>
+        </span>
+      </button>
+      <button class="deck-type-option" id="choose-type-opentext">
+        <span class="deck-type-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </span>
+        <span class="deck-type-text">
+          <span class="deck-type-title">Open Text / Q&A</span>
+          <span class="deck-type-sub">Attendees write a response — you upvote and pin the best ones</span>
+        </span>
+      </button>
+      <button class="deck-type-option" id="choose-type-rating">
+        <span class="deck-type-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </span>
+        <span class="deck-type-text">
+          <span class="deck-type-title">Rating Scale</span>
+          <span class="deck-type-sub">1–5, 1–10, or NPS — shows average and distribution live</span>
+        </span>
+      </button>
       <button class="deck-type-option" id="choose-type-slide">
         <span class="deck-type-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 3 5-6 5 4"/></svg>
@@ -2661,6 +3163,17 @@ const DataLayer = {
   retractResults(code) { return this.resultsRef(code).remove(); },
   onResultsChange(code, callback) { this.resultsRef(code).on('value', callback); },
   offResults(code) { this.resultsRef(code).off(); },
+  // Open text / Q&A — responses stored as objects under votes/{participantId}
+  submitResponse(code, qid, participantId, text, name) {
+    return this.votesRef(code, qid).child(participantId).set({ text, name: name || '', upvotes: 0, pinned: false, submittedAt: firebase.database.ServerValue.TIMESTAMP });
+  },
+  upvoteResponse(code, qid, participantId, hostId, delta) {
+    const ref = this.votesRef(code, qid).child(participantId);
+    return db.ref().transaction ? ref.child('upvotes').transaction(v => (v || 0) + delta) : ref.child('upvotes').set(firebase.database.ServerValue.increment(delta));
+  },
+  pinResponse(code, qid, participantId, pinned) {
+    return this.votesRef(code, qid).child(participantId).update({ pinned });
+  },
   onSessionChange(code, callback) { this.sessionRef(code).on('value', callback); },
   offSession(code) { this.sessionRef(code).off(); },
   getSessionOnce(code) { return this.sessionRef(code).once('value'); }
@@ -3328,6 +3841,9 @@ function enterAttendeeSession(code) {
     if (openQ) {
       const [qid, qdata] = openQ;
       if (qdata.type === 'slide') renderAttendeeSlide(qdata);
+      else if (qdata.type === 'wordcloud') renderAttendeeWordCloud(code, qid, qdata);
+      else if (qdata.type === 'opentext') renderAttendeeOpenText(code, qid, qdata);
+      else if (qdata.type === 'rating') renderAttendeeRating(code, qid, qdata);
       else renderAttendeeQuestion(code, qid, qdata);
     } else if (closedQs.length > 0) {
       const recent = closedQs.sort((a, b) => (b[1].closedAt || 0) - (a[1].closedAt || 0))[0];
@@ -3374,6 +3890,20 @@ function enterDisplayScreen(code) {
         textEl.textContent = (qdata.slide && qdata.slide.caption) || '';
         tallyEl.innerHTML = '';
         renderCountdown({}, 'display-countdown');
+      } else if (qdata.type === 'wordcloud') {
+        textEl.textContent = qdata.text;
+        renderCountdown(qdata, 'display-countdown');
+        renderWordCloud(qdata, 'display-tally');
+      } else if (qdata.type === 'opentext') {
+        textEl.textContent = qdata.text;
+        renderCountdown(qdata, 'display-countdown');
+        // Display screen shows a count only — no raw text, to preserve some privacy
+        const count = Object.values(qdata.votes || {}).filter(v => v && v.text).length;
+        tallyEl.innerHTML = `<div class="wc-waiting">${count} response${count === 1 ? '' : 's'} received</div>`;
+      } else if (qdata.type === 'rating') {
+        textEl.textContent = qdata.text;
+        renderCountdown(qdata, 'display-countdown');
+        renderRatingResult(qdata, 'display-tally');
       } else {
         textEl.textContent = qdata.text;
         renderCountdown(qdata, 'display-countdown');
@@ -3387,7 +3917,28 @@ function enterDisplayScreen(code) {
       textEl.textContent = qdata.text || '';
       renderCountdown({}, 'display-countdown');
       renderAnswerKeyBanner(qdata, 'display-answer-key');
-      renderLiveTally(qdata, 'display-tally', false);
+      if (qdata.type === 'wordcloud') {
+        renderWordCloud(qdata, 'display-tally');
+      } else if (qdata.type === 'opentext') {
+        const mode = qdata.revealMode || 'live';
+        const revealed = mode === 'live' ? true : qdata.revealed === true;
+        if (revealed) {
+          const entries = Object.entries(qdata.votes || {})
+            .filter(([, v]) => v && v.text)
+            .sort((a, b) => (b[1].pinned ? 1 : 0) - (a[1].pinned ? 1 : 0) || (b[1].upvotes || 0) - (a[1].upvotes || 0))
+            .slice(0, 5);
+          tallyEl.innerHTML = entries.length === 0
+            ? '<div class="wc-waiting">No responses</div>'
+            : entries.map(([, r]) => `<div class="ot-response-card${r.pinned ? ' pinned' : ''}" style="margin-bottom:8px;"><div class="ot-response-text">${escapeHtml(r.text)}</div></div>`).join('');
+        } else {
+          const count = Object.values(qdata.votes || {}).filter(v => v && v.text).length;
+          tallyEl.innerHTML = `<div class="wc-waiting">${count} response${count === 1 ? '' : 's'} — waiting to be revealed</div>`;
+        }
+      } else if (qdata.type === 'rating') {
+        renderRatingResult(qdata, 'display-tally');
+      } else {
+        renderLiveTally(qdata, 'display-tally', false);
+      }
     } else {
       textEl.classList.add('hidden');
       tallyEl.classList.add('hidden');
@@ -3469,6 +4020,7 @@ function renderAttendeeQuestion(code, qid, qdata) {
   document.getElementById('attendee-waiting').classList.add('hidden');
   document.getElementById('attendee-closed').classList.add('hidden');
   document.getElementById('attendee-slide').classList.add('hidden');
+  document.getElementById('attendee-wordcloud').classList.add('hidden');
   renderCountdown(qdata, 'attendee-countdown');
 
   if (alreadyVoted) {
@@ -3499,11 +4051,73 @@ function renderAttendeeQuestion(code, qid, qdata) {
 }
 
 function renderAttendeeClosed(qid, qdata) {
+  // Word cloud and open text handle their own closed state directly
+  if (qdata.type === 'wordcloud') {
+    // Re-use the wordcloud attendee view — it shows "word cloud" in closed mode via renderWordCloud
+    ['attendee-skeleton','attendee-waiting','attendee-question','attendee-voted',
+     'attendee-slide','attendee-opentext','attendee-ended','attendee-shared-results'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('hidden');
+    });
+    renderCountdown({}, 'attendee-countdown');
+    const wc = document.getElementById('attendee-wordcloud');
+    wc.classList.remove('hidden');
+    document.getElementById('attendee-wc-input-area').classList.add('hidden');
+    document.getElementById('attendee-wc-submitted').classList.add('hidden');
+    // Show cloud if revealed, waiting message if not
+    const mode = qdata.revealMode || 'live';
+    const revealed = mode === 'live' ? true : qdata.revealed === true;
+    wc.querySelector('#attendee-wc-text') && (wc.querySelector('#attendee-wc-text').textContent = qdata.text);
+    // Reuse the same wc container — render cloud into it
+    let cloudEl = document.getElementById('attendee-wc-cloud');
+    if (!cloudEl) {
+      cloudEl = document.createElement('div');
+      cloudEl.id = 'attendee-wc-cloud';
+      wc.appendChild(cloudEl);
+    }
+    cloudEl.classList.remove('hidden');
+    renderWordCloud(qdata, 'attendee-wc-cloud');
+    return;
+  }
+
+  if (qdata.type === 'opentext') {
+    renderAttendeeOpenText(null, qid, { ...qdata, status: 'closed' });
+    return;
+  }
+
+  if (qdata.type === 'rating') {
+    // Show the average + distribution on the attendee's closed screen
+    ['attendee-skeleton','attendee-waiting','attendee-question','attendee-voted',
+     'attendee-slide','attendee-wordcloud','attendee-opentext','attendee-ended',
+     'attendee-shared-results'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('hidden');
+    });
+    renderCountdown({}, 'attendee-countdown');
+    const ratingEl = document.getElementById('attendee-rating');
+    ratingEl.classList.remove('hidden');
+    document.getElementById('attendee-rating-text').textContent = qdata.text;
+    document.getElementById('attendee-rating-input-area').classList.add('hidden');
+    document.getElementById('attendee-rating-submitted').classList.remove('hidden');
+    const subEl = document.getElementById('attendee-rating-submitted');
+    // Reuse this div to show the result
+    const { avg, count, max } = tallyRatings(qdata);
+    const mode = qdata.revealMode || 'live';
+    const revealed = mode === 'live' ? true : qdata.revealed === true;
+    subEl.innerHTML = revealed && avg !== null
+      ? `<div class="rating-avg-num" style="margin-bottom:4px;">${avg}<span class="rating-avg-denom"> / ${max}</span></div><div class="rating-avg-label">${count} response${count === 1 ? '' : 's'}</div>`
+      : '<div style="color:var(--text-faint); font-size:14px; padding:20px 0;">Results will appear when the host reveals them</div>';
+    return;
+  }
+
   document.getElementById('attendee-skeleton').classList.add('hidden');
   document.getElementById('attendee-waiting').classList.add('hidden');
   document.getElementById('attendee-question').classList.add('hidden');
   document.getElementById('attendee-voted').classList.add('hidden');
   document.getElementById('attendee-slide').classList.add('hidden');
+  document.getElementById('attendee-wordcloud').classList.add('hidden');
+  document.getElementById('attendee-opentext').classList.add('hidden');
+  document.getElementById('attendee-rating').classList.add('hidden');
   document.getElementById('attendee-closed').classList.remove('hidden');
   renderCountdown({}, 'attendee-countdown');
 
@@ -3542,6 +4156,9 @@ function renderAttendeeClosed(qid, qdata) {
 /* ---------- Host: Build Session ---------- */
 const DECK_TYPE_ICONS = {
   poll: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 14l4-5 3 3 5-7"/></svg>',
+  wordcloud: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h6M4 12h10M4 17h7M14 17h6M16 7h4"/></svg>',
+  opentext: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+  rating: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
   slide: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 3 5-6 5 4"/></svg>',
 };
 
@@ -3550,7 +4167,7 @@ function deckItemLabel(item) {
     const kindLabel = { image: 'Image slide', audio: 'Audio slide', text: 'Text slide' }[item.slide.contentType] || 'Slide';
     return item.slide.caption ? `${kindLabel} — ${item.slide.caption}` : kindLabel;
   }
-  return item.text; // poll, or legacy items saved before the type field existed
+  return item.text; // poll, wordcloud, opentext all use the question text as label
 }
 
 let dragFromIndex = null;
@@ -3567,7 +4184,7 @@ function renderQuestionBank() {
   empty.classList.add('hidden');
 
   State.questionBank.forEach((q, i) => {
-    const itemType = q.type === 'slide' ? 'slide' : 'poll'; // legacy items with no type field are treated as polls
+    const itemType = q.type === 'slide' ? 'slide' : q.type === 'wordcloud' ? 'wordcloud' : q.type === 'opentext' ? 'opentext' : q.type === 'rating' ? 'rating' : 'poll';
     const item = document.createElement('div');
     item.className = 'bank-item';
     item.draggable = true;
@@ -3604,7 +4221,7 @@ function renderQuestionBank() {
     editBtn.textContent = 'Edit';
     editBtn.addEventListener('click', () => {
       if (itemType === 'slide') openSlideEditor(i);
-      else openQuestionEditor(i);
+      else openQuestionEditor(i); // handles both poll and wordcloud
     });
 
     const delBtn = document.createElement('button');
@@ -3712,10 +4329,16 @@ function saveDeckLibrary(decks) {
 }
 
 function deckSummary(items) {
-  const polls = items.filter(q => q.type !== 'slide').length;
-  const slides = items.length - polls;
+  const polls = items.filter(q => q.type === 'poll').length;
+  const wordclouds = items.filter(q => q.type === 'wordcloud').length;
+  const opentexts = items.filter(q => q.type === 'opentext').length;
+  const ratings = items.filter(q => q.type === 'rating').length;
+  const slides = items.filter(q => q.type === 'slide').length;
   const parts = [];
   if (polls > 0) parts.push(polls + ' poll' + (polls === 1 ? '' : 's'));
+  if (wordclouds > 0) parts.push(wordclouds + ' word cloud' + (wordclouds === 1 ? '' : 's'));
+  if (opentexts > 0) parts.push(opentexts + ' Q&A' + (opentexts === 1 ? '' : 's'));
+  if (ratings > 0) parts.push(ratings + ' rating' + (ratings === 1 ? '' : 's'));
   if (slides > 0) parts.push(slides + ' slide' + (slides === 1 ? '' : 's'));
   return parts.join(', ') || 'Empty deck';
 }
@@ -4249,10 +4872,694 @@ document.getElementById('choose-type-poll').addEventListener('click', () => {
   closeTypeChooser();
   openQuestionEditor(null);
 });
+document.getElementById('choose-type-wordcloud').addEventListener('click', () => {
+  closeTypeChooser();
+  openWordCloudEditor(null);
+});
+document.getElementById('choose-type-opentext').addEventListener('click', () => {
+  closeTypeChooser();
+  openOpenTextEditor(null);
+});
+document.getElementById('choose-type-rating').addEventListener('click', () => {
+  closeTypeChooser();
+  openRatingEditor(null);
+});
 document.getElementById('choose-type-slide').addEventListener('click', () => {
   closeTypeChooser();
   openSlideEditor(null);
 });
+
+/* ---------- Word Cloud editor ----------
+   Deliberately minimal — the prompt text is the only thing the moderator
+   needs to set. Reveal mode (live/hidden) applies: live shows the cloud
+   building in real-time as words land; hidden waits for the moderator
+   to press Show Results, then animates everything in at once. Timer also
+   works exactly as it does for polls. */
+let wcEditingIndex = null;
+
+function openWordCloudEditor(index) {
+  wcEditingIndex = index;
+  const q = index !== null ? State.questionBank[index] : { type: 'wordcloud', text: '', revealMode: null };
+  document.getElementById('wce-text').value = q.text || '';
+  setWceRevealToggle(q.revealMode || null);
+
+  const globalTimerOn = document.getElementById('global-timer-enabled').checked;
+  const globalTimerSecs = parseInt(document.getElementById('global-timer-seconds').value, 10) || 30;
+  const hasTimer = typeof q.timerSeconds === 'number' ? true : (index === null && globalTimerOn);
+  const timerValue = typeof q.timerSeconds === 'number' ? q.timerSeconds : (globalTimerOn ? globalTimerSecs : 30);
+  document.getElementById('wce-has-timer').checked = hasTimer;
+  document.getElementById('wce-timer-seconds').value = timerValue;
+  document.getElementById('wce-timer-row').classList.toggle('hidden', !hasTimer);
+
+  showView('wordcloud-editor');
+  document.getElementById('wce-text').focus();
+}
+
+let wceRevealMode = null;
+
+function setWceRevealToggle(mode) {
+  wceRevealMode = mode;
+  document.querySelectorAll('#wce-reveal-toggle .reveal-toggle-option').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.revealMode === mode);
+  });
+}
+
+document.getElementById('wce-reveal-toggle').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-reveal-mode]');
+  if (btn) setWceRevealToggle(btn.dataset.revealMode);
+});
+
+document.getElementById('wce-has-timer').addEventListener('change', (e) => {
+  document.getElementById('wce-timer-row').classList.toggle('hidden', !e.target.checked);
+});
+
+document.getElementById('wce-cancel').addEventListener('click', () => {
+  wcEditingIndex = null;
+  showView(State.sessionCode ? 'dashboard' : 'build');
+});
+document.getElementById('wce-back').addEventListener('click', () => {
+  wcEditingIndex = null;
+  showView(State.sessionCode ? 'dashboard' : 'build');
+});
+
+document.getElementById('wce-save').addEventListener('click', () => {
+  const text = document.getElementById('wce-text').value.trim();
+  if (!text) { document.getElementById('wce-text').focus(); return; }
+  if (!wceRevealMode) {
+    appAlert('Choose Live or Hidden results before saving.', { title: 'Reveal mode required' });
+    return;
+  }
+
+  const obj = { type: 'wordcloud', text, revealMode: wceRevealMode };
+  const hasTimer = document.getElementById('wce-has-timer').checked;
+  if (hasTimer) {
+    const secs = parseInt(document.getElementById('wce-timer-seconds').value, 10);
+    if (secs >= 5) obj.timerSeconds = secs;
+  }
+
+  if (wcEditingIndex !== null) {
+    State.questionBank[wcEditingIndex] = obj;
+  } else if (State.sessionCode) {
+    const qid = generateId();
+    State.questionBank.push(obj);
+    DataLayer.addQuestion(State.sessionCode, qid, {
+      ...obj,
+      status: 'draft',
+      createdAt: Date.now(),
+      revealed: obj.revealMode === 'live',
+    });
+  } else {
+    State.questionBank.push(obj);
+  }
+
+  wcEditingIndex = null;
+  persistDraft();
+  renderQuestionBank();
+  showView(State.sessionCode ? 'dashboard' : 'build');
+});
+
+/* ---------- Word Cloud rendering ---------- */
+const WC_COLORS = ['wc-c0', 'wc-c1', 'wc-c2', 'wc-c3', 'wc-c4'];
+
+function tallyWords(qdata) {
+  // votes stored as { participantId: "word string" }
+  const freq = {};
+  Object.values(qdata.votes || {}).forEach(word => {
+    if (typeof word !== 'string') return;
+    const key = word.trim().toLowerCase();
+    if (!key) return;
+    freq[key] = (freq[key] || 0) + 1;
+  });
+  return freq; // { "word": count }
+}
+
+function renderWordCloud(qdata, containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+
+  const mode = qdata.revealMode || 'live';
+  const revealed = mode === 'live' ? true : (qdata.revealed === true);
+  const freq = tallyWords(qdata);
+  const words = Object.entries(freq).sort((a, b) => b[1] - a[1]);
+
+  if (!revealed) {
+    const total = Object.values(freq).length;
+    el.innerHTML = `<div class="wc-waiting">${total > 0 ? total + ' response' + (total === 1 ? '' : 's') + ' received — results hidden' : 'Waiting for responses…'}</div>`;
+    return;
+  }
+
+  if (words.length === 0) {
+    el.innerHTML = '<div class="wc-waiting">Waiting for responses…</div>';
+    return;
+  }
+
+  const maxCount = words[0][1];
+  // Font sizes: most-popular word = 48px, least = 16px, linear scale between.
+  const minSize = 16, maxSize = 48;
+
+  el.innerHTML = '';
+  const cloud = document.createElement('div');
+  cloud.className = 'word-cloud';
+
+  // Assign a stable colour per word (hash-based so the same word always
+  // gets the same colour as the cloud updates with new votes).
+  words.forEach(([word, count], i) => {
+    const span = document.createElement('span');
+    span.className = 'word-cloud-word';
+    const size = words.length === 1
+      ? maxSize
+      : Math.round(minSize + ((count - 1) / Math.max(maxCount - 1, 1)) * (maxSize - minSize));
+    // Simple string hash for stable colour assignment
+    let hash = 0;
+    for (let c of word) hash = (hash * 31 + c.charCodeAt(0)) & 0xffffffff;
+    span.classList.add(WC_COLORS[Math.abs(hash) % WC_COLORS.length]);
+    span.style.fontSize = size + 'px';
+    span.textContent = word;
+    span.title = count + ' response' + (count === 1 ? '' : 's');
+    cloud.appendChild(span);
+  });
+
+  el.appendChild(cloud);
+}
+
+/* ---------- Attendee: word cloud question ---------- */
+function renderAttendeeWordCloud(code, qid, qdata) {
+  const votes = qdata.votes || {};
+  const alreadySubmitted = votes.hasOwnProperty(State.participantId);
+
+  ['attendee-skeleton','attendee-waiting','attendee-question','attendee-voted',
+   'attendee-closed','attendee-slide','attendee-ended','attendee-shared-results'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('hidden');
+  });
+  renderCountdown(qdata, 'attendee-countdown');
+
+  document.getElementById('attendee-wordcloud').classList.remove('hidden');
+  document.getElementById('attendee-wc-text').textContent = qdata.text;
+
+  if (alreadySubmitted) {
+    document.getElementById('attendee-wc-input-area').classList.add('hidden');
+    document.getElementById('attendee-wc-submitted').classList.remove('hidden');
+  } else {
+    document.getElementById('attendee-wc-input-area').classList.remove('hidden');
+    document.getElementById('attendee-wc-submitted').classList.add('hidden');
+
+    const input = document.getElementById('attendee-wc-input');
+    const submitBtn = document.getElementById('attendee-wc-submit');
+    input.value = '';
+
+    const doSubmit = async () => {
+      const word = input.value.trim();
+      if (!word) return;
+      submitBtn.disabled = true;
+      input.disabled = true;
+      // castVote stores arbitrary values — strings work fine for word cloud
+      await DataLayer.castVote(code, qid, State.participantId, word);
+      document.getElementById('attendee-wc-input-area').classList.add('hidden');
+      document.getElementById('attendee-wc-submitted').classList.remove('hidden');
+    };
+
+    // Replace listeners cleanly by cloning the elements
+    const freshInput = input.cloneNode(true);
+    const freshBtn = submitBtn.cloneNode(true);
+    input.replaceWith(freshInput);
+    submitBtn.replaceWith(freshBtn);
+    freshBtn.addEventListener('click', doSubmit);
+    freshInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); doSubmit(); } });
+    freshInput.focus();
+  }
+}
+
+/* ---------- Open Text / Q&A editor ---------- */
+let oteEditingIndex = null;
+let oteRevealMode = null;
+
+function openOpenTextEditor(index) {
+  oteEditingIndex = index;
+  const q = index !== null ? State.questionBank[index] : { type: 'opentext', text: '', revealMode: null };
+  document.getElementById('ote-text').value = q.text || '';
+  setOteRevealToggle(q.revealMode || null);
+
+  const globalTimerOn = document.getElementById('global-timer-enabled').checked;
+  const globalTimerSecs = parseInt(document.getElementById('global-timer-seconds').value, 10) || 60;
+  const hasTimer = typeof q.timerSeconds === 'number' ? true : (index === null && globalTimerOn);
+  const timerValue = typeof q.timerSeconds === 'number' ? q.timerSeconds : (globalTimerOn ? globalTimerSecs : 60);
+  document.getElementById('ote-has-timer').checked = hasTimer;
+  document.getElementById('ote-timer-seconds').value = timerValue;
+  document.getElementById('ote-timer-row').classList.toggle('hidden', !hasTimer);
+
+  showView('opentext-editor');
+  document.getElementById('ote-text').focus();
+}
+
+function setOteRevealToggle(mode) {
+  oteRevealMode = mode;
+  document.querySelectorAll('#ote-reveal-toggle .reveal-toggle-option').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.revealMode === mode);
+  });
+}
+
+document.getElementById('ote-reveal-toggle').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-reveal-mode]');
+  if (btn) setOteRevealToggle(btn.dataset.revealMode);
+});
+
+document.getElementById('ote-has-timer').addEventListener('change', (e) => {
+  document.getElementById('ote-timer-row').classList.toggle('hidden', !e.target.checked);
+});
+
+const oteCancelFn = () => { oteEditingIndex = null; showView(State.sessionCode ? 'dashboard' : 'build'); };
+document.getElementById('ote-cancel').addEventListener('click', oteCancelFn);
+document.getElementById('ote-back').addEventListener('click', oteCancelFn);
+
+document.getElementById('ote-save').addEventListener('click', () => {
+  const text = document.getElementById('ote-text').value.trim();
+  if (!text) { document.getElementById('ote-text').focus(); return; }
+  if (!oteRevealMode) {
+    appAlert('Choose Live or Hidden results before saving.', { title: 'Reveal mode required' });
+    return;
+  }
+
+  const obj = { type: 'opentext', text, revealMode: oteRevealMode };
+  const hasTimer = document.getElementById('ote-has-timer').checked;
+  if (hasTimer) {
+    const secs = parseInt(document.getElementById('ote-timer-seconds').value, 10);
+    if (secs >= 5) obj.timerSeconds = secs;
+  }
+
+  if (oteEditingIndex !== null) {
+    State.questionBank[oteEditingIndex] = obj;
+  } else if (State.sessionCode) {
+    const qid = generateId();
+    State.questionBank.push(obj);
+    DataLayer.addQuestion(State.sessionCode, qid, {
+      ...obj,
+      status: 'draft',
+      createdAt: Date.now(),
+      revealed: obj.revealMode === 'live',
+    });
+  } else {
+    State.questionBank.push(obj);
+  }
+
+  oteEditingIndex = null;
+  persistDraft();
+  renderQuestionBank();
+  showView(State.sessionCode ? 'dashboard' : 'build');
+});
+
+/* ---------- Open Text: host dashboard response list ---------- */
+function renderOpenTextResponses(qdata, containerId, code, qid) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+
+  const votes = qdata.votes || {};
+  const entries = Object.entries(votes)
+    .filter(([, v]) => v && typeof v.text === 'string' && v.text.trim())
+    .sort((a, b) => {
+      // pinned first, then by upvotes desc, then by submission time
+      if (b[1].pinned !== a[1].pinned) return b[1].pinned ? 1 : -1;
+      const upA = a[1].upvotes || 0, upB = b[1].upvotes || 0;
+      if (upB !== upA) return upB - upA;
+      return (a[1].submittedAt || 0) - (b[1].submittedAt || 0);
+    });
+
+  const mode = qdata.revealMode || 'live';
+  const revealed = mode === 'live' ? true : (qdata.revealed === true);
+
+  if (!revealed && entries.length > 0) {
+    el.innerHTML = `<div class="ot-empty">${entries.length} response${entries.length === 1 ? '' : 's'} received — hidden until you reveal</div>`;
+    return;
+  }
+
+  if (entries.length === 0) {
+    el.innerHTML = '<div class="ot-empty">Waiting for responses…</div>';
+    return;
+  }
+
+  el.innerHTML = '';
+  const list = document.createElement('div');
+  list.className = 'ot-response-list';
+
+  entries.forEach(([pid, resp]) => {
+    const card = document.createElement('div');
+    card.className = 'ot-response-card' + (resp.pinned ? ' pinned' : '');
+
+    const upvotes = resp.upvotes || 0;
+    const pinLabel = resp.pinned ? 'Unpin' : 'Pin';
+
+    card.innerHTML = `
+      <div class="ot-response-body">
+        ${resp.name ? `<div class="ot-response-name">${escapeHtml(resp.name)}</div>` : ''}
+        <div class="ot-response-text">${escapeHtml(resp.text)}</div>
+      </div>
+      <div class="ot-response-actions">
+        <button class="ot-action-btn ot-upvote-btn${upvotes > 0 ? ' active' : ''}" data-pid="${pid}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+          ${upvotes > 0 ? upvotes : ''}
+        </button>
+        <button class="ot-action-btn ot-pin-btn${resp.pinned ? ' active' : ''}" data-pid="${pid}" data-pinned="${resp.pinned ? 'true' : 'false'}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17v5M8.5 3.5l7 7-2.5 2.5-3-1.5-4 4-1-1 4-4-1.5-3 2.5-2.5z"/></svg>
+          ${pinLabel}
+        </button>
+      </div>`;
+
+    // Upvote button
+    card.querySelector('.ot-upvote-btn').addEventListener('click', () => {
+      const delta = upvotes > 0 ? -1 : 1;
+      DataLayer.upvoteResponse(code, qid, pid, 'host', delta);
+    });
+
+    // Pin button — only one response can be pinned at a time
+    card.querySelector('.ot-pin-btn').addEventListener('click', () => {
+      const isPinned = resp.pinned;
+      // Unpin all first, then pin this one (if unpinning, just unpin)
+      Object.keys(votes).forEach(p => {
+        if (votes[p].pinned) DataLayer.pinResponse(code, qid, p, false);
+      });
+      if (!isPinned) DataLayer.pinResponse(code, qid, pid, true);
+    });
+
+    list.appendChild(card);
+  });
+
+  el.appendChild(list);
+}
+
+/* ---------- Attendee: open text question ---------- */
+function renderAttendeeOpenText(code, qid, qdata) {
+  const votes = qdata.votes || {};
+  const alreadySubmitted = votes.hasOwnProperty(State.participantId);
+
+  ['attendee-skeleton','attendee-waiting','attendee-question','attendee-voted',
+   'attendee-closed','attendee-slide','attendee-wordcloud','attendee-ended',
+   'attendee-shared-results'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('hidden');
+  });
+  renderCountdown(qdata, 'attendee-countdown');
+
+  document.getElementById('attendee-opentext').classList.remove('hidden');
+  document.getElementById('attendee-ot-text').textContent = qdata.text;
+
+  const mode = qdata.revealMode || 'live';
+  const revealed = mode === 'live' ? true : (qdata.revealed === true);
+
+  // If question is closed (called from renderAttendeeClosed) and revealed,
+  // show top responses instead of the input form.
+  const isClosed = qdata.status === 'closed';
+  if (isClosed && revealed) {
+    document.getElementById('attendee-ot-input-area').classList.add('hidden');
+    document.getElementById('attendee-ot-submitted').classList.add('hidden');
+    const resultsEl = document.getElementById('attendee-ot-results');
+    resultsEl.classList.remove('hidden');
+    const listEl = document.getElementById('attendee-ot-results-list');
+    const allResponses = Object.entries(votes)
+      .filter(([, v]) => v && typeof v.text === 'string')
+      .sort((a, b) => {
+        if (b[1].pinned !== a[1].pinned) return b[1].pinned ? 1 : -1;
+        return (b[1].upvotes || 0) - (a[1].upvotes || 0);
+      });
+    listEl.innerHTML = allResponses.length === 0
+      ? '<div style="text-align:center; color:var(--text-faint); font-size:14px; padding:20px 0;">No responses yet</div>'
+      : allResponses.map(([, r]) => `
+          <div class="ot-revealed-card${r.pinned ? ' pinned' : ''}">
+            ${r.name ? `<div class="ot-revealed-name">${escapeHtml(r.name)}</div>` : ''}
+            <div>${escapeHtml(r.text)}</div>
+          </div>`).join('');
+    return;
+  }
+
+  if (isClosed && !revealed) {
+    document.getElementById('attendee-ot-input-area').classList.add('hidden');
+    document.getElementById('attendee-ot-submitted').classList.remove('hidden');
+    document.getElementById('attendee-ot-submitted').textContent = 'Waiting for the host to reveal responses…';
+    document.getElementById('attendee-ot-results').classList.add('hidden');
+    return;
+  }
+
+  document.getElementById('attendee-ot-results').classList.add('hidden');
+
+  if (alreadySubmitted) {
+    document.getElementById('attendee-ot-input-area').classList.add('hidden');
+    document.getElementById('attendee-ot-submitted').classList.remove('hidden');
+    document.getElementById('attendee-ot-submitted').textContent = '✓ Submitted';
+  } else {
+    document.getElementById('attendee-ot-input-area').classList.remove('hidden');
+    document.getElementById('attendee-ot-submitted').classList.add('hidden');
+
+    const textarea = document.getElementById('attendee-ot-input');
+    const submitBtn = document.getElementById('attendee-ot-submit');
+    textarea.value = '';
+
+    const doSubmit = async () => {
+      const text = textarea.value.trim();
+      if (!text) return;
+      submitBtn.disabled = true;
+      textarea.disabled = true;
+      const name = localStorage.getItem('tally_participant_name') || '';
+      await DataLayer.submitResponse(code, qid, State.participantId, text, name);
+      document.getElementById('attendee-ot-input-area').classList.add('hidden');
+      document.getElementById('attendee-ot-submitted').classList.remove('hidden');
+      document.getElementById('attendee-ot-submitted').textContent = '✓ Submitted';
+    };
+
+    // Clone to remove stale listeners
+    const freshTextarea = textarea.cloneNode(true);
+    const freshBtn = submitBtn.cloneNode(true);
+    textarea.replaceWith(freshTextarea);
+    submitBtn.replaceWith(freshBtn);
+    freshBtn.addEventListener('click', doSubmit);
+    freshTextarea.focus();
+  }
+}
+
+/* ---------- Rating Scale helpers ---------- */
+function ratingScaleRange(scaleType) {
+  // Returns [min, max] for the given scale type
+  if (scaleType === 'nps') return [0, 10];
+  if (scaleType === '5') return [1, 5];
+  return [1, 10]; // default '10'
+}
+
+function tallyRatings(qdata) {
+  // votes stored as { participantId: number }
+  const [min, max] = ratingScaleRange(qdata.scaleType || '10');
+  const freq = {};
+  for (let i = min; i <= max; i++) freq[i] = 0;
+  let sum = 0, count = 0;
+  Object.values(qdata.votes || {}).forEach(v => {
+    const n = Number(v);
+    if (!isNaN(n) && n >= min && n <= max) {
+      freq[n] = (freq[n] || 0) + 1;
+      sum += n;
+      count++;
+    }
+  });
+  const avg = count > 0 ? Math.round((sum / count) * 10) / 10 : null;
+  return { freq, avg, count, min, max };
+}
+
+function renderRatingResult(qdata, containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+
+  const mode = qdata.revealMode || 'live';
+  const revealed = mode === 'live' ? true : (qdata.revealed === true);
+  const { freq, avg, count, min, max } = tallyRatings(qdata);
+
+  if (!revealed) {
+    el.innerHTML = `<div class="wc-waiting">${count > 0 ? count + ' rating' + (count === 1 ? '' : 's') + ' received — hidden' : 'Waiting for ratings…'}</div>`;
+    return;
+  }
+  if (count === 0) {
+    el.innerHTML = '<div class="wc-waiting">No ratings yet…</div>';
+    return;
+  }
+
+  const maxFreq = Math.max(...Object.values(freq), 1);
+  const distRows = [];
+  for (let i = min; i <= max; i++) {
+    const c = freq[i] || 0;
+    const pct = Math.round((c / maxFreq) * 100);
+    distRows.push(`
+      <div class="rating-dist-row">
+        <span class="rating-dist-label">${i}</span>
+        <div class="rating-dist-track"><div class="rating-dist-fill" style="width:${pct}%"></div></div>
+        <span class="rating-dist-count">${c}</span>
+      </div>`);
+  }
+
+  el.innerHTML = `
+    <div class="rating-avg-display">
+      <div class="rating-avg-num">${avg}<span class="rating-avg-denom"> / ${max}</span></div>
+      <div class="rating-avg-label">${count} response${count === 1 ? '' : 's'}</div>
+    </div>
+    <div class="rating-dist">${distRows.join('')}</div>`;
+}
+
+/* ---------- Rating Scale editor ---------- */
+let rteEditingIndex = null;
+let rteRevealMode = null;
+let rteScaleType = null;
+
+function openRatingEditor(index) {
+  rteEditingIndex = index;
+  const q = index !== null ? State.questionBank[index] : { type: 'rating', text: '', revealMode: null, scaleType: '10' };
+  document.getElementById('rte-text').value = q.text || '';
+  document.getElementById('rte-label-low').value = q.labelLow || '';
+  document.getElementById('rte-label-high').value = q.labelHigh || '';
+  setRteScaleToggle(q.scaleType || '10');
+  setRteRevealToggle(q.revealMode || null);
+
+  const globalTimerOn = document.getElementById('global-timer-enabled').checked;
+  const globalTimerSecs = parseInt(document.getElementById('global-timer-seconds').value, 10) || 30;
+  const hasTimer = typeof q.timerSeconds === 'number' ? true : (index === null && globalTimerOn);
+  const timerValue = typeof q.timerSeconds === 'number' ? q.timerSeconds : (globalTimerOn ? globalTimerSecs : 30);
+  document.getElementById('rte-has-timer').checked = hasTimer;
+  document.getElementById('rte-timer-seconds').value = timerValue;
+  document.getElementById('rte-timer-row').classList.toggle('hidden', !hasTimer);
+
+  showView('rating-editor');
+  document.getElementById('rte-text').focus();
+}
+
+function setRteScaleToggle(scale) {
+  rteScaleType = scale;
+  document.querySelectorAll('#rte-scale-toggle .reveal-toggle-option').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.scale === scale);
+  });
+}
+
+function setRteRevealToggle(mode) {
+  rteRevealMode = mode;
+  document.querySelectorAll('#rte-reveal-toggle .reveal-toggle-option').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.revealMode === mode);
+  });
+}
+
+document.getElementById('rte-scale-toggle').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-scale]');
+  if (btn) setRteScaleToggle(btn.dataset.scale);
+});
+
+document.getElementById('rte-reveal-toggle').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-reveal-mode]');
+  if (btn) setRteRevealToggle(btn.dataset.revealMode);
+});
+
+document.getElementById('rte-has-timer').addEventListener('change', (e) => {
+  document.getElementById('rte-timer-row').classList.toggle('hidden', !e.target.checked);
+});
+
+const rteCancelFn = () => { rteEditingIndex = null; showView(State.sessionCode ? 'dashboard' : 'build'); };
+document.getElementById('rte-cancel').addEventListener('click', rteCancelFn);
+document.getElementById('rte-back').addEventListener('click', rteCancelFn);
+
+document.getElementById('rte-save').addEventListener('click', () => {
+  const text = document.getElementById('rte-text').value.trim();
+  if (!text) { document.getElementById('rte-text').focus(); return; }
+  if (!rteRevealMode) { appAlert('Choose Live or Hidden results before saving.', { title: 'Reveal mode required' }); return; }
+  if (!rteScaleType) { appAlert('Choose a scale before saving.', { title: 'Scale required' }); return; }
+
+  const obj = {
+    type: 'rating',
+    text,
+    revealMode: rteRevealMode,
+    scaleType: rteScaleType,
+    labelLow: document.getElementById('rte-label-low').value.trim(),
+    labelHigh: document.getElementById('rte-label-high').value.trim(),
+  };
+  const hasTimer = document.getElementById('rte-has-timer').checked;
+  if (hasTimer) {
+    const secs = parseInt(document.getElementById('rte-timer-seconds').value, 10);
+    if (secs >= 5) obj.timerSeconds = secs;
+  }
+
+  if (rteEditingIndex !== null) {
+    State.questionBank[rteEditingIndex] = obj;
+  } else if (State.sessionCode) {
+    const qid = generateId();
+    State.questionBank.push(obj);
+    DataLayer.addQuestion(State.sessionCode, qid, { ...obj, status: 'draft', createdAt: Date.now(), revealed: obj.revealMode === 'live' });
+  } else {
+    State.questionBank.push(obj);
+  }
+
+  rteEditingIndex = null;
+  persistDraft();
+  renderQuestionBank();
+  showView(State.sessionCode ? 'dashboard' : 'build');
+});
+
+/* ---------- Attendee: rating scale question ---------- */
+function renderAttendeeRating(code, qid, qdata) {
+  const votes = qdata.votes || {};
+  const alreadyVoted = votes.hasOwnProperty(State.participantId);
+
+  ['attendee-skeleton','attendee-waiting','attendee-question','attendee-voted',
+   'attendee-closed','attendee-slide','attendee-wordcloud','attendee-opentext',
+   'attendee-ended','attendee-shared-results'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('hidden');
+  });
+  renderCountdown(qdata, 'attendee-countdown');
+
+  document.getElementById('attendee-rating').classList.remove('hidden');
+  document.getElementById('attendee-rating-text').textContent = qdata.text;
+
+  if (alreadyVoted) {
+    document.getElementById('attendee-rating-input-area').classList.add('hidden');
+    document.getElementById('attendee-rating-submitted').classList.remove('hidden');
+    return;
+  }
+
+  document.getElementById('attendee-rating-input-area').classList.remove('hidden');
+  document.getElementById('attendee-rating-submitted').classList.add('hidden');
+
+  const [min, max] = ratingScaleRange(qdata.scaleType || '10');
+  const strip = document.getElementById('attendee-rating-strip');
+  const labelsEl = document.getElementById('attendee-rating-labels');
+  const submitBtn = document.getElementById('attendee-rating-submit');
+  strip.innerHTML = '';
+  labelsEl.innerHTML = '';
+
+  // Clone submit button to remove stale listeners
+  const freshSubmit = submitBtn.cloneNode(true);
+  submitBtn.replaceWith(freshSubmit);
+  freshSubmit.disabled = true;
+  freshSubmit.textContent = 'Select a rating to submit';
+
+  let selected = null;
+
+  for (let i = min; i <= max; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'rating-btn';
+    btn.textContent = i;
+    btn.addEventListener('click', () => {
+      selected = i;
+      strip.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      freshSubmit.disabled = false;
+      freshSubmit.textContent = `Submit ${i} / ${max}`;
+    });
+    strip.appendChild(btn);
+  }
+
+  // Endpoint labels
+  if (qdata.labelLow || qdata.labelHigh) {
+    labelsEl.innerHTML = `<span>${escapeHtml(qdata.labelLow || '')}</span><span>${escapeHtml(qdata.labelHigh || '')}</span>`;
+  }
+
+  freshSubmit.addEventListener('click', async () => {
+    if (selected === null) return;
+    freshSubmit.disabled = true;
+    strip.querySelectorAll('.rating-btn').forEach(b => { b.disabled = true; });
+    await DataLayer.castVote(code, qid, State.participantId, selected);
+    document.getElementById('attendee-rating-input-area').classList.add('hidden');
+    document.getElementById('attendee-rating-submitted').classList.remove('hidden');
+  });
+}
 
 document.getElementById('session-label-input').addEventListener('input', (e) => {
   State.sessionLabel = e.target.value;
@@ -4290,7 +5597,7 @@ function applyGlobalTimer() {
   const secs = parseInt(document.getElementById('global-timer-seconds').value, 10);
   if (!secs || secs < 5) return;
   State.questionBank.forEach(q => {
-    if (q.type === 'poll') q.timerSeconds = secs;
+    if (q.type === 'poll' || q.type === 'wordcloud' || q.type === 'opentext' || q.type === 'rating') q.timerSeconds = secs;
   });
   persistDraft();
   renderQuestionBank();
@@ -4298,7 +5605,7 @@ function applyGlobalTimer() {
 
 function clearGlobalTimer() {
   State.questionBank.forEach(q => {
-    if (q.type === 'poll') delete q.timerSeconds;
+    if (q.type === 'poll' || q.type === 'wordcloud' || q.type === 'opentext' || q.type === 'rating') delete q.timerSeconds;
   });
   persistDraft();
   renderQuestionBank();
@@ -4309,7 +5616,7 @@ function clearGlobalTimer() {
 // share the same timer, show it as the global value. If mixed or absent,
 // leave the toggle off.
 function syncGlobalTimerFromBank() {
-  const polls = State.questionBank.filter(q => q.type === 'poll');
+  const polls = State.questionBank.filter(q => q.type === 'poll' || q.type === 'wordcloud' || q.type === 'opentext' || q.type === 'rating');
   if (polls.length === 0) return;
   const timerValues = polls.map(q => q.timerSeconds).filter(v => typeof v === 'number');
   const allSame = timerValues.length === polls.length && timerValues.every(v => v === timerValues[0]);
@@ -4653,8 +5960,44 @@ document.getElementById('btn-start-session').addEventListener('click', async () 
         createdAt: now,
         slide: q.slide,
       };
+    } else if (q.type === 'wordcloud') {
+      const revealMode = q.revealMode || 'live';
+      questionsObj[qid] = {
+        type: 'wordcloud',
+        text: q.text,
+        status: 'draft',
+        createdAt: now,
+        revealMode: revealMode,
+        revealed: revealMode === 'live',
+      };
+      if (typeof q.timerSeconds === 'number') questionsObj[qid].timerSeconds = q.timerSeconds;
+    } else if (q.type === 'opentext') {
+      const revealMode = q.revealMode || 'live';
+      questionsObj[qid] = {
+        type: 'opentext',
+        text: q.text,
+        status: 'draft',
+        createdAt: now,
+        revealMode: revealMode,
+        revealed: revealMode === 'live',
+      };
+      if (typeof q.timerSeconds === 'number') questionsObj[qid].timerSeconds = q.timerSeconds;
+    } else if (q.type === 'rating') {
+      const revealMode = q.revealMode || 'live';
+      questionsObj[qid] = {
+        type: 'rating',
+        text: q.text,
+        status: 'draft',
+        createdAt: now,
+        revealMode: revealMode,
+        revealed: revealMode === 'live',
+        scaleType: q.scaleType || '10',
+        labelLow: q.labelLow || '',
+        labelHigh: q.labelHigh || '',
+      };
+      if (typeof q.timerSeconds === 'number') questionsObj[qid].timerSeconds = q.timerSeconds;
     } else {
-      const revealMode = q.revealMode || 'live'; // questions imported from older exports may predate this field
+      const revealMode = q.revealMode || 'live';
       questionsObj[qid] = {
         type: 'poll',
         text: q.text,
@@ -4662,16 +6005,8 @@ document.getElementById('btn-start-session').addEventListener('click', async () 
         status: 'draft',
         createdAt: now,
         revealMode: revealMode,
-        revealed: revealMode === 'live', // hidden-mode questions start unrevealed; live mode has nothing to hide
+        revealed: revealMode === 'live',
       };
-      // correctAnswerIndex and timerSeconds were set on the Build screen
-      // but previously never made it into this object — every question
-      // that went through "Start Session" silently lost its timer and
-      // correct-answer marking the moment the session was created, even
-      // though both were stored correctly on State.questionBank right up
-      // until this point. Questions added live mid-session (a separate
-      // code path) never had this gap, which is why the feature could
-      // look broken in one flow and fine in the other.
       if (typeof q.correctAnswerIndex === 'number') questionsObj[qid].correctAnswerIndex = q.correctAnswerIndex;
       if (typeof q.timerSeconds === 'number') questionsObj[qid].timerSeconds = q.timerSeconds;
     }
@@ -4834,18 +6169,39 @@ function renderDashboard(code, session) {
     const [qid, qdata] = openEntry;
     const isNewQuestion = State.activeQuestionId !== qid;
     State.activeQuestionId = qid;
-    const itemType = qdata.type === 'slide' ? 'slide' : 'poll';
+    const itemType = qdata.type === 'slide' ? 'slide' : qdata.type === 'wordcloud' ? 'wordcloud' : qdata.type === 'opentext' ? 'opentext' : qdata.type === 'rating' ? 'rating' : 'poll';
 
     if (itemType === 'slide') {
-      // A slide has no voting phase — it goes straight to the "showing now,
-      // one Next button" treatment, reusing the closed-poll layout rather
-      // than inventing a third parallel UI state.
       document.getElementById('dashboard-closed-wrap').classList.remove('hidden');
       document.getElementById('dashboard-closed-eyebrow').innerHTML = 'Showing now <span class="kbd-hint">space for next</span>';
       renderSlideIntoControlPane(qdata, 'dashboard-final-tally', 'dashboard-closed-text');
       renderPreviewPane('preview-scale-closed', code, qid, qdata, true);
       document.getElementById('btn-reveal-closed').classList.add('hidden');
       configureNextButton(document.getElementById('btn-next-question'), code, draftEntries);
+    } else if (itemType === 'wordcloud') {
+      document.getElementById('dashboard-live-wrap').classList.remove('hidden');
+      document.getElementById('dashboard-question-text').textContent = qdata.text;
+      renderCountdown(qdata, 'dashboard-countdown');
+      renderWordCloud(qdata, 'dashboard-tally');
+      renderPreviewPane('preview-scale-live', code, qid, qdata, false);
+      updateRevealControls(code, qid, qdata);
+      document.getElementById('btn-close-question').onclick = () => DataLayer.closeQuestion(code, qid);
+    } else if (itemType === 'opentext') {
+      document.getElementById('dashboard-live-wrap').classList.remove('hidden');
+      document.getElementById('dashboard-question-text').textContent = qdata.text;
+      renderCountdown(qdata, 'dashboard-countdown');
+      renderOpenTextResponses(qdata, 'dashboard-tally', code, qid);
+      renderPreviewPane('preview-scale-live', code, qid, qdata, false);
+      updateRevealControls(code, qid, qdata);
+      document.getElementById('btn-close-question').onclick = () => DataLayer.closeQuestion(code, qid);
+    } else if (itemType === 'rating') {
+      document.getElementById('dashboard-live-wrap').classList.remove('hidden');
+      document.getElementById('dashboard-question-text').textContent = qdata.text;
+      renderCountdown(qdata, 'dashboard-countdown');
+      renderRatingResult(qdata, 'dashboard-tally');
+      renderPreviewPane('preview-scale-live', code, qid, qdata, false);
+      updateRevealControls(code, qid, qdata);
+      document.getElementById('btn-close-question').onclick = () => DataLayer.closeQuestion(code, qid);
     } else {
       document.getElementById('dashboard-live-wrap').classList.remove('hidden');
       document.getElementById('dashboard-question-text').textContent = qdata.text;
@@ -4863,7 +6219,15 @@ function renderDashboard(code, session) {
     document.getElementById('dashboard-closed-eyebrow').innerHTML = 'Results — closed <span class="kbd-hint">space for next</span>';
     document.getElementById('dashboard-closed-text').textContent = qdata.text;
     renderAnswerKeyBanner(qdata, 'dashboard-answer-key');
-    renderLiveTally(qdata, 'dashboard-final-tally', isNewQuestion);
+    if (qdata.type === 'wordcloud') {
+      renderWordCloud(qdata, 'dashboard-final-tally');
+    } else if (qdata.type === 'opentext') {
+      renderOpenTextResponses(qdata, 'dashboard-final-tally', code, qid);
+    } else if (qdata.type === 'rating') {
+      renderRatingResult(qdata, 'dashboard-final-tally');
+    } else {
+      renderLiveTally(qdata, 'dashboard-final-tally', isNewQuestion);
+    }
     renderPreviewPane('preview-scale-closed', code, qid, qdata, true);
     updateRevealControls(code, qid, qdata, true);
     configureNextButton(document.getElementById('btn-next-question'), code, draftEntries);
@@ -4980,6 +6344,92 @@ function renderPreviewPane(targetId, code, qid, qdata, isClosed) {
 
   if (qdata.type === 'slide') {
     target.innerHTML = buildAttendeeSlideHtml(qdata);
+    return;
+  }
+
+  // Open text — live state shows prompt + textarea hint
+  if (qdata.type === 'opentext' && !isClosed) {
+    target.innerHTML = `
+      <div class="attendee-inner" style="padding-top:60px;">
+        <div id="${targetId}-countdown" class="countdown-display hidden"></div>
+        <div class="attendee-question-text">${escapeHtml(qdata.text)}</div>
+        <div style="margin-top:16px; background:var(--surface-2); border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:12px 14px; min-height:70px; color:var(--text-faint); font-size:13px;">Write your response…</div>
+      </div>`;
+    renderCountdown(qdata, `${targetId}-countdown`);
+    return;
+  }
+
+  // Open text — closed state shows top responses
+  if (qdata.type === 'opentext' && isClosed) {
+    const mode = qdata.revealMode || 'live';
+    const revealed = mode === 'live' ? true : (qdata.revealed === true);
+    const entries = Object.entries(qdata.votes || {})
+      .filter(([, v]) => v && v.text)
+      .sort((a, b) => (b[1].pinned ? 1 : 0) - (a[1].pinned ? 1 : 0) || (b[1].upvotes || 0) - (a[1].upvotes || 0))
+      .slice(0, 3);
+    target.innerHTML = `
+      <div class="attendee-inner" style="padding-top:60px;">
+        <div class="eyebrow" style="text-align:center;">Responses</div>
+        <div class="attendee-question-text" style="font-size:18px; margin-bottom:16px;">${escapeHtml(qdata.text)}</div>
+        ${revealed && entries.length > 0
+          ? entries.map(([, r]) => `<div class="ot-revealed-card${r.pinned ? ' pinned' : ''}" style="margin-bottom:8px; font-size:13px;">${escapeHtml(r.text)}</div>`).join('')
+          : `<div class="wc-waiting" style="padding:16px 0;">${revealed ? 'No responses yet' : 'Results hidden'}</div>`}
+      </div>`;
+    return;
+  }
+
+  // Rating — live state shows the number strip
+  if (qdata.type === 'rating' && !isClosed) {
+    const [min, max] = ratingScaleRange(qdata.scaleType || '10');
+    const nums = [];
+    for (let i = min; i <= max; i++) nums.push(`<div class="rating-btn" style="width:36px;height:36px;font-size:14px;border-radius:8px;">${i}</div>`);
+    target.innerHTML = `
+      <div class="attendee-inner" style="padding-top:60px;">
+        <div id="${targetId}-countdown" class="countdown-display hidden"></div>
+        <div class="attendee-question-text">${escapeHtml(qdata.text)}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:16px;">${nums.join('')}</div>
+      </div>`;
+    renderCountdown(qdata, `${targetId}-countdown`);
+    return;
+  }
+
+  // Rating — closed state shows avg + distribution
+  if (qdata.type === 'rating' && isClosed) {
+    const ratingContainerId = `${targetId}-rating`;
+    target.innerHTML = `
+      <div class="attendee-inner" style="padding-top:60px;">
+        <div class="eyebrow" style="text-align:center;">Rating</div>
+        <div class="attendee-question-text" style="font-size:18px; margin-bottom:16px;">${escapeHtml(qdata.text)}</div>
+        <div id="${ratingContainerId}"></div>
+      </div>`;
+    renderRatingResult(qdata, ratingContainerId);
+    return;
+  }
+
+  // Word cloud — live open state shows the prompt + "Type your word" hint
+  if (qdata.type === 'wordcloud' && !isClosed) {
+    target.innerHTML = `
+      <div class="attendee-inner" style="padding-top:60px;">
+        <div id="${targetId}-countdown" class="countdown-display hidden"></div>
+        <div class="attendee-question-text">${escapeHtml(qdata.text)}</div>
+        <div style="margin-top:20px; background:var(--surface-2); border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:12px 14px; color:var(--text-faint); font-size:13px;">Type your word…</div>
+      </div>`;
+    renderCountdown(qdata, `${targetId}-countdown`);
+    return;
+  }
+
+  // Word cloud — closed state shows the cloud itself
+  if (qdata.type === 'wordcloud' && isClosed) {
+    const mode = qdata.revealMode || 'live';
+    const revealed = mode === 'live' ? true : (qdata.revealed === true);
+    const wcId = `${targetId}-wc`;
+    target.innerHTML = `
+      <div class="attendee-inner" style="padding-top:60px;">
+        <div class="eyebrow" style="text-align:center;">Word Cloud</div>
+        <div class="attendee-question-text" style="font-size:18px; margin-bottom:16px;">${escapeHtml(qdata.text)}</div>
+        <div id="${wcId}"></div>
+      </div>`;
+    renderWordCloud(qdata, wcId);
     return;
   }
 
@@ -5353,11 +6803,53 @@ function renderReport(exportData) {
     block.className = 'report-question-block';
 
     if (qdata.type === 'slide') {
-      // Slides have no votes to tally — showing "0 responses" here would be
-      // actively misleading, since that phrasing implies a poll nobody
-      // answered rather than a slide that was simply shown.
       const caption = (qdata.slide && qdata.slide.caption) || '(untitled slide)';
       block.innerHTML = `<div class="report-q-title">${i + 1}. ${escapeHtml(caption)}</div><div class="report-total">Slide — shown to the room, no votes collected</div>`;
+      content.appendChild(block);
+      return;
+    }
+
+    if (qdata.type === 'wordcloud') {
+      const freq = tallyWords(qdata);
+      const words = Object.entries(freq).sort((a, b) => b[1] - a[1]);
+      const total = words.reduce((s, [, c]) => s + c, 0);
+      const preview = words.slice(0, 12).map(([w, c]) => `<span style="font-family:var(--font-display); font-weight:700; font-size:${Math.round(12 + (c / Math.max(words[0][1], 1)) * 14)}px; color:var(--teal-bright); margin-right:8px;">${escapeHtml(w)}</span>`).join('');
+      block.innerHTML = `<div class="report-q-title">${i + 1}. ${escapeHtml(qdata.text)}</div><div class="report-total">${total} responses · ${words.length} unique words</div><div style="padding:12px 0; line-height:2;">${preview || '<span style="color:var(--text-faint)">No responses</span>'}</div>`;
+      content.appendChild(block);
+      return;
+    }
+
+    if (qdata.type === 'opentext') {
+      const entries = Object.entries(qdata.votes || {})
+        .filter(([, v]) => v && typeof v.text === 'string' && v.text.trim())
+        .sort((a, b) => (b[1].pinned ? 1 : 0) - (a[1].pinned ? 1 : 0) || (b[1].upvotes || 0) - (a[1].upvotes || 0));
+      const responseRows = entries.map(([, r]) => `<div class="report-result-row" style="display:block; padding:8px 0; border-bottom:1px solid var(--border-soft);">
+          ${r.name ? `<div style="font-size:11px; font-family:var(--font-mono); color:var(--text-faint); margin-bottom:2px;">${escapeHtml(r.name)}</div>` : ''}
+          <div>${escapeHtml(r.text)}${r.pinned ? ' <span style="color:var(--teal-bright); font-size:11px;">📌 Pinned</span>' : ''}${r.upvotes > 0 ? ` <span style="color:var(--text-faint); font-size:11px;">▲ ${r.upvotes}</span>` : ''}</div>
+        </div>`).join('');
+      block.innerHTML = `<div class="report-q-title">${i + 1}. ${escapeHtml(qdata.text)}</div><div class="report-total">${entries.length} response${entries.length === 1 ? '' : 's'}</div>${responseRows || '<div style="color:var(--text-faint); font-size:13px; padding:8px 0;">No responses collected</div>'}`;
+      content.appendChild(block);
+      return;
+    }
+
+    if (qdata.type === 'rating') {
+      const { freq, avg, count, min, max } = tallyRatings(qdata);
+      const maxFreq = Math.max(...Object.values(freq), 1);
+      const distRows = [];
+      for (let n = min; n <= max; n++) {
+        const c = freq[n] || 0;
+        const pct = Math.round((c / maxFreq) * 100);
+        const pctOfTotal = count > 0 ? Math.round((c / count) * 100) : 0;
+        distRows.push(`<div class="report-result-row">
+          <div style="min-width:24px; font-family:var(--font-mono); font-size:12px; color:var(--text-faint);">${n}</div>
+          <div style="flex:1;"><div class="report-result-bar-bg"><div class="report-result-bar-fill tally-fill c0" style="width:${pct}%"></div></div></div>
+          <span style="text-align:right; font-family:var(--font-mono); font-size:12px;">${c} · ${pctOfTotal}%</span>
+        </div>`);
+      }
+      block.innerHTML = `
+        <div class="report-q-title">${i + 1}. ${escapeHtml(qdata.text)}</div>
+        <div class="report-total">${count} response${count === 1 ? '' : 's'}${avg !== null ? ` · avg <strong>${avg} / ${max}</strong>` : ''}</div>
+        <div style="margin-top:10px;">${distRows.join('')}</div>`;
       content.appendChild(block);
       return;
     }
@@ -5522,7 +7014,8 @@ function renderAttendeeSharedResults(payload) {
 
 function renderAttendeeEnded() {
   ['attendee-skeleton','attendee-waiting','attendee-question','attendee-voted',
-   'attendee-closed','attendee-slide','attendee-shared-results'].forEach(id => {
+   'attendee-closed','attendee-slide','attendee-shared-results','attendee-wordcloud',
+   'attendee-opentext','attendee-rating'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add('hidden');
   });
@@ -5794,18 +7287,28 @@ function runRerunSession() {
     if (q.type === 'slide') {
       return { type: 'slide', slide: q.slide };
     }
+    if (q.type === 'wordcloud') {
+      const item = { type: 'wordcloud', text: q.text, revealMode: q.revealMode || 'live' };
+      if (typeof q.timerSeconds === 'number') item.timerSeconds = q.timerSeconds;
+      return item;
+    }
+    if (q.type === 'opentext') {
+      const item = { type: 'opentext', text: q.text, revealMode: q.revealMode || 'live' };
+      if (typeof q.timerSeconds === 'number') item.timerSeconds = q.timerSeconds;
+      return item;
+    }
+    if (q.type === 'rating') {
+      const item = { type: 'rating', text: q.text, revealMode: q.revealMode || 'live', scaleType: q.scaleType || '10' };
+      if (q.labelLow) item.labelLow = q.labelLow;
+      if (q.labelHigh) item.labelHigh = q.labelHigh;
+      if (typeof q.timerSeconds === 'number') item.timerSeconds = q.timerSeconds;
+      return item;
+    }
     const item = { type: 'poll', text: q.text, options: q.options, revealMode: q.revealMode || 'live' };
     if (typeof q.correctAnswerIndex === 'number') item.correctAnswerIndex = q.correctAnswerIndex;
     if (typeof q.timerSeconds === 'number') item.timerSeconds = q.timerSeconds;
     return item;
   });
-
-  State.sessionCode = null;
-  State.activeQuestionId = null;
-  State.compareMode = false;
-  State.importedResults = null;
-  persistDraft();
-  showView('build');
   renderQuestionBank();
   syncGlobalTimerFromBank();
 }
@@ -5880,6 +7383,23 @@ async function handleImportedSession(data) {
   // trivia/timed questions back into plain polls on import.
   State.questionBank = questions.map(q => {
     if (q.type === 'slide') return { type: 'slide', slide: q.slide };
+    if (q.type === 'wordcloud') {
+      const item = { type: 'wordcloud', text: q.text, revealMode: q.revealMode || 'live' };
+      if (typeof q.timerSeconds === 'number') item.timerSeconds = q.timerSeconds;
+      return item;
+    }
+    if (q.type === 'opentext') {
+      const item = { type: 'opentext', text: q.text, revealMode: q.revealMode || 'live' };
+      if (typeof q.timerSeconds === 'number') item.timerSeconds = q.timerSeconds;
+      return item;
+    }
+    if (q.type === 'rating') {
+      const item = { type: 'rating', text: q.text, revealMode: q.revealMode || 'live', scaleType: q.scaleType || '10' };
+      if (q.labelLow) item.labelLow = q.labelLow;
+      if (q.labelHigh) item.labelHigh = q.labelHigh;
+      if (typeof q.timerSeconds === 'number') item.timerSeconds = q.timerSeconds;
+      return item;
+    }
     const item = { type: 'poll', text: q.text, options: q.options, revealMode: q.revealMode || 'live' };
     if (typeof q.correctAnswerIndex === 'number') item.correctAnswerIndex = q.correctAnswerIndex;
     if (typeof q.timerSeconds === 'number') item.timerSeconds = q.timerSeconds;
