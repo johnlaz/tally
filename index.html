@@ -5581,6 +5581,7 @@ async function handleImportedLibrary(data) {
     existing.push({
       id: generateId(),
       name: name,
+      category: deck.category || '',
       items: deck.items,
       createdAt: deck.createdAt || Date.now(),
       updatedAt: Date.now(),
