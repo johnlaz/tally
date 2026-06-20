@@ -8838,14 +8838,14 @@ document.addEventListener('keydown', (e) => {
       }, 400);
     }
 
-    // Fetch from assets/sample-decks.json (relative to index.html)
+    // Fetch demo decks from assets/sample-decks.json (same directory as index.html)
     let data;
     try {
       const res = await fetch('assets/sample-decks.json');
       if (!res.ok) throw new Error('HTTP ' + res.status);
       data = await res.json();
     } catch (err) {
-      await appAlert('Could not load demo decks — make sure assets/sample-decks.json is deployed alongside index.html.', { title: 'Demo decks not found' });
+      await appAlert('Could not load demo decks — make sure assets/sample-decks.json is in the same folder as index.html.', { title: 'Demo decks not found' });
       return;
     }
 
