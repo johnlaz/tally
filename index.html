@@ -993,6 +993,177 @@
     border-radius: var(--radius-md);
   }
 
+  /* ── Deck Library toolbar: search + sort + view toggle ── */
+  .library-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .library-search-wrap {
+    flex: 1;
+    position: relative;
+    min-width: 0;
+  }
+  .library-search-wrap svg {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px; height: 14px;
+    color: var(--text-faint);
+    pointer-events: none;
+  }
+  .library-search {
+    width: 100%;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 13px;
+    padding: 7px 10px 7px 30px;
+    outline: none;
+    transition: border-color 0.15s;
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  .library-search::placeholder { color: var(--text-faint); }
+  .library-search:focus { border-color: var(--teal); }
+
+  .library-sort-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 10px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-dim);
+    white-space: nowrap;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+    flex-shrink: 0;
+  }
+  .library-sort-btn:hover { border-color: var(--border); color: var(--text); }
+  .library-sort-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+  .library-view-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+    flex-shrink: 0;
+  }
+  .library-view-btn:hover { color: var(--text); border-color: var(--border); }
+  .library-view-btn svg { width: 15px; height: 15px; }
+
+  /* Sort dropdown */
+  .library-sort-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-modal);
+    z-index: 200;
+    min-width: 170px;
+    overflow: hidden;
+  }
+  .library-sort-dropdown.hidden { display: none; }
+  .sort-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .sort-option:hover { background: var(--surface-2); color: var(--text); }
+  .sort-option.active { color: var(--teal-bright); }
+  .sort-option svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+  /* Category pill on library items */
+  .library-item-category {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--teal-wash);
+    color: var(--teal-bright);
+    border: 1px solid rgba(42,141,243,0.2);
+    white-space: nowrap;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .library-item-category:hover {
+    background: var(--teal-dim);
+    border-color: var(--teal);
+  }
+  .library-item-category-empty {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-faint);
+    border: 1px dashed var(--border);
+    white-space: nowrap;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .library-item-category-empty:hover {
+    color: var(--teal-bright);
+    border-color: var(--teal);
+    border-style: solid;
+  }
+
+  /* Card grid view */
+  .library-list.card-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  .library-list.card-view .library-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 16px;
+  }
+  .library-list.card-view .library-item-main { width: 100%; }
+  .library-list.card-view .library-item-name {
+    font-size: 14px;
+    margin-bottom: 4px;
+    white-space: normal;
+    overflow: visible;
+  }
+  .library-list.card-view .item-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .library-list.card-view .item-actions .btn-primary { flex: 1; }
+  .library-list.card-view .library-item-category { align-self: flex-start; }
+
   .empty-state {
     text-align: center;
     padding: 48px 24px;
@@ -2850,6 +3021,41 @@
             Deck Library
             <span class="library-section-count" id="library-count">0</span>
           </span>
+        </div>
+        <!-- Toolbar: search + sort + view — hidden when collapsed -->
+        <div class="library-toolbar" id="library-toolbar">
+          <div class="library-search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input class="library-search" id="library-search" type="search" placeholder="Search decks…" autocomplete="off">
+          </div>
+          <div style="position:relative; flex-shrink:0;">
+            <button class="library-sort-btn" id="library-sort-btn" aria-label="Sort decks">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
+              <span id="library-sort-label">Recent</span>
+            </button>
+            <div class="library-sort-dropdown hidden" id="library-sort-dropdown">
+              <div class="sort-option active" data-sort="recent">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Recent first
+              </div>
+              <div class="sort-option" data-sort="alpha">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h6M4 12h8M4 18h6M14 10l4-4 4 4M18 6v12"/></svg>
+                A → Z
+              </div>
+              <div class="sort-option" data-sort="oldest">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l-3 3"/></svg>
+                Oldest first
+              </div>
+              <div class="sort-option" data-sort="category">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h4v4H4zM14 6h4v4h-4zM4 14h4v4H4zM14 14h4v4h-4z"/></svg>
+                Category
+              </div>
+            </div>
+          </div>
+          <button class="library-view-btn" id="library-view-btn" aria-label="Toggle view" title="Toggle list / card view">
+            <svg id="library-view-icon-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+            <svg id="library-view-icon-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </button>
         </div>
         <div id="library-list" class="library-list"></div>
         <div id="library-empty" class="library-empty">No saved decks yet — build a deck below, then save it here to reopen anytime.</div>
@@ -4955,36 +5161,106 @@ function formatLibraryDate(ts) {
   return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
+/* ---------- Deck Library state ---------- */
+let libraryViewMode = 'list';   // 'list' | 'card'
+let librarySortMode = 'recent'; // 'recent' | 'alpha' | 'oldest' | 'category'
+let librarySearchQuery = '';
+
+const SORT_LABELS = { recent: 'Recent', alpha: 'A → Z', oldest: 'Oldest', category: 'Category' };
+
+const DECK_CATEGORIES = [
+  'Poll',
+  'Trivia',
+  'Mixed',
+  'Q&A',
+  'Word Cloud',
+  'Rating',
+  'Training',
+  'Ice Breaker',
+  'Other',
+];
+
 function renderDeckLibrary() {
-  const decks = loadDeckLibrary();
+  const allDecks = loadDeckLibrary();
   const list = document.getElementById('library-list');
   const empty = document.getElementById('library-empty');
   const count = document.getElementById('library-count');
 
-  count.textContent = decks.length;
+  count.textContent = allDecks.length;
+
+  // Filter by search query
+  const q = librarySearchQuery.trim().toLowerCase();
+  let decks = q
+    ? allDecks.filter(d =>
+        d.name.toLowerCase().includes(q) ||
+        (d.category || '').toLowerCase().includes(q)
+      )
+    : allDecks.slice();
+
+  // Sort
+  if (librarySortMode === 'recent') {
+    decks.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+  } else if (librarySortMode === 'alpha') {
+    decks.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (librarySortMode === 'oldest') {
+    decks.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+  } else if (librarySortMode === 'category') {
+    decks.sort((a, b) => {
+      const ca = (a.category || 'zzz').toLowerCase();
+      const cb = (b.category || 'zzz').toLowerCase();
+      return ca !== cb ? ca.localeCompare(cb) : a.name.localeCompare(b.name);
+    });
+  }
+
   list.innerHTML = '';
 
-  if (decks.length === 0) {
+  // Toggle card/list class
+  list.className = 'library-list' + (libraryViewMode === 'card' ? ' card-view' : '');
+
+  if (allDecks.length === 0) {
     empty.classList.remove('hidden');
-    syncLibraryExportControl(decks);
+    syncLibraryExportControl(allDecks);
     return;
   }
   empty.classList.add('hidden');
 
-  // Most recently saved/updated first — the deck someone just finished
-  // editing is the one they're most likely to want next, not whichever
-  // happened to be created first.
-  const sorted = decks.slice().sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+  if (decks.length === 0) {
+    // Search returned no results
+    const noMatch = document.createElement('div');
+    noMatch.className = 'library-empty';
+    noMatch.textContent = 'No decks match "' + librarySearchQuery.trim() + '"';
+    list.appendChild(noMatch);
+    syncLibraryExportControl(allDecks);
+    return;
+  }
 
-  sorted.forEach((deck) => {
+  decks.forEach((deck) => {
     const item = document.createElement('div');
     item.className = 'library-item';
 
     const main = document.createElement('div');
     main.className = 'library-item-main';
+
     main.innerHTML = `
       <div class="library-item-name">${escapeHtml(deck.name)}</div>
       <div class="library-item-meta">${escapeHtml(deckSummary(deck.items))} · saved ${formatLibraryDate(deck.updatedAt || deck.createdAt)}</div>`;
+
+    // Category tag — clickable to change; dimmed prompt when unset
+    const catWrap = document.createElement('div');
+    catWrap.style.marginTop = '5px';
+    const catBtn = document.createElement('button');
+    if (deck.category) {
+      catBtn.className = 'library-item-category';
+      catBtn.textContent = deck.category;
+      catBtn.title = 'Change category';
+    } else {
+      catBtn.className = 'library-item-category-empty';
+      catBtn.textContent = '＋ Category';
+      catBtn.title = 'Set category';
+    }
+    catBtn.addEventListener('click', () => setDeckCategory(deck.id));
+    catWrap.appendChild(catBtn);
+    main.appendChild(catWrap);
 
     const actions = document.createElement('div');
     actions.className = 'item-actions';
@@ -5007,7 +5283,28 @@ function renderDeckLibrary() {
     list.appendChild(item);
   });
 
-  syncLibraryExportControl(decks);
+  syncLibraryExportControl(allDecks);
+}
+
+async function setDeckCategory(deckId) {
+  const decks = loadDeckLibrary();
+  const deck = decks.find(d => d.id === deckId);
+  if (!deck) return;
+
+  const choices = [
+    ...DECK_CATEGORIES.map(c => ({ label: c, value: c, style: deck.category === c ? 'primary' : 'ghost' })),
+    { label: 'Clear category', value: '__clear__', style: 'ghost' },
+  ];
+
+  const pick = await appChoice({
+    title: 'Set category',
+    body: `Categorise "${deck.name}" so you can sort and filter by type.`,
+    choices,
+  });
+  if (pick === null) return; // dismissed
+  deck.category = (pick === '__clear__') ? '' : pick;
+  saveDeckLibrary(decks);
+  renderDeckLibrary();
 }
 
 function syncLibraryExportControl(decks) {
@@ -5041,6 +5338,17 @@ async function saveCurrentDeckToLibrary() {
     return;
   }
 
+  // Category selection
+  const categoryChoice = await appChoice({
+    title: 'Add a category?',
+    body: 'Pick a category to make this deck easier to find and sort later (optional).',
+    choices: [
+      ...DECK_CATEGORIES.map(c => ({ label: c, value: c, style: 'ghost' })),
+      { label: 'Skip', value: '__skip__', style: 'ghost' },
+    ],
+  });
+  const category = (categoryChoice && categoryChoice !== '__skip__') ? categoryChoice : '';
+
   // Matching an existing deck by name (case-insensitive) offers an
   // overwrite instead of silently creating a confusing second copy with
   // the same name — but it's still the moderator's call, not automatic,
@@ -5056,6 +5364,7 @@ async function saveCurrentDeckToLibrary() {
     if (shouldOverwrite) {
       existing.items = JSON.parse(JSON.stringify(State.questionBank));
       existing.updatedAt = Date.now();
+      if (category) existing.category = category;
       saveDeckLibrary(decks);
       renderDeckLibrary();
       return;
@@ -5066,6 +5375,7 @@ async function saveCurrentDeckToLibrary() {
   decks.push({
     id: generateId(),
     name: name,
+    category: category,
     items: JSON.parse(JSON.stringify(State.questionBank)),
     createdAt: now,
     updatedAt: now,
@@ -5154,7 +5464,56 @@ document.getElementById('btn-new-deck').addEventListener('click', async () => {
 // time, and the moderator usually only needs it open long enough to pick
 // a deck or save one, not while actively editing individual questions.
 document.getElementById('library-section-toggle').addEventListener('click', () => {
-  document.getElementById('library-section').classList.toggle('collapsed');
+  const section = document.getElementById('library-section');
+  section.classList.toggle('collapsed');
+  // Show/hide toolbar along with the list
+  const toolbar = document.getElementById('library-toolbar');
+  if (toolbar) toolbar.style.display = section.classList.contains('collapsed') ? 'none' : '';
+});
+
+/* ── Library: search ── */
+document.getElementById('library-search').addEventListener('input', (e) => {
+  librarySearchQuery = e.target.value;
+  renderDeckLibrary();
+});
+
+/* ── Library: sort dropdown ── */
+const librarySortBtn = document.getElementById('library-sort-btn');
+const librarySortDropdown = document.getElementById('library-sort-dropdown');
+
+librarySortBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  librarySortDropdown.classList.toggle('hidden');
+});
+
+document.addEventListener('click', () => {
+  librarySortDropdown.classList.add('hidden');
+});
+
+librarySortDropdown.addEventListener('click', (e) => {
+  const opt = e.target.closest('.sort-option');
+  if (!opt) return;
+  librarySortDropdown.querySelectorAll('.sort-option').forEach(o => o.classList.remove('active'));
+  opt.classList.add('active');
+  librarySortMode = opt.dataset.sort;
+  document.getElementById('library-sort-label').textContent = SORT_LABELS[librarySortMode] || 'Sort';
+  librarySortDropdown.classList.add('hidden');
+  renderDeckLibrary();
+});
+
+/* ── Library: view toggle (list ↔ card) ── */
+document.getElementById('library-view-btn').addEventListener('click', () => {
+  libraryViewMode = libraryViewMode === 'list' ? 'card' : 'list';
+  const iconList = document.getElementById('library-view-icon-list');
+  const iconCard = document.getElementById('library-view-icon-card');
+  if (libraryViewMode === 'card') {
+    iconList.style.display = 'none';
+    iconCard.style.display = '';
+  } else {
+    iconList.style.display = '';
+    iconCard.style.display = 'none';
+  }
+  renderDeckLibrary();
 });
 
 document.getElementById('btn-export-library').addEventListener('click', () => {
