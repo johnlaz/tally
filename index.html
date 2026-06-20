@@ -3304,7 +3304,7 @@
       </div>
 
       <div class="action-row-bottom">
-        <button class="btn btn-ghost" id="btn-rerun-session" style="flex:1;">Back to Build</button>
+        <button class="btn btn-ghost" id="btn-rerun-session" style="flex:1;">↩ Run Again</button>
         <button class="btn btn-primary" id="btn-new-session" style="flex:1;">Start New Session</button>
       </div>
     </div>
@@ -7225,7 +7225,7 @@ function renderDashboard(code, session) {
       renderSlideIntoControlPane(qdata, 'dashboard-final-tally', 'dashboard-closed-text');
       renderPreviewPane('preview-scale-closed', code, qid, qdata, true);
       document.getElementById('btn-reveal-closed').classList.add('hidden');
-      configureNextButton(document.getElementById('btn-next-question'), code, draftEntries);
+      configureNextButton(document.getElementById('btn-next-question'), code, draftEntries, qid);
     } else if (itemType === 'wordcloud') {
       document.getElementById('dashboard-live-wrap').classList.remove('hidden');
       document.getElementById('dashboard-question-text').textContent = qdata.text;
@@ -7316,14 +7316,21 @@ function renderUpNextHint(draftEntries) {
 
 /* Shared "advance to whatever's next in the deck" button config — used after
    both a closed poll and a shown slide, since Next is unified across types. */
-function configureNextButton(nextBtn, code, draftEntries) {
+function configureNextButton(nextBtn, code, draftEntries, openSlideQid) {
   if (draftEntries.length === 0) {
     nextBtn.disabled = true;
     nextBtn.textContent = 'No more items — add one or end session';
   } else {
     nextBtn.disabled = false;
     nextBtn.textContent = 'Next';
-    nextBtn.onclick = () => DataLayer.openQuestion(code, draftEntries[0][0]);
+    nextBtn.onclick = () => {
+      // If a slide is currently open, close it before opening the next item.
+      // Slides show the "closed-wrap" panel with no Close button of their own,
+      // so without this they stay in 'open' status in Firebase alongside the
+      // next item — causing a stuck state where the host can't advance.
+      if (openSlideQid) DataLayer.closeQuestion(code, openSlideQid);
+      DataLayer.openQuestion(code, draftEntries[0][0]);
+    };
   }
 }
 
@@ -8668,6 +8675,13 @@ function runRerunSession() {
     if (typeof q.timerSeconds === 'number') item.timerSeconds = q.timerSeconds;
     return item;
   });
+
+  // Clear the ended session's code so editors and guards don't think
+  // a live session is still active, then navigate to Build.
+  State.sessionCode = null;
+  State.activeQuestionId = null;
+  persistDraft();
+  showView('build');
   renderQuestionBank();
   syncGlobalTimerFromBank();
 }
