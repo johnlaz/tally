@@ -2,7 +2,6 @@
   "type": "tally-deck-library",
   "exportedAt": 1782013770000,
   "decks": [
-
     {
       "id": "demo_trivia_movies",
       "name": "Cinematic Blockbusters",
@@ -14,14 +13,19 @@
           "type": "slide",
           "slide": {
             "contentType": "text",
-            "caption": "🎬 Lights, Camera, Trivia! — How well do you know the biggest movies ever made?",
+            "caption": "\ud83c\udfac Lights, Camera, Trivia! \u2014 How well do you know the biggest movies ever made?",
             "pushToAttendee": true
           }
         },
         {
           "type": "poll",
           "text": "In Jurassic Park (1993), what is the first dinosaur Dr. Grant and Dr. Sattler see alive?",
-          "options": ["Brachiosaurus", "Velociraptor", "Tyrannosaurus Rex", "Triceratops"],
+          "options": [
+            "Brachiosaurus",
+            "Velociraptor",
+            "Tyrannosaurus Rex",
+            "Triceratops"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -29,7 +33,12 @@
         {
           "type": "poll",
           "text": "What is the name of the fictional African nation in Marvel's Black Panther?",
-          "options": ["Wakanda", "Zamunda", "Latveria", "Genosha"],
+          "options": [
+            "Wakanda",
+            "Zamunda",
+            "Latveria",
+            "Genosha"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
@@ -37,7 +46,12 @@
         {
           "type": "poll",
           "text": "Who voiced the villain Scar in Disney's The Lion King (1994)?",
-          "options": ["Jeremy Irons", "James Earl Jones", "Willem Dafoe", "Christopher Walken"],
+          "options": [
+            "Jeremy Irons",
+            "James Earl Jones",
+            "Willem Dafoe",
+            "Christopher Walken"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -45,15 +59,25 @@
         {
           "type": "poll",
           "text": "In Inception, what object does Cobb use as his totem to check if he's dreaming?",
-          "options": ["A spinning top", "A brass coin", "A silver die", "A weighted poker chip"],
+          "options": [
+            "A spinning top",
+            "A brass coin",
+            "A silver die",
+            "A poker chip"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
         },
         {
           "type": "poll",
-          "text": "How many Academy Awards did The Lord of the Rings: The Return of the King win?",
-          "options": ["11", "9", "13", "10"],
+          "text": "How many Academy Awards did The Return of the King win?",
+          "options": [
+            "11",
+            "9",
+            "13",
+            "10"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -61,7 +85,12 @@
         {
           "type": "poll",
           "text": "Who directed the 1975 thriller Jaws?",
-          "options": ["Steven Spielberg", "George Lucas", "Francis Ford Coppola", "Martin Scorsese"],
+          "options": [
+            "Steven Spielberg",
+            "George Lucas",
+            "Francis Ford Coppola",
+            "Martin Scorsese"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
@@ -69,7 +98,12 @@
         {
           "type": "poll",
           "text": "In The Matrix, what color pill does Morpheus offer Neo to escape the simulation?",
-          "options": ["Red", "Blue", "Green", "Yellow"],
+          "options": [
+            "Red",
+            "Blue",
+            "Green",
+            "Yellow"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
@@ -77,7 +111,12 @@
         {
           "type": "poll",
           "text": "What is the name of the AI defense network in the Terminator franchise?",
-          "options": ["Skynet", "HAL 9000", "WOPR", "VIKI"],
+          "options": [
+            "Skynet",
+            "HAL 9000",
+            "WOPR",
+            "VIKI"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
@@ -85,7 +124,12 @@
         {
           "type": "poll",
           "text": "What speed must the DeLorean reach to time travel in Back to the Future?",
-          "options": ["88 mph", "55 mph", "100 mph", "75 mph"],
+          "options": [
+            "88 mph",
+            "55 mph",
+            "100 mph",
+            "75 mph"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
@@ -93,14 +137,18 @@
         {
           "type": "poll",
           "text": "What is Val Kilmer's call sign in Top Gun (1986)?",
-          "options": ["Iceman", "Maverick", "Goose", "Viper"],
+          "options": [
+            "Iceman",
+            "Maverick",
+            "Goose",
+            "Viper"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
         }
       ]
     },
-
     {
       "id": "demo_trivia_90s",
       "name": "All-Out 1990s Trivia",
@@ -112,14 +160,19 @@
           "type": "slide",
           "slide": {
             "contentType": "text",
-            "caption": "📼 Rewind to the '90s! — Dial-up modems, boy bands, and frosted tips.",
+            "caption": "\ud83d\udcfc Rewind to the '90s! \u2014 Dial-up modems, boy bands, and frosted tips.",
             "pushToAttendee": true
           }
         },
         {
           "type": "poll",
           "text": "Which company launched the Tamagotchi virtual pet in 1996?",
-          "options": ["Bandai", "Sega", "Tiger Electronics", "Hasbro"],
+          "options": [
+            "Bandai",
+            "Sega",
+            "Tiger Electronics",
+            "Hasbro"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -127,7 +180,12 @@
         {
           "type": "poll",
           "text": "Which grunge band released Smells Like Teen Spirit in 1991?",
-          "options": ["Nirvana", "Pearl Jam", "Soundgarden", "Alice in Chains"],
+          "options": [
+            "Nirvana",
+            "Pearl Jam",
+            "Soundgarden",
+            "Alice in Chains"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
@@ -135,15 +193,25 @@
         {
           "type": "poll",
           "text": "What hit sitcom was set in a coffee shop called Central Perk?",
-          "options": ["Friends", "Seinfeld", "Frasier", "Mad About You"],
+          "options": [
+            "Friends",
+            "Seinfeld",
+            "Frasier",
+            "Mad About You"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
         },
         {
           "type": "poll",
-          "text": "Which toy triggered an investment craze with collectible pellet-filled plush animals in the late '90s?",
-          "options": ["Beanie Babies", "Pound Puppies", "Furby", "Tickle Me Elmo"],
+          "text": "Which toy triggered a collectibles craze with pellet-filled plush animals in the late '90s?",
+          "options": [
+            "Beanie Babies",
+            "Pound Puppies",
+            "Furby",
+            "Tickle Me Elmo"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -151,7 +219,12 @@
         {
           "type": "poll",
           "text": "Michael Jordan starred alongside Bugs Bunny in which 1996 film?",
-          "options": ["Space Jam", "Blue Chips", "He Got Game", "Above the Rim"],
+          "options": [
+            "Space Jam",
+            "Blue Chips",
+            "He Got Game",
+            "Above the Rim"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
@@ -159,23 +232,38 @@
         {
           "type": "poll",
           "text": "Which pop group launched the 'Girl Power' movement with their 1996 hit Wannabe?",
-          "options": ["Spice Girls", "TLC", "Destiny's Child", "All Saints"],
+          "options": [
+            "Spice Girls",
+            "TLC",
+            "Destiny's Child",
+            "All Saints"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
         },
         {
           "type": "poll",
-          "text": "Which animation studio released the world's first fully computer-animated feature film, Toy Story, in 1995?",
-          "options": ["Pixar", "DreamWorks", "Blue Sky", "Walt Disney Feature Animation"],
+          "text": "Which studio released Toy Story, the world's first fully computer-animated feature film, in 1995?",
+          "options": [
+            "Pixar",
+            "DreamWorks",
+            "Blue Sky",
+            "Walt Disney Animation"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
         },
         {
           "type": "poll",
-          "text": "What internet service was famous for mailing out CDs and saying 'You've Got Mail!'?",
-          "options": ["America Online (AOL)", "CompuServe", "Prodigy", "NetZero"],
+          "text": "What internet service was famous for mailing CDs and saying 'You've Got Mail!'?",
+          "options": [
+            "America Online (AOL)",
+            "CompuServe",
+            "Prodigy",
+            "NetZero"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -183,7 +271,12 @@
         {
           "type": "poll",
           "text": "What was the first 32-bit home console Sony released in North America?",
-          "options": ["PlayStation", "Sega Saturn", "Nintendo 64", "3DO"],
+          "options": [
+            "PlayStation",
+            "Sega Saturn",
+            "Nintendo 64",
+            "3DO"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -191,14 +284,312 @@
         {
           "type": "poll",
           "text": "Which iMac G3 feature made it stand out from every other computer in 1998?",
-          "options": ["Translucent colorful casing", "Touch screen display", "Built-in DVD player", "Wireless keyboard"],
+          "options": [
+            "Translucent colorful casing",
+            "Touch screen display",
+            "Built-in DVD player",
+            "Wireless keyboard"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
         }
       ]
     },
-
+    {
+      "id": "demo_trivia_seinfeld",
+      "name": "Seinfeld Deep-Cut Trivia",
+      "category": "Trivia",
+      "createdAt": 1782013770000,
+      "updatedAt": 1782013770000,
+      "items": [
+        {
+          "type": "slide",
+          "slide": {
+            "contentType": "text",
+            "caption": "\u2615 No hugging, no learning \u2014 just Seinfeld trivia. Good luck, Newman.",
+            "pushToAttendee": true
+          }
+        },
+        {
+          "type": "poll",
+          "text": "What is the name of George Costanza's recurring fake job at the Yankees?",
+          "options": [
+            "Assistant to the Traveling Secretary",
+            "Director of Scouting",
+            "Media Relations Manager",
+            "Head of Player Development"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 25
+        },
+        {
+          "type": "poll",
+          "text": "What is Kramer's first name, revealed in the finale?",
+          "options": [
+            "Cosmo",
+            "Franklin",
+            "Harold",
+            "Eugene"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "What does George order at Monk's Caf\u00e9 that becomes his ultimate comfort food?",
+          "options": [
+            "A big salad",
+            "Tuna on toast",
+            "A BLT",
+            "Egg salad"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "What is the name of Jerry's annoying neighbor across the hall?",
+          "options": [
+            "Newman",
+            "Lloyd Braun",
+            "Uncle Leo",
+            "Bob Sacamano"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "What is Elaine's last name?",
+          "options": [
+            "Benes",
+            "Peterman",
+            "Lewis",
+            "Costanza"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "Which episode features the gang waiting for a table at a Chinese restaurant for the entire episode?",
+          "options": [
+            "The Chinese Restaurant",
+            "The Dinner Party",
+            "The Wait",
+            "The Table"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "What candy bar does George try to eat with a knife and fork?",
+          "options": [
+            "Snickers",
+            "Twix",
+            "Baby Ruth",
+            "Milky Way"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "What does George's answering machine message say he is?",
+          "options": [
+            "The Maestro",
+            "Art Vandelay",
+            "H.E. Pennypacker",
+            "Kel Varnsen"
+          ],
+          "correctAnswerIndex": 1,
+          "revealMode": "hidden",
+          "timerSeconds": 25
+        },
+        {
+          "type": "poll",
+          "text": "What city is Elaine's boss J. Peterman based out of for most of the series?",
+          "options": [
+            "New York",
+            "Chicago",
+            "Los Angeles",
+            "Paris"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "What was the name of Jerry and George's failed TV pilot?",
+          "options": [
+            "Jerry",
+            "The Show About Nothing",
+            "Good Looking",
+            "Seinfeld"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        }
+      ]
+    },
+    {
+      "id": "demo_trivia_science_7th",
+      "name": "7th Grade Science Challenge",
+      "category": "Trivia",
+      "createdAt": 1782013770000,
+      "updatedAt": 1782013770000,
+      "items": [
+        {
+          "type": "slide",
+          "slide": {
+            "contentType": "text",
+            "caption": "\ud83d\udd2c Science time! \u2014 Cells, atoms, ecosystems, and everything in between.",
+            "pushToAttendee": true
+          }
+        },
+        {
+          "type": "poll",
+          "text": "What is the powerhouse of the cell?",
+          "options": [
+            "Mitochondria",
+            "Nucleus",
+            "Ribosome",
+            "Vacuole"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "What is the chemical symbol for water?",
+          "options": [
+            "H\u2082O",
+            "CO\u2082",
+            "NaCl",
+            "O\u2082"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "Which planet is closest to the Sun?",
+          "options": [
+            "Mercury",
+            "Venus",
+            "Earth",
+            "Mars"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "What force pulls objects toward the center of the Earth?",
+          "options": [
+            "Gravity",
+            "Magnetism",
+            "Friction",
+            "Inertia"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "What do plants use to make food from sunlight?",
+          "options": [
+            "Photosynthesis",
+            "Respiration",
+            "Fermentation",
+            "Digestion"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "What is the smallest unit of an element that still has its chemical properties?",
+          "options": [
+            "Atom",
+            "Molecule",
+            "Cell",
+            "Electron"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "What type of rock is formed from cooled lava or magma?",
+          "options": [
+            "Igneous",
+            "Sedimentary",
+            "Metamorphic",
+            "Limestone"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "How many bones are in the adult human body?",
+          "options": [
+            "206",
+            "186",
+            "212",
+            "194"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "What gas do plants absorb from the air during photosynthesis?",
+          "options": [
+            "Carbon dioxide",
+            "Oxygen",
+            "Nitrogen",
+            "Hydrogen"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "What is the speed of light in a vacuum (approximately)?",
+          "options": [
+            "300,000 km/s",
+            "150,000 km/s",
+            "500,000 km/s",
+            "30,000 km/s"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        }
+      ]
+    },
     {
       "id": "demo_trivia_music",
       "name": "Legends of Music History",
@@ -210,22 +601,32 @@
           "type": "slide",
           "slide": {
             "contentType": "text",
-            "caption": "🎸 Turn it up! — From vinyl to streaming, test your music knowledge.",
+            "caption": "\ud83c\udfb8 Turn it up! \u2014 From vinyl to streaming, test your music knowledge.",
             "pushToAttendee": true
           }
         },
         {
           "type": "poll",
           "text": "Which artist released Thriller in 1982, the best-selling album of all time?",
-          "options": ["Michael Jackson", "Prince", "David Bowie", "Lionel Richie"],
+          "options": [
+            "Michael Jackson",
+            "Prince",
+            "David Bowie",
+            "Lionel Richie"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
         },
         {
           "type": "poll",
-          "text": "What Fender guitar model was launched in 1954 and became iconic for rock and blues?",
-          "options": ["Stratocaster", "Telecaster", "Jazzmaster", "Jaguar"],
+          "text": "What Fender guitar model launched in 1954 became iconic for rock and blues?",
+          "options": [
+            "Stratocaster",
+            "Telecaster",
+            "Jazzmaster",
+            "Jaguar"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -233,15 +634,25 @@
         {
           "type": "poll",
           "text": "Which band recorded The Dark Side of the Moon at Abbey Road Studios?",
-          "options": ["Pink Floyd", "Led Zeppelin", "Genesis", "Yes"],
+          "options": [
+            "Pink Floyd",
+            "Led Zeppelin",
+            "Genesis",
+            "Yes"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
         },
         {
           "type": "poll",
-          "text": "Hip Hop culture was born at a 1973 block party in which city?",
-          "options": ["The Bronx, New York", "Brooklyn, New York", "Compton, California", "Detroit, Michigan"],
+          "text": "Hip Hop culture was born at a 1973 block party hosted by DJ Kool Herc in which borough?",
+          "options": [
+            "The Bronx",
+            "Brooklyn",
+            "Queens",
+            "Harlem"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -249,7 +660,12 @@
         {
           "type": "poll",
           "text": "Who was the lead vocalist of Queen until his passing in 1991?",
-          "options": ["Freddie Mercury", "David Bowie", "Robert Plant", "Roger Daltrey"],
+          "options": [
+            "Freddie Mercury",
+            "David Bowie",
+            "Robert Plant",
+            "Roger Daltrey"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
@@ -257,7 +673,12 @@
         {
           "type": "poll",
           "text": "Which jazz vocalist was known as the 'First Lady of Song'?",
-          "options": ["Ella Fitzgerald", "Billie Holiday", "Sarah Vaughan", "Nina Simone"],
+          "options": [
+            "Ella Fitzgerald",
+            "Billie Holiday",
+            "Sarah Vaughan",
+            "Nina Simone"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -265,23 +686,38 @@
         {
           "type": "poll",
           "text": "What Detroit record label pioneered the crossover pop-soul sound in the 1960s?",
-          "options": ["Motown Records", "Stax Records", "Atlantic Records", "Chess Records"],
+          "options": [
+            "Motown Records",
+            "Stax Records",
+            "Atlantic Records",
+            "Chess Records"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
         },
         {
           "type": "poll",
-          "text": "Bob Dylan shocked fans at which 1965 festival by going electric for the first time?",
-          "options": ["Newport Folk Festival", "Monterey Pop Festival", "Woodstock", "Isle of Wight"],
+          "text": "Bob Dylan shocked fans at which 1965 festival by going electric?",
+          "options": [
+            "Newport Folk Festival",
+            "Monterey Pop",
+            "Woodstock",
+            "Isle of Wight"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
         },
         {
           "type": "poll",
-          "text": "Which drum machine, released in 1980, defined the sound of hip hop and electronic music?",
-          "options": ["Roland TR-808", "LinnDrum", "E-mu SP-1200", "Akai MPC60"],
+          "text": "Which drum machine released in 1980 defined the sound of hip hop and electronic music?",
+          "options": [
+            "Roland TR-808",
+            "LinnDrum",
+            "E-mu SP-1200",
+            "Akai MPC60"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -289,14 +725,18 @@
         {
           "type": "poll",
           "text": "What landmark music event took place on Max Yasgur's farm in Bethel, New York in 1969?",
-          "options": ["Woodstock", "Altamont", "Monterey Pop", "Isle of Wight Festival"],
+          "options": [
+            "Woodstock",
+            "Altamont",
+            "Monterey Pop",
+            "Isle of Wight Festival"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
         }
       ]
     },
-
     {
       "id": "demo_trivia_sports",
       "name": "World Sports & Olympics",
@@ -308,22 +748,32 @@
           "type": "slide",
           "slide": {
             "contentType": "text",
-            "caption": "🏆 Game On! — From the Olympics to the World Cup, how deep does your sports knowledge go?",
+            "caption": "\ud83c\udfc6 Game On! \u2014 From the Olympics to the World Cup, how deep does your sports knowledge go?",
             "pushToAttendee": true
           }
         },
         {
           "type": "poll",
           "text": "Which country won the very first FIFA World Cup in 1930?",
-          "options": ["Uruguay", "Argentina", "Brazil", "Italy"],
+          "options": [
+            "Uruguay",
+            "Argentina",
+            "Brazil",
+            "Italy"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
         },
         {
           "type": "poll",
-          "text": "Who holds the men's 100-meter world record with a time of 9.58 seconds?",
-          "options": ["Usain Bolt", "Yohan Blake", "Asafa Powell", "Tyson Gay"],
+          "text": "Who holds the men's 100m world record with a time of 9.58 seconds?",
+          "options": [
+            "Usain Bolt",
+            "Yohan Blake",
+            "Asafa Powell",
+            "Tyson Gay"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
@@ -331,7 +781,12 @@
         {
           "type": "poll",
           "text": "How far is a regulation marathon?",
-          "options": ["26.2 miles", "24.5 miles", "28.0 miles", "25.0 miles"],
+          "options": [
+            "26.2 miles",
+            "24.5 miles",
+            "28.0 miles",
+            "25.0 miles"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
@@ -339,31 +794,38 @@
         {
           "type": "poll",
           "text": "Which tennis player holds the most Grand Slam singles titles in the Open Era?",
-          "options": ["Novak Djokovic", "Rafael Nadal", "Roger Federer", "Pete Sampras"],
+          "options": [
+            "Novak Djokovic",
+            "Rafael Nadal",
+            "Roger Federer",
+            "Pete Sampras"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
         },
         {
           "type": "poll",
-          "text": "Muhammad Ali famously said he would do what 'like a butterfly, sting like a bee'?",
-          "options": ["Float", "Dance", "Fly", "Strike"],
-          "correctAnswerIndex": 0,
-          "revealMode": "hidden",
-          "timerSeconds": 15
-        },
-        {
-          "type": "poll",
           "text": "What color jersey does the overall leader wear at the Tour de France?",
-          "options": ["Yellow", "Green", "Polka Dot", "White"],
+          "options": [
+            "Yellow",
+            "Green",
+            "Polka Dot",
+            "White"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
         },
         {
           "type": "poll",
-          "text": "Who achieved the first-ever perfect 10.0 score in Olympic gymnastics at the 1976 Montreal Games?",
-          "options": ["Nadia Comăneci", "Mary Lou Retton", "Olga Korbut", "Simone Biles"],
+          "text": "Who achieved the first perfect 10.0 in Olympic gymnastics at the 1976 Montreal Games?",
+          "options": [
+            "Nadia Com\u0103neci",
+            "Mary Lou Retton",
+            "Olga Korbut",
+            "Simone Biles"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -371,7 +833,12 @@
         {
           "type": "poll",
           "text": "Which country has won the most all-time Winter Olympic medals?",
-          "options": ["Norway", "United States", "Germany", "Austria"],
+          "options": [
+            "Norway",
+            "United States",
+            "Germany",
+            "Austria"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -379,22 +846,44 @@
         {
           "type": "poll",
           "text": "Who held the MLB career home run record of 714 before Hank Aaron?",
-          "options": ["Babe Ruth", "Ty Cobb", "Lou Gehrig", "Honus Wagner"],
+          "options": [
+            "Babe Ruth",
+            "Ty Cobb",
+            "Lou Gehrig",
+            "Honus Wagner"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
         },
         {
           "type": "poll",
-          "text": "How many skaters from one team are on the ice at once during standard NHL play (including goalie)?",
-          "options": ["6", "5", "7", "4"],
+          "text": "How many players from one team are on the ice at once in standard NHL play (including goalie)?",
+          "options": [
+            "6",
+            "5",
+            "7",
+            "4"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "Which sport uses the terms Birdie, Bogey, and Eagle?",
+          "options": [
+            "Golf",
+            "Tennis",
+            "Cricket",
+            "Badminton"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
         }
       ]
     },
-
     {
       "id": "demo_trivia_space",
       "name": "Astronomy & Space Exploration",
@@ -406,14 +895,19 @@
           "type": "slide",
           "slide": {
             "contentType": "text",
-            "caption": "🚀 3... 2... 1... Lift off! — Test your knowledge of the cosmos.",
+            "caption": "\ud83d\ude80 3... 2... 1... Lift off! \u2014 Test your knowledge of the cosmos.",
             "pushToAttendee": true
           }
         },
         {
           "type": "poll",
           "text": "How long does it take light from the Sun to reach Earth?",
-          "options": ["About 8 minutes", "About 5 minutes", "About 12 minutes", "About 1 minute"],
+          "options": [
+            "About 8 minutes",
+            "About 5 minutes",
+            "About 12 minutes",
+            "About 1 minute"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -421,15 +915,25 @@
         {
           "type": "poll",
           "text": "Which planet has the most visible ring system?",
-          "options": ["Saturn", "Jupiter", "Uranus", "Neptune"],
+          "options": [
+            "Saturn",
+            "Jupiter",
+            "Uranus",
+            "Neptune"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
         },
         {
           "type": "poll",
-          "text": "What is the boundary around a black hole where nothing — not even light — can escape?",
-          "options": ["Event Horizon", "Singularity", "Ergosphere", "Accretion Disk"],
+          "text": "What is the boundary around a black hole where nothing can escape?",
+          "options": [
+            "Event Horizon",
+            "Singularity",
+            "Ergosphere",
+            "Accretion Disk"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -437,7 +941,12 @@
         {
           "type": "poll",
           "text": "Which space telescope was launched into orbit in 1990?",
-          "options": ["Hubble", "James Webb", "Chandra", "Kepler"],
+          "options": [
+            "Hubble",
+            "James Webb",
+            "Chandra",
+            "Kepler"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
@@ -445,7 +954,12 @@
         {
           "type": "poll",
           "text": "Pluto was reclassified from a planet to what in 2006?",
-          "options": ["Dwarf planet", "Asteroid", "Comet", "Kuiper Belt Object"],
+          "options": [
+            "Dwarf planet",
+            "Asteroid",
+            "Comet",
+            "Kuiper Belt Object"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
@@ -453,15 +967,25 @@
         {
           "type": "poll",
           "text": "Which NASA program first landed humans on the Moon in 1969?",
-          "options": ["Apollo", "Gemini", "Mercury", "Artemis"],
+          "options": [
+            "Apollo",
+            "Gemini",
+            "Mercury",
+            "Artemis"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
         },
         {
           "type": "poll",
-          "text": "Which moon of Jupiter is thought to have a liquid ocean beneath its icy surface?",
-          "options": ["Europa", "Ganymede", "Io", "Callisto"],
+          "text": "Which moon of Jupiter may have a liquid ocean beneath its icy surface?",
+          "options": [
+            "Europa",
+            "Ganymede",
+            "Io",
+            "Callisto"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -469,7 +993,12 @@
         {
           "type": "poll",
           "text": "Which probe was the first human-made object to reach interstellar space?",
-          "options": ["Voyager 1", "Pioneer 10", "New Horizons", "Cassini"],
+          "options": [
+            "Voyager 1",
+            "Pioneer 10",
+            "New Horizons",
+            "Cassini"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -477,7 +1006,12 @@
         {
           "type": "poll",
           "text": "What is the largest volcano in our solar system?",
-          "options": ["Olympus Mons (Mars)", "Mauna Kea (Earth)", "Tharsis Tholus (Mars)", "Elysium Mons (Mars)"],
+          "options": [
+            "Olympus Mons (Mars)",
+            "Mauna Kea (Earth)",
+            "Tharsis Tholus (Mars)",
+            "Elysium Mons (Mars)"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -485,14 +1019,18 @@
         {
           "type": "poll",
           "text": "What is the closest major spiral galaxy to the Milky Way?",
-          "options": ["Andromeda", "Triangulum", "Large Magellanic Cloud", "Sombrero Galaxy"],
+          "options": [
+            "Andromeda",
+            "Triangulum",
+            "Large Magellanic Cloud",
+            "Sombrero"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
         }
       ]
     },
-
     {
       "id": "demo_trivia_geography",
       "name": "Global Geography & Landmarks",
@@ -504,14 +1042,19 @@
           "type": "slide",
           "slide": {
             "contentType": "text",
-            "caption": "🌍 Around the World! — From mountain peaks to ocean trenches.",
+            "caption": "\ud83c\udf0d Around the World! \u2014 From mountain peaks to ocean trenches.",
             "pushToAttendee": true
           }
         },
         {
           "type": "poll",
           "text": "Which country spans the most time zones in the world?",
-          "options": ["France (including overseas territories)", "Russia", "United States", "China"],
+          "options": [
+            "France (incl. overseas)",
+            "Russia",
+            "United States",
+            "China"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -519,15 +1062,25 @@
         {
           "type": "poll",
           "text": "Which is the largest island in the world that isn't its own continent?",
-          "options": ["Greenland", "New Guinea", "Borneo", "Madagascar"],
+          "options": [
+            "Greenland",
+            "New Guinea",
+            "Borneo",
+            "Madagascar"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
         },
         {
           "type": "poll",
-          "text": "What is the capital of Australia — chosen as a compromise between Sydney and Melbourne?",
-          "options": ["Canberra", "Sydney", "Melbourne", "Brisbane"],
+          "text": "What is the capital of Australia \u2014 chosen as a compromise between Sydney and Melbourne?",
+          "options": [
+            "Canberra",
+            "Sydney",
+            "Melbourne",
+            "Brisbane"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -535,23 +1088,38 @@
         {
           "type": "poll",
           "text": "Which mountain range contains Mount Everest?",
-          "options": ["Himalayas", "Andes", "Alps", "Rocky Mountains"],
+          "options": [
+            "Himalayas",
+            "Andes",
+            "Alps",
+            "Rocky Mountains"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
         },
         {
           "type": "poll",
-          "text": "What is the deepest point on Earth?",
-          "options": ["Mariana Trench (Challenger Deep)", "Puerto Rico Trench", "Java Trench", "Tonga Trench"],
+          "text": "What is the deepest known point on Earth?",
+          "options": [
+            "Mariana Trench \u2014 Challenger Deep",
+            "Puerto Rico Trench",
+            "Java Trench",
+            "Tonga Trench"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
         },
         {
           "type": "poll",
-          "text": "What canal opened in 1869 to connect the Mediterranean Sea to the Red Sea?",
-          "options": ["Suez Canal", "Panama Canal", "Kiel Canal", "Corinth Canal"],
+          "text": "What canal opened in 1869 connecting the Mediterranean Sea to the Red Sea?",
+          "options": [
+            "Suez Canal",
+            "Panama Canal",
+            "Kiel Canal",
+            "Corinth Canal"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
@@ -559,7 +1127,12 @@
         {
           "type": "poll",
           "text": "Which country is nicknamed the 'Land of Fire and Ice'?",
-          "options": ["Iceland", "Indonesia", "Japan", "New Zealand"],
+          "options": [
+            "Iceland",
+            "Indonesia",
+            "Japan",
+            "New Zealand"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 15
@@ -567,7 +1140,12 @@
         {
           "type": "poll",
           "text": "Which South American country has coastline on both the Pacific Ocean and the Caribbean Sea?",
-          "options": ["Colombia", "Venezuela", "Panama", "Ecuador"],
+          "options": [
+            "Colombia",
+            "Venezuela",
+            "Panama",
+            "Ecuador"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -575,22 +1153,472 @@
         {
           "type": "poll",
           "text": "Which high-altitude plateau is nicknamed the 'Roof of the World'?",
-          "options": ["Tibetan Plateau", "Deccan Plateau", "Anatolian Plateau", "Colorado Plateau"],
+          "options": [
+            "Tibetan Plateau",
+            "Deccan Plateau",
+            "Anatolian Plateau",
+            "Colorado Plateau"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
         },
         {
           "type": "poll",
-          "text": "Which lake feeds the White Nile?",
-          "options": ["Lake Victoria", "Lake Tanganyika", "Lake Malawi", "Lake Chad"],
+          "text": "Which African lake feeds the White Nile?",
+          "options": [
+            "Lake Victoria",
+            "Lake Tanganyika",
+            "Lake Malawi",
+            "Lake Chad"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
         }
       ]
     },
-
+    {
+      "id": "demo_trivia_florida",
+      "name": "Florida Facts & Culture",
+      "category": "Trivia",
+      "createdAt": 1782013770000,
+      "updatedAt": 1782013770000,
+      "items": [
+        {
+          "type": "slide",
+          "slide": {
+            "contentType": "text",
+            "caption": "\ud83c\udf34 Welcome to the Sunshine State! \u2014 From Space Coast to South Beach, how well do you know Florida?",
+            "pushToAttendee": true
+          }
+        },
+        {
+          "type": "poll",
+          "text": "What is the capital city of Florida?",
+          "options": [
+            "Tallahassee",
+            "Orlando",
+            "Miami",
+            "Jacksonville"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "Which Florida city is home to NASA's Kennedy Space Center?",
+          "options": [
+            "Cape Canaveral / Merritt Island",
+            "Orlando",
+            "Daytona Beach",
+            "Cocoa Beach"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "What is the name of Florida's famous freshwater ecosystem covering much of the southern peninsula?",
+          "options": [
+            "The Everglades",
+            "Lake Okeechobee",
+            "The Big Cypress",
+            "The St. Johns River"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "Which Florida city is known as the theme park capital of the world?",
+          "options": [
+            "Orlando",
+            "Tampa",
+            "Fort Lauderdale",
+            "Kissimmee"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "What is the largest lake entirely within Florida?",
+          "options": [
+            "Lake Okeechobee",
+            "Lake Tohopeke liga",
+            "Lake George",
+            "Lake Apopka"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "Florida is the southernmost contiguous U.S. state. What city is its southernmost point?",
+          "options": [
+            "Key West",
+            "Miami",
+            "Homestead",
+            "Marathon"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "Which NFL team plays its home games in Miami?",
+          "options": [
+            "Miami Dolphins",
+            "Jacksonville Jaguars",
+            "Tampa Bay Buccaneers",
+            "Florida Panthers"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "What citrus fruit is most closely associated with Florida's agricultural identity?",
+          "options": [
+            "Orange",
+            "Grapefruit",
+            "Lemon",
+            "Lime"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "The Florida Keys are connected to the mainland by which famous highway?",
+          "options": [
+            "US-1 / Overseas Highway",
+            "I-75 / Alligator Alley",
+            "US-41 / Tamiami Trail",
+            "SR-826 / Palmetto Expressway"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "What prehistoric reptile, native to Florida, was once hunted nearly to extinction before federal protection?",
+          "options": [
+            "American Alligator",
+            "American Crocodile",
+            "Loggerhead Sea Turtle",
+            "Gopher Tortoise"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        }
+      ]
+    },
+    {
+      "id": "demo_trivia_tech",
+      "name": "Technology & Computing History",
+      "category": "Trivia",
+      "createdAt": 1782013770000,
+      "updatedAt": 1782013770000,
+      "items": [
+        {
+          "type": "slide",
+          "slide": {
+            "contentType": "text",
+            "caption": "\ud83d\udcbb Byte-sized brilliance \u2014 From punch cards to AI, how well do you know tech history?",
+            "pushToAttendee": true
+          }
+        },
+        {
+          "type": "poll",
+          "text": "Which British pioneer is credited with conceptualizing the first general-purpose computer in the 1820s?",
+          "options": [
+            "Charles Babbage",
+            "Alan Turing",
+            "Ada Lovelace",
+            "John von Neumann"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "What year did Tim Berners-Lee publicly release the World Wide Web?",
+          "options": [
+            "1991",
+            "1989",
+            "1993",
+            "1995"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "Which open-source operating system kernel was uploaded by Finnish student Linus Torvalds in 1991?",
+          "options": [
+            "Linux",
+            "Unix",
+            "Minix",
+            "FreeBSD"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "Which early internet network, commissioned by the U.S. Department of Defense in 1969, laid the foundation for the modern internet?",
+          "options": [
+            "ARPANET",
+            "NSFNET",
+            "ALOHANET",
+            "CYCLADES"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "Which object-oriented programming language was deployed commercially by Sun Microsystems in 1995?",
+          "options": [
+            "Java",
+            "C++",
+            "Python",
+            "Smalltalk"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "Which consumer electronics company launched the Walkman TPS-L2 in the summer of 1979?",
+          "options": [
+            "Sony",
+            "Panasonic",
+            "Toshiba",
+            "Philips"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "What wireless protocol standard was named after 10th-century Danish king Harald Gormsson?",
+          "options": [
+            "Bluetooth",
+            "Wi-Fi",
+            "Zigbee",
+            "Infrared"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "What does CPU stand for?",
+          "options": [
+            "Central Processing Unit",
+            "Core Processing Utility",
+            "Computer Protocol Unit",
+            "Central Program Uplink"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "Which storage medium, invented by IBM in 1971, used a magnetic recording sheet inside a flexible sleeve?",
+          "options": [
+            "Floppy Disk",
+            "Hard Disk Drive",
+            "Magnetic Tape",
+            "Zip Disk"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "GPS requires at least how many satellites in its constellation to function?",
+          "options": [
+            "24",
+            "12",
+            "36",
+            "18"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        }
+      ]
+    },
+    {
+      "id": "demo_trivia_food",
+      "name": "Culinary Arts & Food Science",
+      "category": "Trivia",
+      "createdAt": 1782013770000,
+      "updatedAt": 1782013770000,
+      "items": [
+        {
+          "type": "slide",
+          "slide": {
+            "contentType": "text",
+            "caption": "\ud83c\udf73 You are what you eat \u2014 but do you know what you're eating? Let's find out.",
+            "pushToAttendee": true
+          }
+        },
+        {
+          "type": "poll",
+          "text": "What sauce is the base for classic Eggs Benedict?",
+          "options": [
+            "Hollandaise",
+            "B\u00e9chamel",
+            "Velout\u00e9",
+            "B\u00e9arnaise"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "What is the most expensive spice in the world by weight?",
+          "options": [
+            "Saffron",
+            "Vanilla",
+            "Cardamom",
+            "Ceylon Cinnamon"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "What chemical process causes the browning of seared meat when amino acids and sugars react under heat?",
+          "options": [
+            "Maillard Reaction",
+            "Caramelization",
+            "Enzymatic Oxidation",
+            "Fermentation"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "Which country is the historical birthplace of modern pizza?",
+          "options": [
+            "Italy",
+            "Greece",
+            "France",
+            "Spain"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "What is the Japanese cooking method that vacuum-seals food in plastic and cooks it at precise low water temperatures?",
+          "options": [
+            "Sous-vide",
+            "Confit",
+            "Poaching",
+            "Braising"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "What scale is used to measure the spiciness of chili peppers?",
+          "options": [
+            "Scoville Scale",
+            "Brix Scale",
+            "Baum\u00e9 Scale",
+            "Richter Scale"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "What gives traditional Italian pasta dough its elastic, chewy texture?",
+          "options": [
+            "Gluten",
+            "Starch",
+            "Egg proteins",
+            "Yeast"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "Which Korean fermented dish is made from napa cabbage layered with chili pepper paste?",
+          "options": [
+            "Kimchi",
+            "Sauerkraut",
+            "Pickled Daikon",
+            "Tsukemono"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 15
+        },
+        {
+          "type": "poll",
+          "text": "What type of pastry is created by repeatedly folding cold butter into dough to create hundreds of flaky layers?",
+          "options": [
+            "Puff Pastry",
+            "Choux Pastry",
+            "Shortcrust",
+            "Phyllo"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 20
+        },
+        {
+          "type": "poll",
+          "text": "To be legally stamped Parmigiano-Reggiano, the cheese must be made from what?",
+          "options": [
+            "Raw unpasteurized cow's milk aged 12+ months",
+            "Pasteurized goat's milk aged 6 months",
+            "Sheep's milk aged in limestone caves",
+            "Skimmed buffalo milk pressed overnight"
+          ],
+          "correctAnswerIndex": 0,
+          "revealMode": "hidden",
+          "timerSeconds": 25
+        }
+      ]
+    },
     {
       "id": "demo_poll_team_pulse",
       "name": "Team Pulse Check",
@@ -602,61 +1630,100 @@
           "type": "slide",
           "slide": {
             "contentType": "text",
-            "caption": "👋 Quick Pulse Check — No wrong answers here. Let's hear from everyone.",
+            "caption": "\ud83d\udc4b Quick Pulse Check \u2014 No wrong answers here. Let's hear from everyone.",
             "pushToAttendee": true
           }
         },
         {
           "type": "poll",
           "text": "How are you feeling coming into today's session?",
-          "options": ["Energized and ready", "Good, just getting started", "A little tired", "Need more coffee first"],
+          "options": [
+            "Energized and ready",
+            "Good, just getting started",
+            "A little tired",
+            "Need more coffee first"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "What best describes your workload right now?",
-          "options": ["Manageable — I'm on top of things", "Busy but keeping up", "Stretched thin", "Completely overwhelmed"],
+          "options": [
+            "Manageable \u2014 I'm on top of things",
+            "Busy but keeping up",
+            "Stretched thin",
+            "Completely overwhelmed"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "How clear is your team on current priorities?",
-          "options": ["Very clear — we know exactly what matters", "Mostly clear, some gaps", "It could be clearer", "We need alignment"],
+          "options": [
+            "Very clear \u2014 we know exactly what matters",
+            "Mostly clear, some gaps",
+            "It could be clearer",
+            "We need alignment"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "How connected do you feel to the rest of the team?",
-          "options": ["Very connected", "Mostly connected", "Somewhat disconnected", "Quite isolated"],
+          "options": [
+            "Very connected",
+            "Mostly connected",
+            "Somewhat disconnected",
+            "Quite isolated"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "When do you do your best focused work?",
-          "options": ["Early morning", "Mid-morning", "Afternoon", "Evening or late night"],
+          "options": [
+            "Early morning",
+            "Mid-morning",
+            "Afternoon",
+            "Evening or late night"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "What's the biggest obstacle to your productivity right now?",
-          "options": ["Too many meetings", "Unclear direction", "Too many tools & platforms", "Lack of time"],
+          "options": [
+            "Too many meetings",
+            "Unclear direction",
+            "Too many tools",
+            "Not enough time"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
-          "text": "How often does your team celebrate wins — big or small?",
-          "options": ["Regularly, it's part of our culture", "Sometimes, when it's a big deal", "Rarely — we move fast and forget to pause", "Almost never"],
+          "text": "How often does your team celebrate wins \u2014 big or small?",
+          "options": [
+            "Regularly, it's part of our culture",
+            "Sometimes, for big moments",
+            "Rarely \u2014 we move fast",
+            "Almost never"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "Which working style fits you best?",
-          "options": ["Deep focus blocks, minimal interruptions", "Collaborative — I like working near others", "Flexible — it depends on the task", "I like a bit of both equally"],
+          "options": [
+            "Deep focus, minimal interruptions",
+            "Collaborative \u2014 near others",
+            "Flexible \u2014 depends on the task",
+            "A bit of both equally"
+          ],
           "revealMode": "live"
         }
       ]
     },
-
     {
       "id": "demo_poll_event_planning",
       "name": "Event Planning Preferences",
@@ -668,55 +1735,89 @@
           "type": "slide",
           "slide": {
             "contentType": "text",
-            "caption": "📋 Help us plan the perfect event — Your input shapes what comes next.",
+            "caption": "\ud83d\udccb Help us plan the perfect event \u2014 Your input shapes what comes next.",
             "pushToAttendee": true
           }
         },
         {
           "type": "poll",
           "text": "What type of event format do you prefer?",
-          "options": ["In-person, full day", "In-person, half day", "Hybrid (in-person + remote)", "Fully virtual"],
+          "options": [
+            "In-person, full day",
+            "In-person, half day",
+            "Hybrid",
+            "Fully virtual"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "What day of the week works best for you?",
-          "options": ["Monday", "Tuesday or Wednesday", "Thursday", "Friday"],
+          "options": [
+            "Monday",
+            "Tuesday or Wednesday",
+            "Thursday",
+            "Friday"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "What time slot is most convenient?",
-          "options": ["Morning (8am–12pm)", "Midday (12pm–2pm)", "Afternoon (2pm–5pm)", "Evening (5pm+)"],
+          "options": [
+            "Morning (8am\u201312pm)",
+            "Midday (12pm\u20132pm)",
+            "Afternoon (2pm\u20135pm)",
+            "Evening (5pm+)"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "What kind of food setup do you prefer at events?",
-          "options": ["Sit-down catered meal", "Buffet-style spread", "Light snacks and coffee", "I don't mind — just have good coffee"],
+          "options": [
+            "Sit-down catered meal",
+            "Buffet-style spread",
+            "Light snacks and coffee",
+            "Just good coffee is fine"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "Which session format do you get the most value from?",
-          "options": ["Panel discussions", "Hands-on workshops", "Keynote presentations", "Roundtable conversations"],
+          "options": [
+            "Panel discussions",
+            "Hands-on workshops",
+            "Keynote presentations",
+            "Roundtable conversations"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "How much networking time should be built in?",
-          "options": ["Lots — it's the main reason I come", "Some — a dedicated block is enough", "A little — I prefer structured time", "Minimal — just get to the content"],
+          "options": [
+            "Lots \u2014 it's why I come",
+            "Some \u2014 a dedicated block",
+            "A little \u2014 structured is better",
+            "Minimal \u2014 get to the content"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "What makes you most likely to attend an event?",
-          "options": ["Relevant speaker lineup", "Valuable content and takeaways", "Networking with the right people", "Company or team requirements"],
+          "options": [
+            "Relevant speaker lineup",
+            "Valuable content and takeaways",
+            "Networking with the right people",
+            "Company requirements"
+          ],
           "revealMode": "live"
         }
       ]
     },
-
     {
       "id": "demo_mixed_allhands",
       "name": "All-Hands Kickoff Mix",
@@ -728,20 +1829,30 @@
           "type": "slide",
           "slide": {
             "contentType": "text",
-            "caption": "🎯 All-Hands Kickoff — Polls, Q&A, and a quick team quiz. Something for everyone.",
+            "caption": "\ud83c\udfaf All-Hands Kickoff \u2014 Polls, Q&A, a rating, and a word cloud. Something for everyone.",
             "pushToAttendee": true
           }
         },
         {
           "type": "poll",
           "text": "How long have you been with the company?",
-          "options": ["Less than 1 year", "1–3 years", "3–5 years", "5+ years"],
+          "options": [
+            "Less than 1 year",
+            "1\u20133 years",
+            "3\u20135 years",
+            "5+ years"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "Which department are you part of?",
-          "options": ["Sales & Revenue", "Product & Engineering", "Marketing & Brand", "Operations & People"],
+          "options": [
+            "Sales & Revenue",
+            "Product & Engineering",
+            "Marketing & Brand",
+            "Operations & People"
+          ],
           "revealMode": "live"
         },
         {
@@ -752,16 +1863,13 @@
         {
           "type": "poll",
           "text": "What's your biggest challenge heading into this quarter?",
-          "options": ["Resource constraints", "Market uncertainty", "Execution speed", "Alignment across teams"],
+          "options": [
+            "Resource constraints",
+            "Market uncertainty",
+            "Execution speed",
+            "Alignment across teams"
+          ],
           "revealMode": "live"
-        },
-        {
-          "type": "poll",
-          "text": "Company trivia: What year was this company founded?",
-          "options": ["2018", "2019", "2020", "2021"],
-          "correctAnswerIndex": 1,
-          "revealMode": "hidden",
-          "timerSeconds": 20
         },
         {
           "type": "rating",
@@ -773,13 +1881,18 @@
         },
         {
           "type": "wordcloud",
-          "text": "In one or two words — what does success look like to YOU this year?",
+          "text": "In one or two words \u2014 what does success look like to YOU this year?",
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "What communication channel does your team rely on most?",
-          "options": ["Slack / Teams", "Email", "Video calls", "In-person meetings"],
+          "options": [
+            "Slack / Teams",
+            "Email",
+            "Video calls",
+            "In-person meetings"
+          ],
           "revealMode": "live"
         },
         {
@@ -789,7 +1902,6 @@
         }
       ]
     },
-
     {
       "id": "demo_mixed_training",
       "name": "Product Training Check-In",
@@ -801,26 +1913,41 @@
           "type": "slide",
           "slide": {
             "contentType": "text",
-            "caption": "📚 Knowledge Check — Let's see what landed from the session so far.",
+            "caption": "\ud83d\udcda Knowledge Check \u2014 Let's see what landed from the session so far.",
             "pushToAttendee": true
           }
         },
         {
           "type": "poll",
           "text": "Before today, how familiar were you with this product?",
-          "options": ["Never used it", "Heard of it but never tried", "Used it a few times", "Use it regularly"],
+          "options": [
+            "Never used it",
+            "Heard of it but never tried",
+            "Used it a few times",
+            "Use it regularly"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "Which feature are you most excited to explore?",
-          "options": ["Live polling", "Word clouds", "Q&A / Open text", "Analytics & reporting"],
+          "options": [
+            "Live polling",
+            "Word clouds",
+            "Q&A / Open text",
+            "Analytics & reporting"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "Which question type is best for gathering open-ended feedback?",
-          "options": ["Open Text / Q&A", "Multiple choice poll", "Rating scale", "Word cloud"],
+          "options": [
+            "Open Text / Q&A",
+            "Multiple choice poll",
+            "Rating scale",
+            "Word cloud"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 20
@@ -828,7 +1955,12 @@
         {
           "type": "poll",
           "text": "What does 'Hidden Reveal' mode mean in Tally ARS?",
-          "options": ["Results stay hidden until the host reveals them", "The question is invisible to attendees", "Only the host can see the answers", "Results are deleted after the session"],
+          "options": [
+            "Results stay hidden until the host reveals them",
+            "The question is invisible to attendees",
+            "Only the host can see the answers",
+            "Results are deleted after the session"
+          ],
           "correctAnswerIndex": 0,
           "revealMode": "hidden",
           "timerSeconds": 25
@@ -854,12 +1986,128 @@
         {
           "type": "poll",
           "text": "How likely are you to use this at your next event or meeting?",
-          "options": ["Definitely — already planning it", "Probably yes", "Maybe — need to think about it", "Probably not for my use case"],
+          "options": [
+            "Definitely \u2014 already planning it",
+            "Probably yes",
+            "Maybe, need to think about it",
+            "Probably not for my use case"
+          ],
           "revealMode": "live"
         }
       ]
     },
-
+    {
+      "id": "demo_jvox_market",
+      "name": "AAC App \u2014 Market Research",
+      "category": "Mixed",
+      "createdAt": 1782013770000,
+      "updatedAt": 1782013770000,
+      "items": [
+        {
+          "type": "slide",
+          "slide": {
+            "contentType": "text",
+            "caption": "\ud83d\udde3\ufe0f AAC App Research \u2014 Help us build the next generation of communication tools. Your experience matters.",
+            "pushToAttendee": true
+          }
+        },
+        {
+          "type": "poll",
+          "text": "What is your primary relationship to AAC?",
+          "options": [
+            "Parent / caregiver of an AAC user",
+            "AAC user myself",
+            "SLP / therapist",
+            "Educator or support professional"
+          ],
+          "revealMode": "live"
+        },
+        {
+          "type": "poll",
+          "text": "Which AAC app does your child or client use most?",
+          "options": [
+            "Proloquo2Go",
+            "TouchChat",
+            "LAMP Words for Life",
+            "Other / free app"
+          ],
+          "revealMode": "live"
+        },
+        {
+          "type": "poll",
+          "text": "What is your biggest frustration with current AAC apps?",
+          "options": [
+            "Too expensive",
+            "Hard to customize",
+            "Not intuitive for the user",
+            "Poor support & updates"
+          ],
+          "revealMode": "live"
+        },
+        {
+          "type": "poll",
+          "text": "How much does your family or organization currently pay annually for AAC software?",
+          "options": [
+            "$0 \u2014 using a free option",
+            "Under $100",
+            "$100\u2013$300",
+            "Over $300"
+          ],
+          "revealMode": "live"
+        },
+        {
+          "type": "poll",
+          "text": "Which AI-powered feature would excite you most in a next-gen AAC app?",
+          "options": [
+            "AI that learns vocabulary from the user's patterns",
+            "Voice that sounds natural and personalized",
+            "AI-generated situation phrases in real time",
+            "Smart suggestions based on context"
+          ],
+          "revealMode": "live"
+        },
+        {
+          "type": "poll",
+          "text": "How important is offline functionality \u2014 no internet required \u2014 to you?",
+          "options": [
+            "Critical \u2014 it must work offline",
+            "Very important",
+            "Somewhat important",
+            "Not a concern"
+          ],
+          "revealMode": "live"
+        },
+        {
+          "type": "rating",
+          "text": "How satisfied are you with the AAC tools currently available on the market?",
+          "revealMode": "live",
+          "scaleType": "10",
+          "labelLow": "Very dissatisfied",
+          "labelHigh": "Extremely satisfied"
+        },
+        {
+          "type": "poll",
+          "text": "What platform does your AAC user primarily use?",
+          "options": [
+            "iPad / iOS",
+            "Android tablet",
+            "Dedicated AAC device",
+            "Multiple platforms"
+          ],
+          "revealMode": "live"
+        },
+        {
+          "type": "opentext",
+          "text": "What's one thing you wish every AAC app developer understood about your daily reality?",
+          "revealMode": "live"
+        },
+        {
+          "type": "wordcloud",
+          "text": "In one or two words \u2014 what does a great AAC app feel like to you?",
+          "revealMode": "live"
+        }
+      ]
+    },
     {
       "id": "demo_wordcloud_showcase",
       "name": "Word Cloud Showcase",
@@ -871,7 +2119,7 @@
           "type": "slide",
           "slide": {
             "contentType": "text",
-            "caption": "☁️ Word Cloud Demo — Watch the crowd's voice take shape in real time.",
+            "caption": "\u2601\ufe0f Word Cloud Demo \u2014 Watch the crowd's voice take shape in real time.",
             "pushToAttendee": true
           }
         },
@@ -912,7 +2160,6 @@
         }
       ]
     },
-
     {
       "id": "demo_rating_showcase",
       "name": "Rating Scale Showcase",
@@ -924,7 +2171,7 @@
           "type": "slide",
           "slide": {
             "contentType": "text",
-            "caption": "⭐ Rating Scale Demo — From 1 to 10, tell us how you really feel.",
+            "caption": "\u2b50 Rating Scale Demo \u2014 From 1 to 10, tell us how you really feel.",
             "pushToAttendee": true
           }
         },
@@ -965,16 +2212,16 @@
           "text": "How well does your team handle conflict and disagreement constructively?",
           "revealMode": "live",
           "scaleType": "10",
-          "labelLow": "Poorly — it's avoided or mishandled",
-          "labelHigh": "Very well — we work through it"
+          "labelLow": "Poorly \u2014 it's avoided",
+          "labelHigh": "Very well \u2014 we work through it"
         },
         {
           "type": "rating",
           "text": "How confident are you in the tools and resources you have to do your job well?",
           "revealMode": "live",
           "scaleType": "10",
-          "labelLow": "Not confident — I'm missing what I need",
-          "labelHigh": "Very confident — I have what I need"
+          "labelLow": "Not confident",
+          "labelHigh": "Very confident"
         },
         {
           "type": "rating",
@@ -986,7 +2233,6 @@
         }
       ]
     },
-
     {
       "id": "demo_qa_showcase",
       "name": "Open Q&A Showcase",
@@ -998,7 +2244,7 @@
           "type": "slide",
           "slide": {
             "contentType": "text",
-            "caption": "💬 Open Q&A — Your turn to speak. Responses appear live for the whole room.",
+            "caption": "\ud83d\udcac Open Q&A \u2014 Your turn to speak. Responses appear live for the whole room.",
             "pushToAttendee": true
           }
         },
@@ -1029,7 +2275,7 @@
         },
         {
           "type": "opentext",
-          "text": "What's a win from the past 30 days you're proud of — big or small?",
+          "text": "What's a win from the past 30 days you're proud of \u2014 big or small?",
           "revealMode": "live"
         },
         {
@@ -1039,10 +2285,9 @@
         }
       ]
     },
-
     {
       "id": "demo_icebreaker",
-      "name": "Ice Breaker — Get to Know the Room",
+      "name": "Ice Breaker \u2014 Get to Know the Room",
       "category": "Ice Breaker",
       "createdAt": 1782013770000,
       "updatedAt": 1782013770000,
@@ -1051,49 +2296,68 @@
           "type": "slide",
           "slide": {
             "contentType": "text",
-            "caption": "🧊 Break the Ice! — Fun, fast questions to warm up the room before we get into it.",
+            "caption": "\ud83e\uddca Break the Ice! \u2014 Fun, fast questions to warm up the room before we get into it.",
             "pushToAttendee": true
           }
         },
         {
           "type": "poll",
           "text": "How do you take your coffee or morning drink?",
-          "options": ["Black coffee — no frills", "Coffee with milk or creamer", "Tea person", "I don't do caffeine"],
+          "options": [
+            "Black coffee \u2014 no frills",
+            "Coffee with milk or creamer",
+            "Tea person",
+            "I don't do caffeine"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
-          "text": "What's your working-from-home setup like?",
-          "options": ["Dedicated home office", "Kitchen table or couch", "Coffee shop regular", "Primarily in the office"],
+          "text": "What's your working setup like most days?",
+          "options": [
+            "Dedicated home office",
+            "Kitchen table or couch",
+            "Coffee shop regular",
+            "Primarily in the office"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "Pick your spirit animal for this week.",
-          "options": ["🦅 Eagle — laser focused", "🐢 Turtle — slow and steady", "🦊 Fox — quick and clever", "🐻 Bear — I need a nap"],
-          "revealMode": "live"
-        },
-        {
-          "type": "poll",
-          "text": "What's your go-to lunch when you're working from home?",
-          "options": ["Something quick I can make in 5 minutes", "Leftovers from last night", "I order delivery honestly", "I skip lunch or just snack"],
-          "revealMode": "live"
-        },
-        {
-          "type": "wordcloud",
-          "text": "In one word — what did you do last weekend?",
+          "options": [
+            "\ud83e\udd85 Eagle \u2014 laser focused",
+            "\ud83d\udc22 Turtle \u2014 slow and steady",
+            "\ud83e\udd8a Fox \u2014 quick and clever",
+            "\ud83d\udc3b Bear \u2014 I need a nap"
+          ],
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "If your work style was a movie genre, what would it be?",
-          "options": ["Action — always moving, always urgent", "Comedy — keep it light and fun", "Documentary — facts, data, structure", "Thriller — deadline crunches and plot twists"],
+          "options": [
+            "Action \u2014 always moving, always urgent",
+            "Comedy \u2014 keep it light and fun",
+            "Documentary \u2014 facts, data, structure",
+            "Thriller \u2014 deadline crunches and plot twists"
+          ],
+          "revealMode": "live"
+        },
+        {
+          "type": "wordcloud",
+          "text": "In one word \u2014 what did you do last weekend?",
           "revealMode": "live"
         },
         {
           "type": "poll",
           "text": "What's your preferred way to unwind after a long day?",
-          "options": ["Binge something on streaming", "Get outside for a walk or workout", "Cook something or eat good food", "Decompress in total silence"],
+          "options": [
+            "Binge something on streaming",
+            "Get outside for a walk or workout",
+            "Cook or eat something good",
+            "Decompress in total silence"
+          ],
           "revealMode": "live"
         },
         {
@@ -1103,6 +2367,5 @@
         }
       ]
     }
-
   ]
 }
