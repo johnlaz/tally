@@ -4077,11 +4077,15 @@ function showView(name) {
    protected view and intercepts popstate to show an in-app confirmation
    instead of letting the navigation happen, immediately restoring the
    history entry if the person cancels so back isn't "spent" on a no-op. */
-const PROTECTED_VIEWS = ['dashboard', 'attendee', 'question-editor', 'slide-editor', 'report', 'display'];
+const PROTECTED_VIEWS = ['dashboard', 'attendee', 'question-editor', 'slide-editor', 'rating-editor', 'opentext-editor', 'wordcloud-editor', 'report', 'display'];
 let historyGuardActive = false;
 
 function syncHistoryGuard(viewName) {
-  const shouldGuard = PROTECTED_VIEWS.includes(viewName);
+  // Build is guarded only when there's actual deck content to lose — the
+  // draft auto-saves so a back on an empty build screen is harmless.
+  const hasDraftContent = State.questionBank && State.questionBank.length > 0;
+  const shouldGuard = PROTECTED_VIEWS.includes(viewName) ||
+    (viewName === 'build' && hasDraftContent);
   if (shouldGuard && !historyGuardActive) {
     history.pushState({ tallyGuard: true }, '');
     historyGuardActive = true;
@@ -4115,10 +4119,13 @@ function showLeaveConfirm() {
   }
 
   const isLive = viewName === 'dashboard' || viewName === 'attendee' || viewName === 'display';
+  const isBuild = viewName === 'build';
   appConfirm({
-    title: isLive ? 'Leave the live session?' : 'Leave without saving?',
+    title: isLive ? 'Leave the live session?' : isBuild ? 'Leave your deck?' : 'Leave without saving?',
     body: isLive
       ? 'This session is still running. Going back won\'t end it, but you\'ll lose this view until you return.'
+      : isBuild
+      ? 'Your deck is saved as a draft and will be here when you come back — but any unsaved question edits will be lost.'
       : 'Any unsaved changes here will be lost.',
     confirmLabel: 'Leave',
     cancelLabel: 'Stay',
@@ -4126,8 +4133,11 @@ function showLeaveConfirm() {
   }).then((confirmed) => {
     if (!confirmed) return;
     historyGuardActive = false;
-    if (viewName === 'question-editor' || viewName === 'slide-editor') {
-      showView('build');
+    if (viewName === 'build') {
+      showView('landing');
+    } else if (viewName === 'question-editor' || viewName === 'slide-editor' ||
+        viewName === 'rating-editor' || viewName === 'opentext-editor' || viewName === 'wordcloud-editor') {
+      showView(State.sessionCode ? 'dashboard' : 'build');
     } else if (viewName === 'dashboard') {
       // Live session stays alive in Firebase regardless — this only
       // changes what this device is looking at, never ends the session.
@@ -4564,7 +4574,11 @@ document.getElementById('btn-display').addEventListener('click', () => {
 });
 
 /* ---------- Join flow ---------- */
-document.getElementById('btn-join-back').addEventListener('click', () => showView('landing'));
+document.getElementById('btn-join-back').addEventListener('click', () => {
+  // If the user came from a deep-link or already has a session code in
+  // flight, just go back to landing. No guard needed — nothing is lost.
+  showView('landing');
+});
 
 document.getElementById('btn-join-submit').addEventListener('click', async () => {
   const code = document.getElementById('join-code-input').value.trim().toUpperCase();
@@ -4983,6 +4997,13 @@ function renderQuestionBank() {
   const list = document.getElementById('question-bank-list');
   const empty = document.getElementById('bank-empty');
   list.innerHTML = '';
+
+  // Re-sync the back-button guard whenever the deck changes — it activates
+  // as soon as the first item is added and releases when the deck is empty.
+  const activeView = document.querySelector('[data-view].active');
+  if (activeView && activeView.getAttribute('data-view') === 'build') {
+    syncHistoryGuard('build');
+  }
 
   if (State.questionBank.length === 0) {
     empty.classList.remove('hidden');
