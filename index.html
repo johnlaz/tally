@@ -3639,6 +3639,15 @@
               <button class="btn btn-ghost btn-sm" id="btn-clear-groq-key">Clear</button>
               <span class="ai-key-status" id="ai-key-status"></span>
             </div>
+            <div id="groq-model-block" style="display:none; margin-top:18px;">
+              <div class="settings-row-label">Model</div>
+              <div class="settings-row-sub">Pulled live from your Groq account — the newest chat models available to your key. Used for Speed Card and Improve Wording.</div>
+              <div style="display:flex; gap:10px; margin-top:10px; align-items:center;">
+                <select id="groq-model-select" class="input-field" style="flex:1; margin:0;"></select>
+                <button class="btn btn-ghost btn-sm" id="btn-refresh-groq-models">Refresh</button>
+              </div>
+              <div class="ai-key-status empty" id="groq-model-status" style="margin-top:8px;"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -4410,7 +4419,160 @@ function refreshGroqKeyStatus() {
     statusEl.className = 'ai-key-status empty';
     input.value = '';
   }
+  if (typeof renderGroqModelPicker === 'function') renderGroqModelPicker();
 }
+
+/* ---------- Groq model list (auto-pulled from the user's key) ----------
+   Nothing is hardcoded except a last-resort fallback. On Save Key / Refresh
+   (and silently when the cached list is >3 days old) we ask Groq which models
+   this key can use, drop non-chat models (speech, TTS, guard/safety, embeddings,
+   compound agents), keep the newest few, and let the user pick. If Groq ever
+   rejects the selected model as retired, groqChat() re-pulls the list and
+   retries once on the best available replacement. */
+const GROQ_MODEL_FALLBACK = 'llama-3.3-70b-versatile';
+const GROQ_MODELS_CACHE_KEY = 'tally_groq_models';
+const GROQ_MODEL_SELECTED_KEY = 'tally_groq_model';
+const GROQ_MODEL_LIST_SIZE = 5;
+const GROQ_MODEL_STALE_MS = 3 * 24 * 60 * 60 * 1000;
+const GROQ_NON_CHAT = /whisper|tts|playai|orpheus|guard|safeguard|embed|compound|moderation|transcri/i;
+
+function getGroqModelCache() {
+  try { return JSON.parse(localStorage.getItem(GROQ_MODELS_CACHE_KEY) || 'null'); } catch (e) { return null; }
+}
+
+function getGroqModel() {
+  return localStorage.getItem(GROQ_MODEL_SELECTED_KEY) || GROQ_MODEL_FALLBACK;
+}
+
+// Rough size from the id ("...-70b-...", "...-120b") so the default pick
+// favours capable models over tiny instant ones. Users can always override.
+function groqModelSize(id) {
+  const m = /(\d+(?:\.\d+)?)b(?![a-z])/i.exec(id);
+  return m ? parseFloat(m[1]) : 0;
+}
+
+function buildGroqModelList(raw) {
+  const chat = (raw || [])
+    .filter(m => m && m.id && m.active !== false && !GROQ_NON_CHAT.test(m.id))
+    .sort((a, b) => (b.created || 0) - (a.created || 0));
+  return chat.slice(0, GROQ_MODEL_LIST_SIZE).map(m => ({ id: m.id, created: m.created || 0 }));
+}
+
+async function refreshGroqModels(opts) {
+  const silent = opts && opts.silent;
+  const apiKey = getGroqKey();
+  const statusEl = document.getElementById('groq-model-status');
+  if (!apiKey) return null;
+  if (!silent && statusEl) { statusEl.textContent = 'Fetching models…'; statusEl.className = 'ai-key-status empty'; }
+  try {
+    const res = await fetch('https://api.groq.com/openai/v1/models', {
+      headers: { 'Authorization': 'Bearer ' + apiKey },
+    });
+    if (!res.ok) {
+      if (res.status === 401) throw new Error('Groq rejected this API key.');
+      throw new Error('Could not load models (status ' + res.status + ').');
+    }
+    const body = await res.json();
+    const list = buildGroqModelList(body.data);
+    if (!list.length) throw new Error('No chat models came back for this key.');
+
+    // Keep the user's current choice if it is still available (even if it
+    // has slipped out of the newest few); otherwise pick the best default.
+    const current = localStorage.getItem(GROQ_MODEL_SELECTED_KEY);
+    const stillExists = current && (body.data || []).some(m => m.id === current && m.active !== false);
+    if (stillExists && !list.some(m => m.id === current)) list.push({ id: current, created: 0 });
+    if (!stillExists) {
+      const best = list.slice().sort((a, b) => groqModelSize(b.id) - groqModelSize(a.id) || b.created - a.created)[0];
+      localStorage.setItem(GROQ_MODEL_SELECTED_KEY, best.id);
+    }
+    localStorage.setItem(GROQ_MODELS_CACHE_KEY, JSON.stringify({ fetchedAt: Date.now(), list }));
+    renderGroqModelPicker();
+    return list;
+  } catch (e) {
+    if (!silent && statusEl) {
+      const offline = e instanceof TypeError;
+      statusEl.textContent = offline ? 'Couldn’t reach Groq — using the saved model.' : e.message;
+      statusEl.className = 'ai-key-status empty';
+    }
+    return null;
+  }
+}
+
+function renderGroqModelPicker() {
+  const block = document.getElementById('groq-model-block');
+  const select = document.getElementById('groq-model-select');
+  const statusEl = document.getElementById('groq-model-status');
+  if (!block || !select) return;
+  const cache = getGroqModelCache();
+  if (!getGroqKey() || !cache || !cache.list || !cache.list.length) { block.style.display = 'none'; return; }
+  const selected = getGroqModel();
+  select.innerHTML = '';
+  const ids = cache.list.map(m => m.id);
+  if (!ids.includes(selected)) ids.unshift(selected);
+  ids.forEach(id => {
+    const opt = document.createElement('option');
+    opt.value = id;
+    opt.textContent = id;
+    if (id === selected) opt.selected = true;
+    select.appendChild(opt);
+  });
+  block.style.display = '';
+  if (statusEl) {
+    statusEl.textContent = 'Updated ' + new Date(cache.fetchedAt).toLocaleDateString();
+    statusEl.className = 'ai-key-status saved';
+  }
+}
+
+document.getElementById('groq-model-select').addEventListener('change', (e) => {
+  localStorage.setItem(GROQ_MODEL_SELECTED_KEY, e.target.value);
+});
+document.getElementById('btn-refresh-groq-models').addEventListener('click', () => refreshGroqModels());
+
+/* One shared Groq chat call for every AI feature. Uses the selected model,
+   strips <think> blocks that reasoning models may emit, and self-heals once
+   if the selected model has been retired. */
+async function groqChat(apiKey, messages, temperature, _retried) {
+  const model = getGroqModel();
+  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + apiKey,
+    },
+    body: JSON.stringify({ model, messages, temperature }),
+  });
+
+  if (!response.ok) {
+    if (response.status === 401) throw new Error('Groq rejected this API key — check it in Settings → AI.');
+    if (response.status === 429) throw new Error('Groq rate limit hit — wait a moment and try again.');
+    if (!_retried && (response.status === 400 || response.status === 404)) {
+      let detail = '';
+      try { const err = await response.clone().json(); detail = JSON.stringify(err.error || err); } catch (e) {}
+      if (/model/i.test(detail)) {
+        // Force a re-pick by dropping the dead selection, then refresh.
+        localStorage.removeItem(GROQ_MODEL_SELECTED_KEY);
+        await refreshGroqModels({ silent: true });
+        if (getGroqModel() !== model) return groqChat(apiKey, messages, temperature, true);
+      }
+    }
+    throw new Error('Groq request failed (status ' + response.status + '). Try again.');
+  }
+
+  const data = await response.json();
+  const msg = data.choices && data.choices[0] && data.choices[0].message;
+  if (msg && typeof msg.content === 'string') {
+    msg.content = msg.content.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+  }
+  return data;
+}
+
+// Silent background refresh when the cached list is old.
+(function () {
+  const cache = getGroqModelCache();
+  if (getGroqKey() && (!cache || Date.now() - cache.fetchedAt > GROQ_MODEL_STALE_MS)) {
+    refreshGroqModels({ silent: true });
+  }
+})();
 
 document.getElementById('btn-save-groq-key').addEventListener('click', () => {
   const value = document.getElementById('groq-api-key-input').value.trim();
@@ -4420,11 +4582,15 @@ document.getElementById('btn-save-groq-key').addEventListener('click', () => {
   }
   localStorage.setItem('tally_groq_key', value);
   refreshGroqKeyStatus();
+  refreshGroqModels();
 });
 
 document.getElementById('btn-clear-groq-key').addEventListener('click', () => {
   localStorage.removeItem('tally_groq_key');
+  localStorage.removeItem(GROQ_MODELS_CACHE_KEY);
+  localStorage.removeItem(GROQ_MODEL_SELECTED_KEY);
   refreshGroqKeyStatus();
+  renderGroqModelPicker();
 });
 
 /* ---------- Theme toggle (Settings → Display) ----------
@@ -5735,25 +5901,7 @@ document.getElementById('btn-keep-original').addEventListener('click', () => {
 async function improveQuestionWording(questionText, apiKey) {
   const systemPrompt = `You tighten the wording of live audience-poll questions. Rewrite the given question to be clearer and more concise, keeping the same meaning and intent. Return ONLY the rewritten question text — no quotes, no explanation, no markdown.`;
 
-  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + apiKey,
-    },
-    body: JSON.stringify({
-      model: 'llama-3.3-70b-versatile',
-      messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: questionText }],
-      temperature: 0.6,
-    }),
-  });
-
-  if (!response.ok) {
-    if (response.status === 401) throw new Error('Groq rejected this API key — check it in Settings → AI.');
-    throw new Error('Groq request failed (status ' + response.status + '). Try again.');
-  }
-
-  const data = await response.json();
+  const data = await groqChat(apiKey, [{ role: 'system', content: systemPrompt }, { role: 'user', content: questionText }], 0.6);
   const raw = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
   if (!raw) throw new Error('Groq returned an empty response. Try again.');
 
@@ -6786,25 +6934,7 @@ Return ONLY a JSON array, no prose, no markdown fences, no explanation. Each ite
 ${schemaLine}
 Each question needs 2 to 4 short answer options.${correctIndexInstruction} Generate exactly ${count} questions about: ${topic}`;
 
-  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + apiKey,
-    },
-    body: JSON.stringify({
-      model: 'llama-3.3-70b-versatile',
-      messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: 'Generate the questions now.' }],
-      temperature: 0.8,
-    }),
-  });
-
-  if (!response.ok) {
-    if (response.status === 401) throw new Error('Groq rejected this API key — check it in Settings → AI.');
-    throw new Error('Groq request failed (status ' + response.status + '). Try again.');
-  }
-
-  const data = await response.json();
+  const data = await groqChat(apiKey, [{ role: 'system', content: systemPrompt }, { role: 'user', content: 'Generate the questions now.' }], 0.8);
   const raw = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
   if (!raw) throw new Error('Groq returned an empty response. Try again.');
 
