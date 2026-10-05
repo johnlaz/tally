@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200" role="img" aria-labelledby="t d">
+  <title id="t">How a Tally session runs</title>
+  <desc id="d">Four steps: Build a deck, Start a session, Run it live, End and export.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="#6E7F99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <g font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" text-anchor="middle">
+    <g>
+      <rect x="10" y="30" width="205" height="140" rx="14" fill="#14253F" stroke="#2A8DF3" stroke-width="2"/>
+      <text x="112" y="72" font-size="26" font-weight="700" fill="#F3F6FB">1  Build</text>
+      <text x="112" y="104" font-size="15" fill="#B8C4D9">Polls, trivia, word clouds,</text>
+      <text x="112" y="126" font-size="15" fill="#B8C4D9">ratings, Q&amp;A and slides</text>
+    </g>
+    <g>
+      <rect x="265" y="30" width="205" height="140" rx="14" fill="#14253F" stroke="#2A8DF3" stroke-width="2"/>
+      <text x="367" y="72" font-size="26" font-weight="700" fill="#F3F6FB">2  Start</text>
+      <text x="367" y="104" font-size="15" fill="#B8C4D9">Get a five-character code</text>
+      <text x="367" y="126" font-size="15" fill="#B8C4D9">and a QR for the big screen</text>
+    </g>
+    <g>
+      <rect x="520" y="30" width="205" height="140" rx="14" fill="#14253F" stroke="#2A8DF3" stroke-width="2"/>
+      <text x="622" y="72" font-size="26" font-weight="700" fill="#F3F6FB">3  Run</text>
+      <text x="622" y="104" font-size="15" fill="#B8C4D9">Open one item at a time,</text>
+      <text x="622" y="126" font-size="15" fill="#B8C4D9">watch votes land live</text>
+    </g>
+    <g>
+      <rect x="775" y="30" width="215" height="140" rx="14" fill="#14253F" stroke="#C97D3C" stroke-width="2"/>
+      <text x="882" y="72" font-size="26" font-weight="700" fill="#F3F6FB">4  End + export</text>
+      <text x="882" y="104" font-size="15" fill="#B8C4D9">Report and data export,</text>
+      <text x="882" y="126" font-size="15" fill="#B8C4D9">then live data is cleared</text>
+    </g>
+  </g>
+  <g stroke="#6E7F99" stroke-width="2.5" fill="none" marker-end="url(#a)">
+    <line x1="219" y1="100" x2="259" y2="100"/>
+    <line x1="474" y1="100" x2="514" y2="100"/>
+    <line x1="729" y1="100" x2="769" y2="100"/>
+  </g>
+</svg>
