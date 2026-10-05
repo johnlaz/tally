@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/banner.svg" alt="Tally ARS: live audience response, no app required" width="100%"></p>
+
 # Tally ARS
 
 **Live audience response, no app required.**
@@ -30,7 +32,7 @@ Hosts can also send a **Display Screen** view to a projector, share results, and
 ```
 /index.html          landing page
 /README.md
-/docs/               README diagrams (flow.svg, architecture.svg)
+/docs/               README visuals (banner.svg, flow.svg, architecture.svg)
 /app/index.html      the app (single file: HTML, CSS and JS)
 /app/manifest.json   PWA manifest (scope /tally/app/)
 /app/sw.js           service worker
@@ -106,6 +108,7 @@ The service worker is network-first with a four-second timeout: online hosts alw
 ## Changelog
 
 ### 1.1.0
+- README banner added.
 - Landing page added at the repo root; the duplicate app copy there is gone.
 - Flattened layout: two icons (192 and 512, maskable-safe), `sample-decks.json` beside the app, no stray folders.
 - Manifest: relative `id`, screenshots for narrow and wide form factors.

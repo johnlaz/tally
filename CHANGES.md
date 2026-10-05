@@ -18,7 +18,7 @@ Unzip over the repo root, then delete the files listed under "Delete".
 | `app/sample-decks.json` | Moved from `app/assets/`, unchanged | Flatten |
 | `app/shot-phone-1.png`, `shot-phone-2.png` (780x1688), `shot-wide.png` (1280x720) | Simulated captures of the real app (stand-in Firebase, sample deck) | Manifest screenshots |
 | `README.md` | Rewritten: live URLs, layout, AI/model, data & privacy, Firebase rules, deploy, changelog | Item 7 |
-| `docs/flow.svg`, `docs/architecture.svg` | New README diagrams, checked on light and dark | Item 7 |
+| `docs/banner.svg`, `docs/flow.svg`, `docs/architecture.svg` | New README banner and diagrams, checked on light and dark | Item 7 |
 
 ## Not done
 - Script integrity (SRI) hashes: could not fetch the CDN files to hash them.
