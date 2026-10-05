@@ -2,7 +2,6 @@
   "name": "Tally ARS",
   "short_name": "Tally",
   "description": "Live audience response system for events and presentations. Attendees vote from their own phone — no app install, no account.",
-  "id": "/tally/app/",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -11,8 +10,12 @@
   "theme_color": "#0A0A0A",
   "categories": ["business", "productivity", "events"],
   "icons": [
-    { "src": "../icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "../icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "../icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "screenshots": [
+    { "src": "shot-phone-1.png", "sizes": "780x1688", "type": "image/png", "form_factor": "narrow", "label": "Attendee votes on a poll from their phone" },
+    { "src": "shot-phone-2.png", "sizes": "780x1688", "type": "image/png", "form_factor": "narrow", "label": "Attendee joins with a five-character code" },
+    { "src": "shot-wide.png", "sizes": "1280x720", "type": "image/png", "form_factor": "wide", "label": "Host dashboard with live results and attendee preview" }
   ]
 }

@@ -2,13 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Tally ARS</title>
 
-<link rel="icon" type="image/png" sizes="32x32" href="../icons/icon-32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192.png">
-<link rel="shortcut icon" href="../favicon.ico">
-<link rel="apple-touch-icon" sizes="180x180" href="../icons/icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0A0A0A">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2822,6 +2820,24 @@
     #print-report-root .report-result-bar-bg { background: #E5E5E5 !important; }
     @page { margin: 1.4cm; }
   }
+
+  /* ---- v1.1: accessibility + polish ---- */
+  :focus-visible { outline: 2px solid var(--teal-bright); outline-offset: 2px; }
+  .btn:focus-visible, .icon-btn:focus-visible { outline-offset: 3px; }
+  #join-name-row { width: 100%; }
+  .landing-mark { margin: 0; }
+  .landing-tagline { margin: -14px 0 0; max-width: 30ch; font-size: 15px; line-height: 1.5; color: var(--text-dim); }
+  .landing-actions .btn-ghost { color: var(--text); border-color: var(--text-faint); }
+  .app-stamp { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--text-dim); }
+  .update-toast {
+    position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+    z-index: 9999; display: flex; align-items: center; gap: 12px; max-width: min(460px, 92vw);
+    padding: 12px 14px; background: var(--surface-raised); color: var(--text);
+    border: 1px solid var(--teal); border-radius: 12px; box-shadow: 0 8px 28px rgba(0,0,0,0.45);
+    font-size: 14px; line-height: 1.4;
+  }
+  .update-toast span { flex: 1; }
+  .update-toast .btn { white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -2839,12 +2855,14 @@
     <div class="landing-body">
       <div class="landing-content">
         <img src="data:image/webp;base64,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" alt="" class="landing-icon" id="landing-icon" width="84" height="84">
-        <div class="landing-mark">TALLY<span class="ars">A · R · S</span></div>
+        <h1 class="landing-mark">TALLY<span class="ars">A · R · S</span></h1>
+        <p class="landing-tagline">Live polls for any room. Attendees scan, vote, and watch it happen.</p>
         <div class="landing-actions">
           <button class="btn btn-primary btn-block" id="btn-host">Host a Session</button>
           <button class="btn btn-ghost btn-block" id="btn-join">Join a Session</button>
           <button class="btn btn-ghost btn-block" id="btn-display">Display Screen</button>
         </div>
+        <div class="app-stamp" id="app-stamp"></div>
       </div>
     </div>
   </section>
@@ -3709,7 +3727,7 @@
 }</pre>
           </div>
 
-          <span class="version-tag">TALLY ARS · v1.0 · LAZLAB Creations</span>
+          <span class="version-tag" id="about-version">TALLY ARS · v1.1.0 · LAZLAB Creations</span>
         </div>
       </div>
 
@@ -4424,8 +4442,11 @@ function refreshGroqKeyStatus() {
    Nothing is hardcoded except a last-resort fallback. On Save Key / Refresh
    (and silently when the cached list is >3 days old) we ask Groq which models
    this key can use, drop non-chat models (speech, TTS, guard/safety, embeddings,
-   compound agents), keep the newest few, and let the user pick. If Groq ever
-   rejects the selected model as retired, groqChat() re-pulls the list and
+   compound agents), keep the newest few, and let the user pick. The saved
+   selection is never swapped automatically: if it drops out of Groq's list it
+   stays selected and is flagged in Settings → AI so the user can choose.
+   Only when nothing has ever been saved is a default picked. If Groq rejects
+   the selected model as retired, groqChat() refreshes the list, flags it, and
    retries once on the best available replacement. */
 const GROQ_MODEL_FALLBACK = 'llama-3.3-70b-versatile';
 const GROQ_MODELS_CACHE_KEY = 'tally_groq_models';
@@ -4478,12 +4499,16 @@ async function refreshGroqModels(opts) {
     // has slipped out of the newest few); otherwise pick the best default.
     const current = localStorage.getItem(GROQ_MODEL_SELECTED_KEY);
     const stillExists = current && (body.data || []).some(m => m.id === current && m.active !== false);
-    if (stillExists && !list.some(m => m.id === current)) list.push({ id: current, created: 0 });
-    if (!stillExists) {
+    let missing = null;
+    if (current) {
+      // Never auto-swap a saved choice. Keep it in the list; flag it if Groq no longer offers it.
+      if (!list.some(m => m.id === current)) list.push({ id: current, created: 0 });
+      if (!stillExists) missing = current;
+    } else {
       const best = list.slice().sort((a, b) => groqModelSize(b.id) - groqModelSize(a.id) || b.created - a.created)[0];
       localStorage.setItem(GROQ_MODEL_SELECTED_KEY, best.id);
     }
-    localStorage.setItem(GROQ_MODELS_CACHE_KEY, JSON.stringify({ fetchedAt: Date.now(), list }));
+    localStorage.setItem(GROQ_MODELS_CACHE_KEY, JSON.stringify({ fetchedAt: Date.now(), list, missing }));
     renderGroqModelPicker();
     return list;
   } catch (e) {
@@ -4507,17 +4532,23 @@ function renderGroqModelPicker() {
   select.innerHTML = '';
   const ids = cache.list.map(m => m.id);
   if (!ids.includes(selected)) ids.unshift(selected);
+  const isMissing = !!cache.missing && cache.missing === selected;
   ids.forEach(id => {
     const opt = document.createElement('option');
     opt.value = id;
-    opt.textContent = id;
+    opt.textContent = (isMissing && id === selected) ? id + ' (not in current list)' : id;
     if (id === selected) opt.selected = true;
     select.appendChild(opt);
   });
   block.style.display = '';
   if (statusEl) {
-    statusEl.textContent = 'Updated ' + new Date(cache.fetchedAt).toLocaleDateString();
-    statusEl.className = 'ai-key-status saved';
+    if (isMissing) {
+      statusEl.textContent = 'Groq no longer lists “' + selected + '”. It is still selected — choose another model if AI requests fail.';
+      statusEl.className = 'ai-key-status empty';
+    } else {
+      statusEl.textContent = 'Updated ' + new Date(cache.fetchedAt).toLocaleDateString();
+      statusEl.className = 'ai-key-status saved';
+    }
   }
 }
 
@@ -4526,9 +4557,10 @@ document.getElementById('groq-model-select').addEventListener('change', (e) => {
 });
 document.getElementById('btn-refresh-groq-models').addEventListener('click', () => refreshGroqModels());
 
-/* One shared Groq chat call for every AI feature. Uses the selected model,
-   strips <think> blocks that reasoning models may emit, and self-heals once
-   if the selected model has been retired. */
+/* One shared Groq chat call for every AI feature. Uses the selected model and
+   strips <think> blocks that reasoning models may emit. If Groq reports the
+   selected model as retired, the list is refreshed and flagged, but the saved
+   selection is left alone and the user is told to pick another. */
 async function groqChat(apiKey, messages, temperature, _retried) {
   const model = getGroqModel();
   const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -4546,11 +4578,9 @@ async function groqChat(apiKey, messages, temperature, _retried) {
     if (!_retried && (response.status === 400 || response.status === 404)) {
       let detail = '';
       try { const err = await response.clone().json(); detail = JSON.stringify(err.error || err); } catch (e) {}
-      if (/model/i.test(detail)) {
-        // Force a re-pick by dropping the dead selection, then refresh.
-        localStorage.removeItem(GROQ_MODEL_SELECTED_KEY);
-        await refreshGroqModels({ silent: true });
-        if (getGroqModel() !== model) return groqChat(apiKey, messages, temperature, true);
+      if (/model/i.test(detail) && /not found|does not exist|decommission|no longer|deprecat|not supported/i.test(detail)) {
+        await refreshGroqModels({ silent: true });   // refreshes + flags; never swaps the selection
+        throw new Error('Groq no longer accepts the model “' + model + '”. Choose another in Settings → AI.');
       }
     }
     throw new Error('Groq request failed (status ' + response.status + '). Try again.');
@@ -7681,7 +7711,7 @@ function renderDraftList(code, draftEntries) {
     const item = document.createElement('div');
     item.className = 'draft-item';
     const modeTag = (qdata.revealMode || 'live') === 'hidden' ? '<span class="mode-tag mode-tag-hidden">Hidden</span>' : '<span class="mode-tag">Live</span>';
-    item.innerHTML = `<span class="draft-item-text"><span class="bank-item-num">${String(i + 1).padStart(2, '0')}</span>${escapeHtml(qdata.text)} ${modeTag}</span>`;
+    item.innerHTML = `<span class="draft-item-text"><span class="bank-item-num">${String(i + 1).padStart(2, '0')}</span>${escapeHtml(qdata.type === 'slide' ? ('Slide — ' + ((qdata.slide && qdata.slide.caption) || 'untitled')) : qdata.text)} ${modeTag}</span>`;
     const openBtn = document.createElement('button');
     openBtn.className = 'btn btn-primary btn-sm';
     openBtn.textContent = 'Open';
@@ -9002,14 +9032,14 @@ document.addEventListener('keydown', (e) => {
       }, 400);
     }
 
-    // Fetch demo decks from assets/sample-decks.json (same directory as index.html)
+    // Fetch demo decks from sample-decks.json (same directory as index.html)
     let data;
     try {
-      const res = await fetch('assets/sample-decks.json');
+      const res = await fetch('sample-decks.json');
       if (!res.ok) throw new Error('HTTP ' + res.status);
       data = await res.json();
     } catch (err) {
-      await appAlert('Could not load demo decks — make sure assets/sample-decks.json is in the same folder as index.html.', { title: 'Demo decks not found' });
+      await appAlert('Could not load demo decks — make sure sample-decks.json is in the same folder as index.html.', { title: 'Demo decks not found' });
       return;
     }
 
@@ -9026,15 +9056,60 @@ renderVisibilityPills();
 refreshThemeToggleUI();
 checkDeepLink();
 
+/* ---------- Version + service worker ----------
+   APP_VERSION must match VERSION in sw.js (the cache is named after it).
+   Bump both together on every release. */
+const APP_VERSION = '1.1.0';
+(function () {
+  const stamp = document.getElementById('app-stamp');
+  if (stamp) stamp.textContent = 'v' + APP_VERSION;
+  const about = document.getElementById('about-version');
+  if (about) about.textContent = 'TALLY ARS · v' + APP_VERSION + ' · LAZLAB Creations';
+})();
+
+function showUpdateToast(worker) {
+  if (document.getElementById('update-toast')) return;
+  const el = document.createElement('div');
+  el.className = 'update-toast';
+  el.id = 'update-toast';
+  el.setAttribute('role', 'status');
+  el.innerHTML = '<span>A new version of Tally is ready. Reload between questions, not mid-poll.</span>' +
+    '<button class="btn btn-primary btn-sm" id="update-reload">Reload</button>' +
+    '<button class="btn btn-ghost btn-sm" id="update-later">Later</button>';
+  document.body.appendChild(el);
+  document.getElementById('update-later').addEventListener('click', () => el.remove());
+  document.getElementById('update-reload').addEventListener('click', () => {
+    window.__tallyReloadRequested = true;
+    worker.postMessage({ type: 'SKIP_WAITING' });
+  });
+}
+
 /* Register the service worker for PWA installability. Wrapped in a feature
    check and try/catch since this file may also be opened directly from
    disk (file://) during local testing, where service workers aren't
-   available at all — that should never break the app itself. */
+   available at all — that should never break the app itself. A new worker
+   waits until the person taps Reload, so an update can never swap the app
+   out from under a live session. */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch((err) => {
+    navigator.serviceWorker.register('sw.js').then((reg) => {
+      if (reg.waiting && navigator.serviceWorker.controller) showUpdateToast(reg.waiting);
+      reg.addEventListener('updatefound', () => {
+        const w = reg.installing;
+        if (!w) return;
+        w.addEventListener('statechange', () => {
+          if (w.state === 'installed' && navigator.serviceWorker.controller) showUpdateToast(w);
+        });
+      });
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') reg.update().catch(() => {});
+      });
+    }).catch((err) => {
       console.warn('Tally ARS: service worker registration failed', err);
     });
+  });
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (window.__tallyReloadRequested) location.reload();
   });
 }
 
